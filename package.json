@@ -1,0 +1,27 @@
+{
+  "name": "quorumproof",
+  "version": "0.1.0",
+  "description": "QuorumProof — an AI agent fleet that reaches auditable, quorum-gated decisions from Attestcoin-verified cross-chain facts, executed on Creditcoin (CC3).",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "demo": "tsx src/index.ts",
+    "serve": "tsx src/server.ts",
+    "verify-live": "tsx scripts/verify-live.ts",
+    "test": "vitest run",
+    "audit": "npm audit --omit=dev"
+  },
+  "dependencies": {
+    "@gluwa/usc-sdk": "^0.18.0",
+    "ethers": "^6.15.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4"
+  }
+}
