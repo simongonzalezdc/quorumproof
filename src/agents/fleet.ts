@@ -12,7 +12,7 @@
  *           confidence >= 0.5; else REJECT. Either way the outcome is a signed
  *           QuorumCertificate bound to the Attestcoin factHash.
  */
-import { keccak256, verifyMessage, Wallet } from 'ethers';
+import { keccak256, verifyMessage, HDNodeWallet, Wallet } from 'ethers';
 import type {
   Brain,
 } from './brains.js';
@@ -56,7 +56,7 @@ function ballotBox(votes: Vote[]): string {
 
 interface AgentIdentity {
   brain: Brain;
-  wallet: Wallet;
+  wallet: HDNodeWallet;
 }
 
 export class Fleet {

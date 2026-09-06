@@ -38,7 +38,7 @@ export interface AssessOptions {
 export interface AssessResult {
   trace: DeliberationTrace;
   submission: SubmissionResult;
-  fleetRoster: ReturnType<Fleet['roster']>;
+  fleetRoster: { agentId: string; agentAddress: string; charter: string; kind: string }[];
   llmEnabled: boolean;
 }
 

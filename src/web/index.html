@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QuorumProof — agent fleet quorum over Attestcoin-verified facts</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="mark">◧</span>
+    <div>
+      <h1>QuorumProof</h1>
+      <p class="tag">an agent fleet that reaches auditable decisions from Attestcoin-verified cross-chain facts</p>
+    </div>
+  </div>
+  <div class="netbadge" id="netbadge">
+    <span class="dot" id="netdot"></span>
+    <span id="nettext">connecting to CC3 testnet…</span>
+  </div>
+</header>
+
+<main>
+  <aside class="panel">
+    <h2>Credit desk</h2>
+    <p class="hint">Pick a live scenario or paste any Ethereum mainnet transaction hash. The fact is proven on Creditcoin (CC3 testnet) via the Attestcoin Protocol before the fleet sees it.</p>
+    <div class="scenarios" id="scenarios"></div>
+    <label class="custom">
+      <span>Custom source tx (Ethereum, chainKey 3)</span>
+      <div class="row">
+        <input id="txinput" placeholder="0x… transaction hash" spellcheck="false" />
+        <button id="assessBtn">Assess</button>
+      </div>
+    </label>
+    <div class="policy card">
+      <h3>Active lending policy</h3>
+      <dl id="policydl"><dt>loading…</dt></dl>
+    </div>
+    <div class="card" id="roster-card">
+      <h3>Fleet roster</h3>
+      <p class="hint">Ephemeral secp256k1 control keys are spawned per session; every ballot is signed and locally audited, and recoverable on-chain by QuorumRegistry.</p>
+      <ul id="roster" class="roster"><li>awaiting first assessment…</li></ul>
+    </div>
+  </aside>
+
+  <section class="panel wide">
+    <h2>Deliberation</h2>
+    <ol class="stages" id="stages">
+      <li class="stage" id="stage-1"><h3><b>1</b> Attestcoin fact</h3><div class="body">waiting…</div></li>
+      <li class="stage" id="stage-2"><h3><b>2</b> Round 1 — secret ballot</h3><div class="body">waiting…</div></li>
+      <li class="stage" id="stage-3"><h3><b>3</b> Round 2 — debate &amp; revision</h3><div class="body">waiting…</div></li>
+      <li class="stage" id="stage-4"><h3><b>4</b> Quorum gate</h3><div class="body">waiting…</div></li>
+    </ol>
+    <div id="error" class="error hidden"></div>
+  </section>
+
+  <aside class="panel">
+    <h2>Certificate</h2>
+    <div class="card decision hidden" id="cert">
+      <div class="verdict" id="verdict">—</div>
+      <dl id="certdl"></dl>
+      <h3>Final ballots (round 2)</h3>
+      <ul id="votes" class="votes"></ul>
+      <p class="hint" id="enforcement"></p>
+    </div>
+    <p class="hint" id="cert-empty">Run an assessment — the signed QuorumCertificate appears here, bound to the Attestcoin factHash.</p>
+  </aside>
+</main>
+
+<footer>
+  <span>BUIDL CTC 2026 Fall · AI track · Creditcoin CC3 testnet · Attestcoin Protocol (BlockProver 0x…FD2)</span>
+  <span>demo runs fully deterministic; no paid services, no secrets</span>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

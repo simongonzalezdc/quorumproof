@@ -108,7 +108,7 @@ export async function enforce(trace: DeliberationTrace): Promise<SubmissionResul
   const submitter: BaseWallet = new Wallet(key, cc3Provider());
   const registry = new Contract(REGISTRY_ADDRESS, QUORUM_REGISTRY_ABI, submitter);
   const sub = encodeSubmission(trace);
-  const tx = await registry.submitDecision(
+  const tx = await registry.getFunction('submitDecision')(
     sub.factHash,
     sub.policyId,
     sub.decision,

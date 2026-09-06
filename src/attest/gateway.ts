@@ -27,7 +27,7 @@ import {
   PROOF_BUILDER_TESTNET,
 } from '../config.js';
 import type { AttestedFact, CreditPolicy } from '../agents/types.js';
-import { keccak256, AbiCoder } from 'ethers';
+import { keccak256, AbiCoder, type InterfaceAbi } from 'ethers';
 
 export async function fetchAttestedHeight(chainKey: number): Promise<number | undefined> {
   const res = await fetch(`${PROOF_BUILDER_TESTNET}/api/v1/attested-height/${chainKey}`);
@@ -90,7 +90,10 @@ export async function attestTx(
   const proofMs = Date.now() - t0;
 
   const t1 = Date.now();
-  const prover = new blockProver.PrecompileBlockProver(cc3Provider());
+  // (Provider + Contract casts bridge the SDK's commonjs ethers types to this project's ESM build.)
+  const prover = new blockProver.PrecompileBlockProver(
+    cc3Provider() as unknown as ConstructorParameters<typeof blockProver.PrecompileBlockProver>[0],
+  );
   const verified = await prover.verifySingle(
     proof.chainKey,
     proof.headerNumber,
@@ -106,8 +109,12 @@ export async function attestTx(
   const verifyMs = Date.now() - t1;
 
   const t2 = Date.now();
-  const decoder = new Contract(CC3_TESTNET_DECODER, evmV1DecoderAbi as unknown, cc3Provider());
-  const decoded = await utils.decoder.decodeEvmV1Transaction(proof.txBytes, decoder);
+  const decoderContract = new Contract(
+    CC3_TESTNET_DECODER,
+    evmV1DecoderAbi as unknown as InterfaceAbi,
+    cc3Provider(),
+  ) as unknown as Parameters<typeof utils.decoder.decodeEvmV1Transaction>[1];
+  const decoded = await utils.decoder.decodeEvmV1Transaction(proof.txBytes, decoderContract);
   const decodeMs = Date.now() - t2;
 
   const d = decoded.data as {
