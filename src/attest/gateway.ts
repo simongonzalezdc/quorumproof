@@ -146,5 +146,16 @@ export async function attestTx(
     }),
     attestedHeight,
   };
+  // Carry the raw proof artifacts so the dashboard's proof-detail view can
+  // display exactly what the precompile verified (audit-grade transparency).
+  fact.txBytes = proof.txBytes;
+  fact.proofArtifacts = {
+    merkleRoot: proof.merkleProof.root,
+    merkleSiblings: proof.merkleProof.siblings.map((s) => ({ hash: s.hash, isLeft: s.isLeft })),
+    continuity: {
+      lowerEndpointDigest: proof.continuityProof.lowerEndpointDigest,
+      roots: proof.continuityProof.roots,
+    },
+  };
   return { fact, proofMs, verifyMs, decodeMs };
 }

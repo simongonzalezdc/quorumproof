@@ -1,0 +1,627 @@
+[
+ {
+  "label": "unrelated-inflow",
+  "data": {
+   "trace": {
+    "fact": {
+     "chainKey": 3,
+     "headerNumber": 25914976,
+     "txIndex": 43,
+     "txHash": "0x890dbaaf163716cc1877ec0c69772d57f8cbfebafb151edaca050ef5654fc744",
+     "verified": true,
+     "verifiedVia": "BlockProver precompile 0x...FD2 on CC3 testnet (eth_call/staticCall)",
+     "from": "0x03D16f4D560A2923e61441257AC2C143eA753b8a",
+     "to": "0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0",
+     "valueWei": "0xca0a6332687616",
+     "calldata": "0x",
+     "txType": 2,
+     "receiptStatus": 1,
+     "factHash": "0xa7fa40b400f0122ef2c91fae605ba48b2197ea942f8ce55e42cfc53f4e0544a8",
+     "attestedHeight": 25923250,
+     "txBytes": "0x0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000002a0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000210000000000000000000000000000000000000000000000000000000000005e5600000000000000000000000003d16f4d560a2923e61441257ac2c143ea753b8a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f30ba13e4b04ce5dc4d254ae5fa95477800f0eb000000000000000000000000000000000000000000000000000ca0a633268761600000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000077359400000000000000000000000000000000000000000000000000000000007d95f25f00000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000000193b507de67274cedd943f7db8a680820fcfe609d165de08aa01f655c047d069f43898189cbffbd3993bb52174dd5b495f635bb399989081ba57e91cfccb1b53b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000005208000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "proofArtifacts": {
+      "merkleRoot": "0x055894b25635429abe374a42ccb56b11541057ac6ddfac3aab47d33169cf3614",
+      "merkleSiblings": [
+       {
+        "hash": "0x1d51130476c58ed1ccabaca748eb871eec6c6bc4c7a73a14ba7d8fee1254dff5",
+        "isLeft": true
+       },
+       {
+        "hash": "0x5751e0ee9f602f64b64374a6623fb1484fa0a8e6a9adc563bd6ec353e3da0164",
+        "isLeft": true
+       },
+       {
+        "hash": "0x4396e99deafcfc53a48b3d409910114bb54967b0cc9f0254ed030da4c576057f",
+        "isLeft": false
+       },
+       {
+        "hash": "0x82c300b30289949632bad79eabcd3ae9bb7491c929d2a4cd96184e0f3561bfe4",
+        "isLeft": true
+       },
+       {
+        "hash": "0x3a597167dc159836edbcf02528f9522605cdd408a741bb7c66264d67428af261",
+        "isLeft": false
+       },
+       {
+        "hash": "0x2d9790c7a7bcec9b72d5c0aee7c4073bf99b6889210d00f03e6631217d47ab8e",
+        "isLeft": true
+       },
+       {
+        "hash": "0xd5eb261d7f738413b56039c508ec076253fe368ab2986d5f6bd8d02df84a1f82",
+        "isLeft": false
+       },
+       {
+        "hash": "0x69abfcc74d0118c34f97078af193e2dbbdb4bf3c464fa9611441ffbe66bfe62f",
+        "isLeft": false
+       }
+      ],
+      "continuity": {
+       "lowerEndpointDigest": "0x8aed591a34243e59268bf7a7320ecfad555104c98b8dda942f0b8da6119c0a3f",
+       "roots": [
+        "0x055894b25635429abe374a42ccb56b11541057ac6ddfac3aab47d33169cf3614",
+        "0x55fa803ffaab5b98a15ee0d96f170dc2fe6d2cbde7363c6b18938752ace58480",
+        "0xb418a2d92192a52af5933578362bd01d62ba98761790be82c0373f704e28b873",
+        "0x031ba8cccbe081fcd99f87381f0a406b9d8e6b533aeeb57148147b80de94c867",
+        "0xa20bec4b9cde2b7e670fa888effa44ace62f4fa806f68c4643ac693d7f3d87f6",
+        "0x9d8450cd6fe915271027b524faf5dd76cd16066d02184df8d795f353dc5c5bc6",
+        "0x71faccc2b8ec2d66cc24815bfa87701ae3e7bcb1b4929ec91b9ec072c57e534e",
+        "0x45d8e134c25c5acb66ad5447a9f2826cf8753bf3848ea83e10eae195ef2a1c2e",
+        "0x7058ecdd529fb46b05e3bd2304dbf0b6d354936f34431ee3d6cd3bb518fbb61d",
+        "0x131588f631abaf87195f0aa0aecb648ba069e31855f1ec1768b839b495917074",
+        "0x1a5b1d86f0a274a81c614a58ab7b53b65fbf4506592d18429cabc34944cda5b1",
+        "0x7b907bdc5b0f46ce699925594b962266713c27f8fe63d2b89bdf904e3705cbcf",
+        "0x458269d233bd71ad3a2c092b4e9eccc33e774af17dc31fd35502ffa27825ab7a",
+        "0x331fda5a96f93a0e6011e6253c3d8bb37b72424d411747b6f71df13003d5d93b",
+        "0x590d4d57c528557c9dc154a05abb0ef8c96996ba408b0bd2f112070c69c06d6f",
+        "0xcab89231e4e8f2f94940985406fa22dae8120ebb5810cf91826be6a479bb245a",
+        "0x7fab19eaefcdcbb78dbba0b1934436432d6ac93439fff19bacc3bc74dcc7d78b",
+        "0x3d508a191bbd2fcc3f8cbaa1ad39646bb40cdd41bb0605e31f2a0ab7a4feb3db",
+        "0x0fc0dbaed33197eba2a81cf0cc639fd5fd46924334b9ad39c71dca5968527864",
+        "0x0c7d433818962f1d9151e9f6222d82d9f7f3b9eeede83bb871320f4b7c4e57d9",
+        "0xc5dd5fd627191290851d15bae759a4aed35714df237c0d43fd55f31c19c4a582",
+        "0x82f348f86ad1aaf828da184e524bfa7be010c65d9d9d142e89607ecf37b6b2ea",
+        "0x84cc082ff2675658a4a67807700577a36e2161127ed7bb5037780df789f073a4",
+        "0x337ac5d172b68c1006ed96d19ae0b950654866d2f93c8f31fb9a55738383bab5",
+        "0xd589931b4412c7db8bf91f95ed5914f21b7217ac8dea9d0b35d44f826e36c87e"
+       ]
+      }
+     }
+    },
+    "policy": {
+     "lender": "0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489",
+     "expectedAmountWei": "0x31f5c4ed27680000",
+     "shortfallToleranceBps": 10,
+     "overpayToleranceBps": 500,
+     "minAmountWei": "0xb1a2bc2ec50000"
+    },
+    "policyId": "0x96cecf5998e33b8b0d72325884a0d398b61d07b64d9aa3baf353dc87a68db359",
+    "rounds": [
+     {
+      "round": 1,
+      "votes": [
+       {
+        "agentId": "ledger-01",
+        "agentKind": "deterministic",
+        "vote": "DENY",
+        "confidence": 0.9,
+        "reasons": [
+         "recipient 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 is not the policy lender 0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489"
+        ],
+        "agentAddress": "0x75f9DEEaDb69788645dB051B1B89aFfF9BfeFb0F",
+        "round": 1,
+        "signature": "0xd3906629a568ef3b6a5cc6afa6ddb23dae73265b07163d0cb1d00ddee51d76860c40a0d2ad9e82e022a94780f5a67ea7037624ffc0d1b9869db0c1050441c70c1c"
+       },
+       {
+        "agentId": "sentinel-02",
+        "agentKind": "deterministic",
+        "vote": "APPROVE",
+        "confidence": 0.74,
+        "reasons": [
+         "no anomalies: value 0.05686936645929935 ETH, distinct counterparties, status 1"
+        ],
+        "agentAddress": "0x77a484d32D7239FA2c4EA954172dB774c909eC51",
+        "round": 1,
+        "signature": "0x9208a2254784dc6ed0b5d2e0e85f39bd60801c8efe64a16b9491409548e031f00908dd4b9b5fc64171f1182c51a7cfb18cd6069f35c5750932b6959155ef8bd51c"
+       },
+       {
+        "agentId": "meridian-03",
+        "agentKind": "deterministic",
+        "vote": "DENY",
+        "confidence": 0.7,
+        "reasons": [
+         "material payment observed but policy match incomplete \u2014 recommend restructuring, not execution"
+        ],
+        "agentAddress": "0xb63a2d1d650324065c1Ab9FdeeCea16b87983926",
+        "round": 1,
+        "signature": "0xb1990803ddd754d9d302b5bed3b56658941d4516b0b50a635773b20c509923322fac1484a7cc6462ae0e8759332bf770fc1a30419ecb05cbe364290a25f4914a1b"
+       }
+      ]
+     },
+     {
+      "round": 2,
+      "votes": [
+       {
+        "agentId": "ledger-01",
+        "agentKind": "deterministic",
+        "vote": "DENY",
+        "confidence": 0.9,
+        "reasons": [
+         "recipient 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 is not the policy lender 0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489"
+        ],
+        "agentAddress": "0x75f9DEEaDb69788645dB051B1B89aFfF9BfeFb0F",
+        "round": 2,
+        "signature": "0xb0b41b3fc9c37b1bc7a9e279be5fc2f5a3f955839b03bc7b10deb8923d4b2e7d5f2b77015cf2d8b2a3794705865fa14ca309049bce49c7b072a0274058b938c21c"
+       },
+       {
+        "agentId": "sentinel-02",
+        "agentKind": "deterministic",
+        "vote": "APPROVE",
+        "confidence": 0.66,
+        "reasons": [
+         "no anomalies: value 0.05686936645929935 ETH, distinct counterparties, status 1",
+         "sole dissent maintained: mandate is transaction integrity; policy fit belongs to ledger/meridian"
+        ],
+        "agentAddress": "0x77a484d32D7239FA2c4EA954172dB774c909eC51",
+        "round": 2,
+        "signature": "0x096d70e77f36a04eb821435af4d2e9e1726badf7e03c7aa3a40c193e4f2699997706e3159056824a54c710d1f7a200299d4449abe5bb001f66de003f226348ae1c"
+       },
+       {
+        "agentId": "meridian-03",
+        "agentKind": "deterministic",
+        "vote": "DENY",
+        "confidence": 0.7,
+        "reasons": [
+         "material payment observed but policy match incomplete \u2014 recommend restructuring, not execution"
+        ],
+        "agentAddress": "0xb63a2d1d650324065c1Ab9FdeeCea16b87983926",
+        "round": 2,
+        "signature": "0xa3843d5823e6fdfd9e407035b170ae11efe2af206c5170f40c72a8fa08abed842cad738c41393368c9f01bb02d50b314aba2432073976f9f7362dd4a256235931c"
+       }
+      ]
+     }
+    ],
+    "ballotBoxHash": "0x70528bb49b14f68e386255c028028db3a9bc85bc34a9c96daae94f88dfe383da",
+    "certificate": {
+     "factHash": "0xa7fa40b400f0122ef2c91fae605ba48b2197ea942f8ce55e42cfc53f4e0544a8",
+     "policyId": "0x96cecf5998e33b8b0d72325884a0d398b61d07b64d9aa3baf353dc87a68db359",
+     "txLabel": "0x890dbaaf163716cc1877ec0c69772d57f8cbfebafb151edaca050ef5654fc744",
+     "decision": "REJECT",
+     "quorum": {
+      "approvals": 1,
+      "denials": 2,
+      "abstentions": 0,
+      "fleetSize": 3,
+      "required": 2
+     },
+     "votes": [
+      {
+       "agentId": "ledger-01",
+       "agentKind": "deterministic",
+       "vote": "DENY",
+       "confidence": 0.9,
+       "reasons": [
+        "recipient 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 is not the policy lender 0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489"
+       ],
+       "agentAddress": "0x75f9DEEaDb69788645dB051B1B89aFfF9BfeFb0F",
+       "round": 1,
+       "signature": "0xd3906629a568ef3b6a5cc6afa6ddb23dae73265b07163d0cb1d00ddee51d76860c40a0d2ad9e82e022a94780f5a67ea7037624ffc0d1b9869db0c1050441c70c1c"
+      },
+      {
+       "agentId": "sentinel-02",
+       "agentKind": "deterministic",
+       "vote": "APPROVE",
+       "confidence": 0.74,
+       "reasons": [
+        "no anomalies: value 0.05686936645929935 ETH, distinct counterparties, status 1"
+       ],
+       "agentAddress": "0x77a484d32D7239FA2c4EA954172dB774c909eC51",
+       "round": 1,
+       "signature": "0x9208a2254784dc6ed0b5d2e0e85f39bd60801c8efe64a16b9491409548e031f00908dd4b9b5fc64171f1182c51a7cfb18cd6069f35c5750932b6959155ef8bd51c"
+      },
+      {
+       "agentId": "meridian-03",
+       "agentKind": "deterministic",
+       "vote": "DENY",
+       "confidence": 0.7,
+       "reasons": [
+        "material payment observed but policy match incomplete \u2014 recommend restructuring, not execution"
+       ],
+       "agentAddress": "0xb63a2d1d650324065c1Ab9FdeeCea16b87983926",
+       "round": 1,
+       "signature": "0xb1990803ddd754d9d302b5bed3b56658941d4516b0b50a635773b20c509923322fac1484a7cc6462ae0e8759332bf770fc1a30419ecb05cbe364290a25f4914a1b"
+      },
+      {
+       "agentId": "ledger-01",
+       "agentKind": "deterministic",
+       "vote": "DENY",
+       "confidence": 0.9,
+       "reasons": [
+        "recipient 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 is not the policy lender 0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489"
+       ],
+       "agentAddress": "0x75f9DEEaDb69788645dB051B1B89aFfF9BfeFb0F",
+       "round": 2,
+       "signature": "0xb0b41b3fc9c37b1bc7a9e279be5fc2f5a3f955839b03bc7b10deb8923d4b2e7d5f2b77015cf2d8b2a3794705865fa14ca309049bce49c7b072a0274058b938c21c"
+      },
+      {
+       "agentId": "sentinel-02",
+       "agentKind": "deterministic",
+       "vote": "APPROVE",
+       "confidence": 0.66,
+       "reasons": [
+        "no anomalies: value 0.05686936645929935 ETH, distinct counterparties, status 1",
+        "sole dissent maintained: mandate is transaction integrity; policy fit belongs to ledger/meridian"
+       ],
+       "agentAddress": "0x77a484d32D7239FA2c4EA954172dB774c909eC51",
+       "round": 2,
+       "signature": "0x096d70e77f36a04eb821435af4d2e9e1726badf7e03c7aa3a40c193e4f2699997706e3159056824a54c710d1f7a200299d4449abe5bb001f66de003f226348ae1c"
+      },
+      {
+       "agentId": "meridian-03",
+       "agentKind": "deterministic",
+       "vote": "DENY",
+       "confidence": 0.7,
+       "reasons": [
+        "material payment observed but policy match incomplete \u2014 recommend restructuring, not execution"
+       ],
+       "agentAddress": "0xb63a2d1d650324065c1Ab9FdeeCea16b87983926",
+       "round": 2,
+       "signature": "0xa3843d5823e6fdfd9e407035b170ae11efe2af206c5170f40c72a8fa08abed842cad738c41393368c9f01bb02d50b314aba2432073976f9f7362dd4a256235931c"
+      }
+     ],
+     "certHash": "0xe20d4dfea1399c09b9db83e6ade64af26956aa1d0df77dfa655b58322beae598",
+     "createdAt": "2026-09-07T05:07:58.517Z",
+     "chain": "cc3-testnet"
+    },
+    "timings": {
+     "proofMs": 1321,
+     "verifyMs": 382,
+     "decodeMs": 337,
+     "deliberateMs": 13
+    }
+   },
+   "submission": {
+    "mode": "local",
+    "verified": true,
+    "failures": [],
+    "note": "local enforcement: all ballots signature-verified; set QUORUMPROOF_REGISTRY_ADDRESS to submit the certificate on-chain (needs CC3 testnet gas from the faucet)"
+   },
+   "fleetRoster": [
+    {
+     "agentId": "ledger-01",
+     "agentAddress": "0x75f9DEEaDb69788645dB051B1B89aFfF9BfeFb0F",
+     "charter": "Conservative underwriter: exact-policy compliance or nothing.",
+     "kind": "deterministic"
+    },
+    {
+     "agentId": "sentinel-02",
+     "agentAddress": "0x77a484d32D7239FA2c4EA954172dB774c909eC51",
+     "charter": "Fraud & anomaly control: rules on transaction integrity only, never on policy fit.",
+     "kind": "deterministic"
+    },
+    {
+     "agentId": "meridian-03",
+     "agentAddress": "0xb63a2d1d650324065c1Ab9FdeeCea16b87983926",
+     "charter": "Market & timing analyst: partial repayments get weighted, not zeroed.",
+     "kind": "deterministic"
+    }
+   ],
+   "llmEnabled": false
+  }
+ },
+ {
+  "label": "repayment-received",
+  "data": {
+   "trace": {
+    "fact": {
+     "chainKey": 3,
+     "headerNumber": 25914979,
+     "txIndex": 23,
+     "txHash": "0x27e55494f572f31c46a79d83de58b8c60cded05185f25637a6f8a710e23d80d7",
+     "verified": true,
+     "verifiedVia": "BlockProver precompile 0x...FD2 on CC3 testnet (eth_call/staticCall)",
+     "from": "0x9395704E478EB664D5Eb58ecfcf7031724cF367B",
+     "to": "0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489",
+     "valueWei": "0x31f5a65e0b578000",
+     "calldata": "0x",
+     "txType": 0,
+     "receiptStatus": 1,
+     "factHash": "0xbcd02b57ca4ec9dd9746944409a4eaae61edaa2392947d80624733769aab7824",
+     "attestedHeight": 25923250,
+     "txBytes": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000002200000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000d00000000000000000000000000000000000000000000000000000000000052080000000000000000000000009395704e478eb664d5eb58ecfcf7031724cf367b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000172ac97e50915292f2b3e8b56f6b4ddf80ac048900000000000000000000000000000000000000000000000031f5a65e0b57800000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000005f5e100000000000000000000000000000000000000000000000000000000000000000258888de9217ca377251f157eedf17fae9e1d393df45bc4164f0a30b5394802a31105808aaea86aea8b78c611b4249ebf2af2acaafd8b434aad47a4d5b720ee5ba00000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000005208000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "proofArtifacts": {
+      "merkleRoot": "0x031ba8cccbe081fcd99f87381f0a406b9d8e6b533aeeb57148147b80de94c867",
+      "merkleSiblings": [
+       {
+        "hash": "0xed71149cd90c0e16760831f28fe420e5c13c5fb231212f6ccfe2d2dd81a0dc3d",
+        "isLeft": true
+       },
+       {
+        "hash": "0x31b025c82804bf424bc370a9202e92e5bd1db7a6417cb25aa7ece198bb8147f2",
+        "isLeft": true
+       },
+       {
+        "hash": "0x9d57f94f1331255ddc5748ae32f0e9b4af8145d9fea334f7f848542b1d0af2d1",
+        "isLeft": true
+       },
+       {
+        "hash": "0xbe6690bb95058c8c6235d2f7d4e1f1711e75dcbd439d7a380e0defac50e5c221",
+        "isLeft": false
+       },
+       {
+        "hash": "0xfee86b261edf06203f947b9e545d8d1eff5c480441d6d15c431996845d9fb3c2",
+        "isLeft": true
+       },
+       {
+        "hash": "0x75251dfadb1740f3f95b69a52e5bcc6aa69289b960a61d8921c281b61909c9d6",
+        "isLeft": false
+       },
+       {
+        "hash": "0x578af13172baed9d8581fb0943ffb50a402164e32cf5262e7ced8a64675a8cb8",
+        "isLeft": false
+       },
+       {
+        "hash": "0x4df8707308f6deaae2ea8a4d95a396057b0fa8bcd7010a94e05c1c55a7edf0ea",
+        "isLeft": false
+       }
+      ],
+      "continuity": {
+       "lowerEndpointDigest": "0xf7216ad30fc077557295e715e3b6824c3f3e7d6791abb1270585715a6f6f4267",
+       "roots": [
+        "0x031ba8cccbe081fcd99f87381f0a406b9d8e6b533aeeb57148147b80de94c867",
+        "0xa20bec4b9cde2b7e670fa888effa44ace62f4fa806f68c4643ac693d7f3d87f6",
+        "0x9d8450cd6fe915271027b524faf5dd76cd16066d02184df8d795f353dc5c5bc6",
+        "0x71faccc2b8ec2d66cc24815bfa87701ae3e7bcb1b4929ec91b9ec072c57e534e",
+        "0x45d8e134c25c5acb66ad5447a9f2826cf8753bf3848ea83e10eae195ef2a1c2e",
+        "0x7058ecdd529fb46b05e3bd2304dbf0b6d354936f34431ee3d6cd3bb518fbb61d",
+        "0x131588f631abaf87195f0aa0aecb648ba069e31855f1ec1768b839b495917074",
+        "0x1a5b1d86f0a274a81c614a58ab7b53b65fbf4506592d18429cabc34944cda5b1",
+        "0x7b907bdc5b0f46ce699925594b962266713c27f8fe63d2b89bdf904e3705cbcf",
+        "0x458269d233bd71ad3a2c092b4e9eccc33e774af17dc31fd35502ffa27825ab7a",
+        "0x331fda5a96f93a0e6011e6253c3d8bb37b72424d411747b6f71df13003d5d93b",
+        "0x590d4d57c528557c9dc154a05abb0ef8c96996ba408b0bd2f112070c69c06d6f",
+        "0xcab89231e4e8f2f94940985406fa22dae8120ebb5810cf91826be6a479bb245a",
+        "0x7fab19eaefcdcbb78dbba0b1934436432d6ac93439fff19bacc3bc74dcc7d78b",
+        "0x3d508a191bbd2fcc3f8cbaa1ad39646bb40cdd41bb0605e31f2a0ab7a4feb3db",
+        "0x0fc0dbaed33197eba2a81cf0cc639fd5fd46924334b9ad39c71dca5968527864",
+        "0x0c7d433818962f1d9151e9f6222d82d9f7f3b9eeede83bb871320f4b7c4e57d9",
+        "0xc5dd5fd627191290851d15bae759a4aed35714df237c0d43fd55f31c19c4a582",
+        "0x82f348f86ad1aaf828da184e524bfa7be010c65d9d9d142e89607ecf37b6b2ea",
+        "0x84cc082ff2675658a4a67807700577a36e2161127ed7bb5037780df789f073a4",
+        "0x337ac5d172b68c1006ed96d19ae0b950654866d2f93c8f31fb9a55738383bab5",
+        "0xd589931b4412c7db8bf91f95ed5914f21b7217ac8dea9d0b35d44f826e36c87e"
+       ]
+      }
+     }
+    },
+    "policy": {
+     "lender": "0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489",
+     "expectedAmountWei": "0x31f5c4ed27680000",
+     "shortfallToleranceBps": 10,
+     "overpayToleranceBps": 500,
+     "minAmountWei": "0xb1a2bc2ec50000"
+    },
+    "policyId": "0x96cecf5998e33b8b0d72325884a0d398b61d07b64d9aa3baf353dc87a68db359",
+    "rounds": [
+     {
+      "round": 1,
+      "votes": [
+       {
+        "agentId": "ledger-01",
+        "agentKind": "deterministic",
+        "vote": "APPROVE",
+        "confidence": 0.86,
+        "reasons": [
+         "recipient matches policy lender",
+         "amount 3.5999664 ETH within tolerated window",
+         "fact proven on CC3 via BlockProver precompile 0x...FD2 on CC3 testnet (eth_call/staticCall)"
+        ],
+        "agentAddress": "0xd52A1316a576705869e204F3cE7b638C9Ff29A9c",
+        "round": 1,
+        "signature": "0x1dca79b4ae7ee5b5ea72032d35e473ae95c668aeb0e41117d11bbfb06c0300d94afcefa411211ed884161f53761b48ac93df83af5b1a1773372203ca6656ce621b"
+       },
+       {
+        "agentId": "sentinel-02",
+        "agentKind": "deterministic",
+        "vote": "APPROVE",
+        "confidence": 0.74,
+        "reasons": [
+         "no anomalies: value 3.5999664 ETH, distinct counterparties, status 1"
+        ],
+        "agentAddress": "0x7e5cF272e3305aDeA386D5c9A65Ff4e04e0AF65a",
+        "round": 1,
+        "signature": "0x8d0a23ddb71bed878da19d697ab9bf7a5e842af70782a5966f7fb5fad236f4374fd0958debf8fa2248248f4a8d49c79e6801119e88359aeb0bf9446c8c63d9151c"
+       },
+       {
+        "agentId": "meridian-03",
+        "agentKind": "deterministic",
+        "vote": "APPROVE",
+        "confidence": 0.8999967333333334,
+        "reasons": [
+         "recipient correct; coverage ratio 100.00% of expected",
+         "attestation depth: source block 25914979 vs attested height 25923250"
+        ],
+        "agentAddress": "0xe5304a23cD80d6174dc8Cdb0b48c3979da311338",
+        "round": 1,
+        "signature": "0xb7bcf9cb12002754c04df578878fa6867b23419c32d91929d513c17b1762a4474a54c3379eaf3e02d3863c5c5de0569651364a39dbab622382553c8617ae8a0e1b"
+       }
+      ]
+     },
+     {
+      "round": 2,
+      "votes": [
+       {
+        "agentId": "ledger-01",
+        "agentKind": "deterministic",
+        "vote": "APPROVE",
+        "confidence": 0.86,
+        "reasons": [
+         "recipient matches policy lender",
+         "amount 3.5999664 ETH within tolerated window",
+         "fact proven on CC3 via BlockProver precompile 0x...FD2 on CC3 testnet (eth_call/staticCall)"
+        ],
+        "agentAddress": "0xd52A1316a576705869e204F3cE7b638C9Ff29A9c",
+        "round": 2,
+        "signature": "0x308dadab12836804d07b618c260813466aab157ac8434f89b7b9d0bff4eae52675885fd56091eb5548fe651976994766df3e2022fb801aeeb385d64777a7c75a1c"
+       },
+       {
+        "agentId": "sentinel-02",
+        "agentKind": "deterministic",
+        "vote": "APPROVE",
+        "confidence": 0.74,
+        "reasons": [
+         "no anomalies: value 3.5999664 ETH, distinct counterparties, status 1"
+        ],
+        "agentAddress": "0x7e5cF272e3305aDeA386D5c9A65Ff4e04e0AF65a",
+        "round": 2,
+        "signature": "0x9ce4fd1b8085be794392a9ffb439bcf61037352895b1e89a910834a6828aeb23508c0dabb631cbac013d0b7bcc461548c1e6c6c76c15a36c7cab87203a7752b21b"
+       },
+       {
+        "agentId": "meridian-03",
+        "agentKind": "deterministic",
+        "vote": "APPROVE",
+        "confidence": 0.8999967333333334,
+        "reasons": [
+         "recipient correct; coverage ratio 100.00% of expected",
+         "attestation depth: source block 25914979 vs attested height 25923250"
+        ],
+        "agentAddress": "0xe5304a23cD80d6174dc8Cdb0b48c3979da311338",
+        "round": 2,
+        "signature": "0x604cb553430b8dc436d02c271845dfbc540ba298c2529795573de1489d88d7b737f6feae06dac0c11fc2f55a8dd1089a86541c045cfe6082e9f810d854f669a51c"
+       }
+      ]
+     }
+    ],
+    "ballotBoxHash": "0xc3b1d81cdac7308d9f64b9a5c71cffd4bf09cda728526ce486965d689bd0a4c7",
+    "certificate": {
+     "factHash": "0xbcd02b57ca4ec9dd9746944409a4eaae61edaa2392947d80624733769aab7824",
+     "policyId": "0x96cecf5998e33b8b0d72325884a0d398b61d07b64d9aa3baf353dc87a68db359",
+     "txLabel": "0x27e55494f572f31c46a79d83de58b8c60cded05185f25637a6f8a710e23d80d7",
+     "decision": "EXECUTE",
+     "quorum": {
+      "approvals": 3,
+      "denials": 0,
+      "abstentions": 0,
+      "fleetSize": 3,
+      "required": 2
+     },
+     "votes": [
+      {
+       "agentId": "ledger-01",
+       "agentKind": "deterministic",
+       "vote": "APPROVE",
+       "confidence": 0.86,
+       "reasons": [
+        "recipient matches policy lender",
+        "amount 3.5999664 ETH within tolerated window",
+        "fact proven on CC3 via BlockProver precompile 0x...FD2 on CC3 testnet (eth_call/staticCall)"
+       ],
+       "agentAddress": "0xd52A1316a576705869e204F3cE7b638C9Ff29A9c",
+       "round": 1,
+       "signature": "0x1dca79b4ae7ee5b5ea72032d35e473ae95c668aeb0e41117d11bbfb06c0300d94afcefa411211ed884161f53761b48ac93df83af5b1a1773372203ca6656ce621b"
+      },
+      {
+       "agentId": "sentinel-02",
+       "agentKind": "deterministic",
+       "vote": "APPROVE",
+       "confidence": 0.74,
+       "reasons": [
+        "no anomalies: value 3.5999664 ETH, distinct counterparties, status 1"
+       ],
+       "agentAddress": "0x7e5cF272e3305aDeA386D5c9A65Ff4e04e0AF65a",
+       "round": 1,
+       "signature": "0x8d0a23ddb71bed878da19d697ab9bf7a5e842af70782a5966f7fb5fad236f4374fd0958debf8fa2248248f4a8d49c79e6801119e88359aeb0bf9446c8c63d9151c"
+      },
+      {
+       "agentId": "meridian-03",
+       "agentKind": "deterministic",
+       "vote": "APPROVE",
+       "confidence": 0.8999967333333334,
+       "reasons": [
+        "recipient correct; coverage ratio 100.00% of expected",
+        "attestation depth: source block 25914979 vs attested height 25923250"
+       ],
+       "agentAddress": "0xe5304a23cD80d6174dc8Cdb0b48c3979da311338",
+       "round": 1,
+       "signature": "0xb7bcf9cb12002754c04df578878fa6867b23419c32d91929d513c17b1762a4474a54c3379eaf3e02d3863c5c5de0569651364a39dbab622382553c8617ae8a0e1b"
+      },
+      {
+       "agentId": "ledger-01",
+       "agentKind": "deterministic",
+       "vote": "APPROVE",
+       "confidence": 0.86,
+       "reasons": [
+        "recipient matches policy lender",
+        "amount 3.5999664 ETH within tolerated window",
+        "fact proven on CC3 via BlockProver precompile 0x...FD2 on CC3 testnet (eth_call/staticCall)"
+       ],
+       "agentAddress": "0xd52A1316a576705869e204F3cE7b638C9Ff29A9c",
+       "round": 2,
+       "signature": "0x308dadab12836804d07b618c260813466aab157ac8434f89b7b9d0bff4eae52675885fd56091eb5548fe651976994766df3e2022fb801aeeb385d64777a7c75a1c"
+      },
+      {
+       "agentId": "sentinel-02",
+       "agentKind": "deterministic",
+       "vote": "APPROVE",
+       "confidence": 0.74,
+       "reasons": [
+        "no anomalies: value 3.5999664 ETH, distinct counterparties, status 1"
+       ],
+       "agentAddress": "0x7e5cF272e3305aDeA386D5c9A65Ff4e04e0AF65a",
+       "round": 2,
+       "signature": "0x9ce4fd1b8085be794392a9ffb439bcf61037352895b1e89a910834a6828aeb23508c0dabb631cbac013d0b7bcc461548c1e6c6c76c15a36c7cab87203a7752b21b"
+      },
+      {
+       "agentId": "meridian-03",
+       "agentKind": "deterministic",
+       "vote": "APPROVE",
+       "confidence": 0.8999967333333334,
+       "reasons": [
+        "recipient correct; coverage ratio 100.00% of expected",
+        "attestation depth: source block 25914979 vs attested height 25923250"
+       ],
+       "agentAddress": "0xe5304a23cD80d6174dc8Cdb0b48c3979da311338",
+       "round": 2,
+       "signature": "0x604cb553430b8dc436d02c271845dfbc540ba298c2529795573de1489d88d7b737f6feae06dac0c11fc2f55a8dd1089a86541c045cfe6082e9f810d854f669a51c"
+      }
+     ],
+     "certHash": "0xa139ff31b39429c083e4c7b4d60839322c933958d91e64b077dfc25747408839",
+     "createdAt": "2026-09-07T05:08:07.190Z",
+     "chain": "cc3-testnet"
+    },
+    "timings": {
+     "proofMs": 2386,
+     "verifyMs": 358,
+     "decodeMs": 298,
+     "deliberateMs": 5
+    }
+   },
+   "submission": {
+    "mode": "local",
+    "verified": true,
+    "failures": [],
+    "note": "local enforcement: all ballots signature-verified; set QUORUMPROOF_REGISTRY_ADDRESS to submit the certificate on-chain (needs CC3 testnet gas from the faucet)"
+   },
+   "fleetRoster": [
+    {
+     "agentId": "ledger-01",
+     "agentAddress": "0xd52A1316a576705869e204F3cE7b638C9Ff29A9c",
+     "charter": "Conservative underwriter: exact-policy compliance or nothing.",
+     "kind": "deterministic"
+    },
+    {
+     "agentId": "sentinel-02",
+     "agentAddress": "0x7e5cF272e3305aDeA386D5c9A65Ff4e04e0AF65a",
+     "charter": "Fraud & anomaly control: rules on transaction integrity only, never on policy fit.",
+     "kind": "deterministic"
+    },
+    {
+     "agentId": "meridian-03",
+     "agentAddress": "0xe5304a23cD80d6174dc8Cdb0b48c3979da311338",
+     "charter": "Market & timing analyst: partial repayments get weighted, not zeroed.",
+     "kind": "deterministic"
+    }
+   ],
+   "llmEnabled": false
+  }
+ }
+]

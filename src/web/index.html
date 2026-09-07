@@ -4,74 +4,165 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>QuorumProof — agent fleet quorum over Attestcoin-verified facts</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230b0e14'/%3E%3Cpath d='M3 3h10v3H6v7H3z' fill='%235eead4'/%3E%3C/svg%3E" />
+<meta name="description" content="An agent fleet that reaches auditable, quorum-gated decisions from Attestcoin-verified cross-chain facts, executed on Creditcoin CC3." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23FBFAF7'/%3E%3Ccircle cx='8' cy='8' r='5.5' fill='none' stroke='%238C6D2F' stroke-width='1.4'/%3E%3Ccircle cx='8' cy='8' r='2.6' fill='none' stroke='%238C6D2F' stroke-width='1'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-<header>
+<a class="skip" href="#chamber">Skip to the proceeding</a>
+
+<header class="masthead">
   <div class="brand">
-    <span class="mark">◧</span>
-    <div>
-      <h1>QuorumProof</h1>
-      <p class="tag">an agent fleet that reaches auditable decisions from Attestcoin-verified cross-chain facts</p>
+    <span class="brand-mark" aria-hidden="true">§</span>
+    <div class="brand-text">
+      <h1 class="brand-name">QuorumProof</h1>
+      <p class="brand-tag">an agent fleet that reaches auditable decisions from attestcoin-verified cross-chain facts</p>
     </div>
   </div>
-  <div class="netbadge" id="netbadge">
-    <span class="dot" id="netdot"></span>
-    <span id="nettext">connecting to CC3 testnet…</span>
-  </div>
+  <p class="netstatus"><span class="dot" id="netdot" aria-hidden="true"></span><span id="nettext">CC3 TESTNET · CONNECTING</span></p>
 </header>
 
-<main>
-  <aside class="panel">
-    <h2>Credit desk</h2>
-    <p class="hint">Pick a live scenario or paste any Ethereum mainnet transaction hash. The fact is proven on Creditcoin (CC3 testnet) via the Attestcoin Protocol before the fleet sees it.</p>
-    <div class="scenarios" id="scenarios"></div>
-    <label class="custom">
-      <span>Custom source tx (Ethereum, chainKey 3)</span>
-      <div class="row">
-        <input id="txinput" placeholder="0x… transaction hash" spellcheck="false" />
-        <button id="assessBtn">Assess</button>
-      </div>
-    </label>
-    <div class="policy card">
-      <h3>Active lending policy</h3>
-      <dl id="policydl"><dt>loading…</dt></dl>
+<form class="clerk" id="clerk" aria-label="Convene a proceeding">
+  <span class="clerk-label">Clerk’s desk</span>
+  <div class="scenarios" id="scenarios"></div>
+  <div class="custom">
+    <label class="custom-label" for="txinput">Custom source tx · Ethereum mainnet · chainKey 3</label>
+    <div class="custom-row">
+      <input id="txinput" name="txinput" placeholder="0x… transaction hash" spellcheck="false" autocomplete="off" />
+      <button type="submit" id="assessBtn">Convene</button>
     </div>
-    <div class="card" id="roster-card">
-      <h3>Fleet roster</h3>
-      <p class="hint">Ephemeral secp256k1 control keys are spawned per session; every ballot is signed and locally audited, and recoverable on-chain by QuorumRegistry.</p>
-      <ul id="roster" class="roster"><li>awaiting first assessment…</li></ul>
-    </div>
-  </aside>
+  </div>
+</form>
 
-  <section class="panel wide">
-    <h2>Deliberation</h2>
-    <ol class="stages" id="stages">
-      <li class="stage" id="stage-1"><h3><b>1</b> Attestcoin fact</h3><div class="body">waiting…</div></li>
-      <li class="stage" id="stage-2"><h3><b>2</b> Round 1 — secret ballot</h3><div class="body">waiting…</div></li>
-      <li class="stage" id="stage-3"><h3><b>3</b> Round 2 — debate &amp; revision</h3><div class="body">waiting…</div></li>
-      <li class="stage" id="stage-4"><h3><b>4</b> Quorum gate</h3><div class="body">waiting…</div></li>
-    </ol>
-    <div id="error" class="error hidden"></div>
+<main id="main">
+  <p class="error hidden" id="error" role="alert"></p>
+
+  <!-- § 0 — THE CHAMBER: the live proceeding -->
+  <section class="chamber" id="chamber" aria-label="The Chamber — live proceeding">
+    <div class="chamber-head">
+      <div class="chamber-title">
+        <p class="kicker">The Chamber · in re</p>
+        <h2 class="case-name" id="case-name">—</h2>
+      </div>
+      <p class="case-meta" id="case-meta">no proceeding on the record</p>
+    </div>
+
+    <div class="chamber-grid">
+      <!-- Exhibit: the verified fact, stamped -->
+      <article class="exhibit" aria-label="Exhibit — attested fact">
+        <div class="exhibit-stampwrap">
+          <span class="exhibit-stamp">Exhibit&nbsp;A</span>
+          <span class="exhibit-stampnote" id="exhibit-verifiedvia">fact not yet verified</span>
+        </div>
+        <table class="ruled" id="exhibit-table">
+          <tbody><tr><th>factHash</th><td id="ex-facthash">—</td></tr></tbody>
+        </table>
+        <p class="proof-checks" id="proof-checks">awaiting proof</p>
+      </article>
+
+      <!-- Ballots: two rounds, signed -->
+      <article class="ballots" aria-label="Ballots of the fleet">
+        <section class="round" aria-label="Round 1 — secret ballot">
+          <h3 class="round-h"><span>Round I — secret ballot</span><span class="round-box" id="r1-box">ballot box —</span></h3>
+          <div class="ballotlist" id="round1"><p class="empty">no ballots cast</p></div>
+        </section>
+        <section class="round" aria-label="Round 2 — debate and revision">
+          <h3 class="round-h"><span>Round II — debate &amp; revision</span><span class="round-box" id="r2-box">ballot box —</span></h3>
+          <div class="ballotlist" id="round2"><p class="empty">no ballots cast</p></div>
+        </section>
+      </article>
+
+      <!-- Outcome: verdict + sealed certificate -->
+      <article class="outcome" aria-label="Verdict and certificate">
+        <p class="verdict" id="verdict">Awaiting proceeding</p>
+        <p class="tally" id="tally">convene a proceeding to open the record</p>
+        <div class="certificate" id="certificate" aria-label="Quorum certificate">
+          <div class="cert-doc">
+            <h3 class="cert-h">Certificate of quorum decision</h3>
+            <table class="ruled cert-table" id="cert-table">
+              <tbody>
+                <tr><th>decision</th><td id="cert-decision">—</td></tr>
+                <tr><th>factHash</th><td id="cert-facthash">—</td></tr>
+                <tr><th>policyId</th><td id="cert-policyid">—</td></tr>
+                <tr><th>certHash</th><td id="certhash">—</td></tr>
+                <tr><th>ballots</th><td id="cert-ballots">—</td></tr>
+                <tr><th>issued</th><td id="cert-issued">—</td></tr>
+              </tbody>
+            </table>
+            <div class="cert-sealrow">
+              <svg class="seal" id="seal" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+                <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
+                <defs><path id="sealarc" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
+                <text class="seal-arc"><textPath href="#sealarc" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
+                <text class="seal-center" x="50" y="49">QP</text>
+                <text class="seal-sub" x="50" y="61">SEALED</text>
+                <line x1="34" y1="66.5" x2="66" y2="66.5" stroke="currentColor" stroke-width="0.9"/>
+              </svg>
+              <p class="enforcement" id="enforcement"></p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
   </section>
 
-  <aside class="panel">
-    <h2>Certificate</h2>
-    <div class="card decision hidden" id="cert">
-      <div class="verdict" id="verdict">—</div>
-      <dl id="certdl"></dl>
-      <h3>Final ballots (round 2)</h3>
-      <ul id="votes" class="votes"></ul>
-      <p class="hint" id="enforcement"></p>
+  <!-- § 1 — Docket -->
+  <section class="section" aria-label="Docket of proceedings">
+    <h2 class="section-h">§&#8202;1 · Docket of proceedings</h2>
+    <div class="tablewrap">
+      <table class="ruled docket" id="docket">
+        <thead>
+          <tr><th class="num">No.</th><th>cause</th><th>source tx</th><th class="num">approvals</th><th>decision</th><th>certHash</th><th>convened</th></tr>
+        </thead>
+        <tbody id="docket-body"><tr class="emptyrow"><td colspan="7">the docket is empty</td></tr></tbody>
+      </table>
     </div>
-    <p class="hint" id="cert-empty">Run an assessment — the signed QuorumCertificate appears here, bound to the Attestcoin factHash.</p>
-  </aside>
+  </section>
+
+  <!-- § 2 — Fact & proof detail -->
+  <section class="section" aria-label="Fact and proof detail">
+    <h2 class="section-h">§&#8202;2 · Fact &amp; proof detail <span class="section-sub" id="pd-case">—</span></h2>
+    <div class="pd-grid">
+      <div>
+        <h3 class="sub-h">Decoded fact</h3>
+        <table class="ruled" id="pd-fact"><tbody><tr><th>status</th><td>no proceeding on the record</td></tr></tbody></table>
+      </div>
+      <div>
+        <h3 class="sub-h">Precompile trace — BlockProver 0x…FD2 on CC3</h3>
+        <table class="ruled" id="pd-trace"><tbody><tr><th>status</th><td>no proceeding on the record</td></tr></tbody></table>
+      </div>
+    </div>
+    <details class="rawbytes">
+      <summary>Raw proof bytes — txBytes as proven into the CC3 precompile</summary>
+      <pre class="bytes" id="pd-txbytes">—</pre>
+    </details>
+    <details class="rawbytes">
+      <summary>Merkle &amp; continuity artifacts — what the precompile verified</summary>
+      <pre class="bytes" id="pd-artifacts">—</pre>
+    </details>
+  </section>
+
+  <!-- § 3 — Standing orders -->
+  <section class="section" aria-label="Standing orders">
+    <h2 class="section-h">§&#8202;3 · Standing orders</h2>
+    <div class="pd-grid">
+      <div>
+        <h3 class="sub-h">Active lending policy</h3>
+        <table class="ruled" id="policydl"><tbody><tr><th>status</th><td>loading…</td></tr></tbody></table>
+      </div>
+      <div>
+        <h3 class="sub-h">Fleet roster — ephemeral secp256k1 control keys</h3>
+        <p class="hint">Spawned per session; every ballot is signed and locally audited, recoverable on-chain by QuorumRegistry.</p>
+        <table class="ruled" id="roster"><tbody><tr><th>status</th><td>awaiting first assessment…</td></tr></tbody></table>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer>
+<footer class="colophon">
   <span>BUIDL CTC 2026 Fall · AI track · Creditcoin CC3 testnet · Attestcoin Protocol (BlockProver 0x…FD2)</span>
-  <span>demo runs fully deterministic; no paid services, no secrets</span>
+  <span id="foot-status">demo runs deterministic; no paid services, no secrets</span>
 </footer>
 
 <script src="/app.js"></script>

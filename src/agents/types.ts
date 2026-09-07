@@ -25,6 +25,14 @@ export interface AttestedFact {
   factHash: string;
   /** CC3 testnet attested height observed when the proof was built */
   attestedHeight?: number;
+  /** Raw proven transaction bytes (RLX-encoded), for the proof-detail audit view */
+  txBytes?: string;
+  /** Raw Attestcoin proof artifacts, for the proof-detail audit view */
+  proofArtifacts?: {
+    merkleRoot: string;
+    merkleSiblings: { hash: string; isLeft: boolean }[];
+    continuity: { lowerEndpointDigest: string; roots: string[] };
+  };
 }
 
 /** The lending policy the fleet deliberates against. */
