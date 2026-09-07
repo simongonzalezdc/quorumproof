@@ -6,6 +6,12 @@
 <title>QuorumProof — agent fleet quorum over Attestcoin-verified facts</title>
 <meta name="description" content="An agent fleet that reaches auditable, quorum-gated decisions from Attestcoin-verified cross-chain facts, executed on Creditcoin CC3." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23FBFAF7'/%3E%3Ccircle cx='8' cy='8' r='5.5' fill='none' stroke='%238C6D2F' stroke-width='1.4'/%3E%3Ccircle cx='8' cy='8' r='2.6' fill='none' stroke='%238C6D2F' stroke-width='1'/%3E%3C/svg%3E" />
+<script>
+/* theme bootstrap — runs before first paint; light is the default (no-JS = light) */
+try {
+  if (localStorage.getItem('qp-theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+} catch (e) { /* storage unavailable — stay light */ }
+</script>
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
@@ -19,7 +25,10 @@
       <p class="brand-tag">an agent fleet that reaches auditable decisions from attestcoin-verified cross-chain facts</p>
     </div>
   </div>
-  <p class="netstatus"><span class="dot" id="netdot" aria-hidden="true"></span><span id="nettext">CC3 TESTNET · CONNECTING</span></p>
+  <div class="masthead-right">
+    <button type="button" id="themeToggle" class="themetoggle" aria-pressed="false" aria-label="Toggle midnight-ledger dark mode">Dark</button>
+    <p class="netstatus"><span class="dot" id="netdot" aria-hidden="true"></span><span id="nettext">CC3 TESTNET · CONNECTING</span></p>
+  </div>
 </header>
 
 <form class="clerk" id="clerk" aria-label="Convene a proceeding">
@@ -134,11 +143,11 @@
       </div>
     </div>
     <details class="rawbytes">
-      <summary>Raw proof bytes — txBytes as proven into the CC3 precompile</summary>
+      <summary>Raw proof bytes — txBytes as proven into the CC3 precompile <button type="button" class="copy" id="copy-txbytes" aria-label="Copy raw txBytes">copy</button></summary>
       <pre class="bytes" id="pd-txbytes">—</pre>
     </details>
     <details class="rawbytes">
-      <summary>Merkle &amp; continuity artifacts — what the precompile verified</summary>
+      <summary>Merkle &amp; continuity artifacts — what the precompile verified <button type="button" class="copy" id="copy-artifacts" aria-label="Copy proof artifacts">copy</button></summary>
       <pre class="bytes" id="pd-artifacts">—</pre>
     </details>
   </section>

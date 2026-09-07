@@ -12,6 +12,61 @@ const weiToEth = (hexwei) => (Number(BigInt(hexwei)) / 1e18).toLocaleString('en-
 const short = (s, n = 10) => (s ? s.slice(0, n + 2) + '…' + (s.length > n + 4 ? s.slice(-4) : '') : '');
 const fmtInt = (n) => Number(n).toLocaleString('en-US');
 
+/* ---------- evidence affordances (public explorers + click-to-copy) ---------- */
+const PRECOMPILE = '0x0000000000000000000000000000000000000FD2';
+const DECODER = '0x731c345d79Fb8BbDC541f9DF3b6317585F849F9f';
+const CC3_EXPLORER = 'https://creditcoin-testnet.blockscout.com';
+const cc3Addr = (a) => `${CC3_EXPLORER}/address/${a}`;
+const cc3Block = (n) => `${CC3_EXPLORER}/block/${n}`;
+const ethTx = (h) => `https://etherscan.io/tx/${h}`;
+const ethAddr = (a) => `https://etherscan.io/address/${a}`;
+
+const copyBtn = (value, label) =>
+  `<button type="button" class="copy" data-copy="${esc(value)}" aria-label="Copy ${esc(label)}">copy</button>`;
+
+function fallbackCopy(text, done) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); done(); } catch (e) { /* clipboard unavailable */ } finally { ta.remove(); }
+}
+
+document.addEventListener('click', (ev) => {
+  const btn = ev.target.closest('.copy');
+  if (!btn || !btn.dataset.copy) return;
+  const value = btn.dataset.copy;
+  const original = btn.textContent;
+  const done = () => {
+    btn.classList.add('copied');
+    btn.textContent = 'copied';
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = original; }, 1400);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(value).then(done, () => fallbackCopy(value, done));
+  } else {
+    fallbackCopy(value, done);
+  }
+});
+
+/* ---------- theme toggle — 'midnight ledger' (light default, persisted) ---------- */
+const themeBtn = $('themeToggle');
+function applyTheme(t) {
+  if (t === 'dark') document.documentElement.dataset.theme = 'dark';
+  else delete document.documentElement.dataset.theme;
+  themeBtn.setAttribute('aria-pressed', String(t === 'dark'));
+  themeBtn.textContent = t === 'dark' ? 'Light' : 'Dark';
+}
+themeBtn.addEventListener('click', () => {
+  const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('qp-theme', t); } catch (e) { /* storage unavailable */ }
+  applyTheme(t);
+});
+applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+
 /* ---------- clerk's desk ---------- */
 function renderScenarios() {
   $('scenarios').innerHTML = scenarios.map((s, i) => `
@@ -48,11 +103,11 @@ async function loadHealth() {
 /* ---------- the chamber ---------- */
 function exhibitRows(f) {
   return `
-    <tr><th>factHash</th><td>${esc(short(f.factHash, 20))}</td></tr>
-    <tr><th>source tx</th><td>${esc(short(f.txHash, 14))}</td></tr>
-    <tr><th>parties</th><td>${esc(short(f.from, 8))} → ${esc(short(f.to, 8))}</td></tr>
+    <tr><th>factHash</th><td>${esc(short(f.factHash, 20))}${copyBtn(f.factHash, 'factHash')}</td></tr>
+    <tr><th>source tx</th><td><a class="evlink" href="${ethTx(f.txHash)}" target="_blank" rel="noopener noreferrer" aria-label="Open source transaction on Etherscan">${esc(short(f.txHash, 14))}</a>${copyBtn(f.txHash, 'source tx hash')}</td></tr>
+    <tr><th>parties</th><td><a class="evlink" href="${ethAddr(f.from)}" target="_blank" rel="noopener noreferrer">${esc(short(f.from, 8))}</a> → <a class="evlink" href="${ethAddr(f.to)}" target="_blank" rel="noopener noreferrer">${esc(short(f.to, 8))}</a></td></tr>
     <tr><th>value</th><td>${weiToEth('0x' + BigInt(f.valueWei).toString(16))} ETH</td></tr>
-    <tr><th>position</th><td>chainKey ${f.chainKey} · block ${fmtInt(f.headerNumber)} · tx #${f.txIndex}</td></tr>
+    <tr><th>position</th><td>chainKey ${f.chainKey} · block <a class="evlink" href="${cc3Block(f.headerNumber)}" target="_blank" rel="noopener noreferrer" aria-label="Open CC3 block on the explorer">${fmtInt(f.headerNumber)}</a> · tx #${f.txIndex}</td></tr>
     <tr><th>receipt</th><td>status ${f.receiptStatus ?? '?'} · txType ${f.txType}</td></tr>
     <tr><th>attested to</th><td>${f.attestedHeight ? fmtInt(f.attestedHeight) : '—'} <span class="hint">(CC3 height at proof time)</span></td></tr>`;
 }
@@ -100,7 +155,7 @@ function renderChamber(entry) {
     `DECODE <span class="ok">PASS</span> ${t.decodeMs}MS · DELIBERATION ${t.deliberateMs}MS`;
 
   $('r1-box').textContent = 'votes sealed — box opened at round II';
-  $('r2-box').textContent = `box ${esc(short(d.trace.ballotBoxHash, 8))}`;
+  $('r2-box').innerHTML = `box ${esc(short(d.trace.ballotBoxHash, 8))}${copyBtn(d.trace.ballotBoxHash, 'ballot box hash')}`;
   $('round1').innerHTML = r1.map((v, i) => ballotRow(v, null, i)).join('');
   $('round2').innerHTML = r2.map((v, i) => ballotRow(v, r1[i], i)).join('');
 
@@ -113,9 +168,9 @@ function renderChamber(entry) {
 
   const clean = d.submission.failures.length === 0;
   $('cert-decision').innerHTML = met ? '<span class="ok">EXECUTE — quorum met</span>' : '<span class="bad">REJECT — quorum not met</span>';
-  $('cert-facthash').textContent = short(c.factHash, 12);
-  $('cert-policyid').textContent = short(c.policyId, 12);
-  $('certhash').textContent = short(c.certHash, 12);
+  $('cert-facthash').innerHTML = `${esc(short(c.factHash, 12))}${copyBtn(c.factHash, 'factHash')}`;
+  $('cert-policyid').innerHTML = `${esc(short(c.policyId, 12))}${copyBtn(c.policyId, 'policyId')}`;
+  $('certhash').innerHTML = `${esc(short(c.certHash, 12))}${copyBtn(c.certHash, 'certHash')}`;
   $('cert-ballots').innerHTML = `${c.votes.length} signed · audit ${clean ? '<span class="ok">clean</span>' : '<span class="bad">FAILED</span>'}`;
   $('cert-issued').textContent = c.createdAt;
   $('enforcement').textContent =
@@ -141,19 +196,23 @@ function renderChamber(entry) {
     <tr><th>calldata</th><td>${esc(f.calldata === '0x' ? '0x — none' : short(f.calldata, 20))}</td></tr>
     <tr><th>factHash preimage</th><td>keccak256(chainKey ++ headerNumber ++ txHash ++ verified)</td></tr>`;
   const art = f.proofArtifacts;
+  const artifactsJson = art
+    ? JSON.stringify({ merkleRoot: art.merkleRoot, merkleSiblings: art.merkleSiblings, continuity: art.continuity }, null, 2)
+    : '';
   $('pd-trace').querySelector('tbody').innerHTML = `
-    <tr><th>verification</th><td><span class="ok">${esc(f.verifiedVia)}</span></td></tr>
+    <tr><th>verification</th><td><span class="ok">verified</span> — precompile staticCall</td></tr>
+    <tr><th>BlockProver</th><td><a class="evlink" href="${cc3Addr(PRECOMPILE)}" target="_blank" rel="noopener noreferrer" aria-label="Open BlockProver precompile on the CC3 explorer">0x…FD2</a> on CC3 testnet (eth_call/staticCall)${copyBtn(PRECOMPILE, 'BlockProver precompile address')}</td></tr>
     <tr><th>proof build</th><td>${t.proofMs} ms — hosted Attestcoin Proof Builder (testnet)</td></tr>
     <tr><th>precompile verify</th><td>${t.verifyMs} ms — verifySingle() staticCall against 0x…FD2</td></tr>
-    <tr><th>on-chain decode</th><td>${t.decodeMs} ms — EvmV1Decoder 0x731c…49f9f (eth_call)</td></tr>
-    <tr><th>merkle root</th><td>${art ? esc(short(art.merkleRoot, 16)) : '—'}</td></tr>
-    <tr><th>merkle siblings</th><td>${art ? `${art.merkleSiblings.length} entries` : '—'}</td></tr>
-    <tr><th>continuity</th><td>${art ? `lower-endpoint ${esc(short(art.continuity.lowerEndpointDigest, 8))} · ${art.continuity.roots.length} roots` : '—'}</td></tr>
-    <tr><th>txBytes</th><td>${f.txBytes ? `${(f.txBytes.length - 2) / 2} bytes — see raw proof bytes below` : '—'}</td></tr>`;
+    <tr><th>on-chain decode</th><td>${t.decodeMs} ms — <a class="evlink" href="${cc3Addr(DECODER)}" target="_blank" rel="noopener noreferrer" aria-label="Open EvmV1Decoder library on the CC3 explorer">EvmV1Decoder 0x731c…9f9f</a> (eth_call)</td></tr>
+    <tr><th>merkle root</th><td>${art ? `${esc(short(art.merkleRoot, 16))}${copyBtn(art.merkleRoot, 'merkle root')}` : '—'}</td></tr>
+    <tr><th>merkle siblings</th><td>${art ? `${art.merkleSiblings.length} entries${copyBtn(artifactsJson, 'merkle siblings')}` : '—'}</td></tr>
+    <tr><th>continuity</th><td>${art ? `lower-endpoint ${esc(short(art.continuity.lowerEndpointDigest, 8))} · ${art.continuity.roots.length} roots${copyBtn(art.continuity.lowerEndpointDigest, 'continuity lower-endpoint digest')}` : '—'}</td></tr>
+    <tr><th>txBytes</th><td>${f.txBytes ? `${(f.txBytes.length - 2) / 2} bytes — see raw proof bytes below${copyBtn(f.txBytes, 'raw txBytes')}` : '—'}</td></tr>`;
   $('pd-txbytes').textContent = f.txBytes ?? '—';
-  $('pd-artifacts').textContent = art
-    ? JSON.stringify({ merkleRoot: art.merkleRoot, merkleSiblings: art.merkleSiblings, continuity: art.continuity }, null, 2)
-    : '—';
+  $('pd-artifacts').textContent = art ? artifactsJson : '—';
+  $('copy-txbytes').dataset.copy = f.txBytes ?? '';
+  $('copy-artifacts').dataset.copy = artifactsJson;
 
   renderDocket();
 }
@@ -175,18 +234,34 @@ function renderDocket() {
     const c = e.data.trace.certificate;
     const cur = e.no === currentNo;
     return `
-      <tr data-no="${e.no}"${cur ? ' aria-current="true"' : ''} title="open this proceeding in the Chamber">
-        <td class="num">QP-${String(e.no).padStart(3, '0')}</td>
+      <tr data-no="${e.no}" tabindex="0"${cur ? ' aria-current="true"' : ''} aria-label="Open proceeding QP-${String(e.no).padStart(3, '0')} in the Chamber">
+        <td class="num"><button type="button" class="openrow" data-no="${e.no}" aria-label="Open QP-${String(e.no).padStart(3, '0')} in the Chamber">QP-${String(e.no).padStart(3, '0')}</button></td>
         <td class="cause">${esc(e.label)}</td>
-        <td>${esc(short(e.data.trace.fact.txHash, 10))}</td>
+        <td><a class="evlink" href="${ethTx(e.data.trace.fact.txHash)}" target="_blank" rel="noopener noreferrer" aria-label="Open source transaction on Etherscan">${esc(short(e.data.trace.fact.txHash, 10))}</a></td>
         <td>${c.quorum.approvals}/${c.quorum.fleetSize} (≥${c.quorum.required})</td>
         <td class="decision ${esc(c.decision)}">${esc(c.decision)}</td>
         <td>${esc(short(c.certHash, 8))}</td>
         <td>${esc(c.createdAt)}</td>
       </tr>`;
   }).join('');
-  body.querySelectorAll('tr[data-no]').forEach((tr) =>
-    tr.addEventListener('click', () => openDocketEntry(Number(tr.dataset.no))));
+  body.querySelectorAll('tr[data-no]').forEach((tr) => {
+    const no = Number(tr.dataset.no);
+    tr.addEventListener('click', (ev) => {
+      if (ev.target.closest('a, button')) return; // evidence affordances handle themselves
+      openDocketEntry(no);
+    });
+    tr.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        openDocketEntry(no);
+      }
+    });
+  });
+  body.querySelectorAll('.openrow').forEach((b) =>
+    b.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      openDocketEntry(Number(b.dataset.no));
+    }));
 }
 
 function openDocketEntry(no) {
