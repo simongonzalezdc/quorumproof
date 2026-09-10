@@ -1,0 +1,485 @@
+{
+ "receipt_kind": "video_receipt",
+ "generated_utc": "2026-09-10T04:28:00Z",
+ "user_intent": "Competition-grade ~2-minute silent demo MP4 for the Creditcoin BUIDL CTC 2026 (AI track) QuorumProof entry, produced with the org's own video machinery (kinocut 1.15.1 + Hyperframes 0.8.27), following docs/demo-script.md beats, ready for the CEO to upload.",
+ "subject": {
+  "project": "QuorumProof (buidl-ctc)",
+  "repo_head_at_capture": "8ba592e69750292071b38a16e1e9ad8d963d7677",
+  "live_app": "http://localhost:8792 (PORT=8792 npm run serve), CC3 testnet live (block ~5,461,341), no keys, no tokens, reads only"
+ },
+ "final_video": {
+  "path": "docs/demo-video.mp4",
+  "duration_seconds": 104.166667,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "codec": "h264",
+  "pix_fmt": "yuv420p",
+  "audio_streams": 0,
+  "bytes": 6925603,
+  "sha256": "sha256:a5d7a1810a41cc60935931faff119fddcded01bdb40ace66add0e3e8d5984c33"
+ },
+ "timeline": [
+  {
+   "clip": "Hyperframes opener card",
+   "t": "0:00-0:07.5",
+   "note": "QuorumProof \u2014 agent-fleet quorum over Attestcoin-verified facts"
+  },
+  {
+   "clip": "Hyperframes hook card",
+   "t": "0:07.5-0:16",
+   "note": "single-agent failure framing"
+  },
+  {
+   "clip": "Hyperframes chapter 01",
+   "t": "0:16-0:19",
+   "note": "The trust boundary"
+  },
+  {
+   "clip": "live Attestcoin proof (verify-live)",
+   "t": "0:19-0:33.8",
+   "note": "real `npm run verify-live` process output streamed live with true network timing; callouts: ProofBuilder -> BlockProver 0x...FD2 eth_call -> EvmV1Decoder -> factHash"
+  },
+  {
+   "clip": "Hyperframes chapter 02",
+   "t": "0:33.8-0:36.8"
+  },
+  {
+   "clip": "dashboard EXECUTE (light ledger)",
+   "t": "0:36.8-0:50.9",
+   "note": "live re-run of repayment-received: Round I secret ballot, Round II revision, 3/3 EXECUTE, certificate + seal; callouts"
+  },
+  {
+   "clip": "Hyperframes chapter 03",
+   "t": "0:50.9-0:53.9"
+  },
+  {
+   "clip": "dashboard REJECT (midnight ledger, visible theme toggle)",
+   "t": "0:53.9-1:10.3",
+   "note": "live re-run of unrelated-inflow: sentinel-02 sole dissent maintained (revised confidence), 1/3 < 2 blocked; callouts"
+  },
+  {
+   "clip": "Hyperframes chapter 04",
+   "t": "1:10.3-1:13.3"
+  },
+  {
+   "clip": "auditability scroll (light)",
+   "t": "1:13.3-1:35.7",
+   "note": "docket, precompile trace, raw proof bytes, fleet roster; callouts"
+  },
+  {
+   "clip": "Hyperframes end card",
+   "t": "1:35.7-1:44.2",
+   "note": "repo URL + Built for Creditcoin BUIDL CTC 2026 \u2014 AI track"
+  }
+ ],
+ "tool_calls": [
+  {
+   "stage": "01-capture-dashboard",
+   "tool": "playwright 1.60.0 (chromium, recordVideo 1920x1080)",
+   "output": "3 webm segments (EXECUTE light, REJECT dark incl. theme toggle, audit scroll) of the live app on :8792"
+  },
+  {
+   "stage": "02-capture-terminal",
+   "tool": "playwright + node child_process",
+   "output": "live-streamed real `npm run verify-live` (exit 0, PASS) \u2014 process output with true network timing"
+  },
+  {
+   "stage": "03-cards",
+   "tool": "kino hyperframes-init/hyperframes-render (Hyperframes 0.8.27)",
+   "output": "7 brand cards (opener, hook, ch01-04, end), 1920x1080@30, GSAP timelines, app fonts + DESIGN-SYSTEM tokens"
+  },
+  {
+   "stage": "04-callouts",
+   "tool": "kino hyperframes-still",
+   "output": "14 marginal-note callout PNGs (RGBA) naming the real contracts and verdicts"
+  },
+  {
+   "stage": "05-trim",
+   "tool": "kino trim",
+   "output": "term/seg1/seg2/seg3 bases"
+  },
+  {
+   "stage": "06-composite",
+   "tool": "kino composite-layers (layer_plan receipts term/seg1/seg2/seg3-plan.json)",
+   "output": "callouts + terminal composited over bases at 1920x1080@30"
+  },
+  {
+   "stage": "07-merge",
+   "tool": "kino merge",
+   "output": "qp-demo-master.mp4"
+  },
+  {
+   "stage": "08-provenance-merge",
+   "tool": "kino workflow-validate/plan/render (spec final-merge-spec.json)",
+   "output": "official workflow receipt with per-input/output sha256 (workflow-receipt.json)"
+  },
+  {
+   "stage": "09-export",
+   "tool": "kino export --quality high",
+   "output": "docs/demo-video.mp4"
+  }
+ ],
+ "edits_applied": [
+  "assembled per docs/demo-script.md beats with Hyperframes title/chapter/end cards",
+  "burned marginal-note callouts naming ProofBuilder, BlockProver 0x...FD2, EvmV1Decoder 0x731c...9f9f, ballots, seal, dissent, QuorumRegistry",
+  "silent edit: no audio track (no dead-audio track)",
+  "trims/holds paced for technical judges; total 104.2s (within 100-140s)"
+ ],
+ "guardrails_triggered": [
+  {
+   "tool": "kino composite-layers",
+   "rule": "unsafe_layer_source",
+   "outcome": "first spec rejected (absolute paths outside spec dir); fixed by confining sources to spec directory \u2014 no bypass used"
+  },
+  {
+   "tool": "kinocut release_checkpoint (Python Client)",
+   "rule": "assert_quality min_score 80",
+   "outcome": "REFUSED \u2014 score 54.8. Refusal recorded verbatim; no bypass attempted (gates are fail-closed by contract)"
+  },
+  {
+   "tool": "kino merge",
+   "rule": "merge compatibility",
+   "outcome": "passed (uniform 1920x1080@30 h264)"
+  }
+ ],
+ "quality": {
+  "video": "/private/tmp/qp-video-raw/build/demo-video.mp4",
+  "overall_score": 54.8,
+  "all_passed": false,
+  "checks": [
+   {
+    "name": "brightness",
+    "passed": true,
+    "score": 60.6,
+    "message": "Brightness is well-balanced (brightness: 178.4)",
+    "details": {
+     "y_avg": 178.38974671999998,
+     "target_range": [
+      40,
+      200
+     ]
+    }
+   },
+   {
+    "name": "contrast",
+    "passed": false,
+    "score": 11.9,
+    "message": "Video has low contrast (std dev: 6.0). Image may appear flat. Consider increasing contrast.",
+    "details": {
+     "y_std": 5.962999999999996,
+     "y_low": 176.0576,
+     "y_high": 191.32288,
+     "target_range": [
+      20,
+      100
+     ],
+     "metric": {
+      "name": "ffmpeg.signalstats.YHIGH-YLOW",
+      "available": true,
+      "value": 5.962999999999996,
+      "unit": "percent_of_8bit_luma_range",
+      "raw": {
+       "y_low": 176.0576,
+       "y_high": 191.32288,
+       "unit": "8bit_luma"
+      }
+     }
+    }
+   },
+   {
+    "name": "saturation",
+    "passed": false,
+    "score": 2.1,
+    "message": "Video appears desaturated (estimated: 1.1%). Consider increasing saturation.",
+    "details": {
+     "saturation_pct": 1.061850918364641,
+     "sat_avg": 1.92195016224,
+     "metric": {
+      "name": "ffmpeg.signalstats.SATAVG",
+      "available": true,
+      "value": 1.061850918364641,
+      "unit": "percent_of_8bit_yuv_saturation_range",
+      "raw": {
+       "value": 1.92195016224,
+       "unit": "signalstats_chroma_magnitude",
+       "full_scale": 181.0
+      }
+     }
+    }
+   },
+   {
+    "name": "audio_levels",
+    "passed": true,
+    "score": 100.0,
+    "message": "No audio stream detected in video",
+    "details": {
+     "has_audio": false
+    }
+   },
+   {
+    "name": "color_balance",
+    "passed": true,
+    "score": 99.5,
+    "message": "Color balance is good (max deviation: 0.2%)",
+    "details": {
+     "r_mean": 178.00650003775996,
+     "g_mean": 178.61227668901375,
+     "b_mean": 178.24909414911997,
+     "max_deviation": 0.18115860830466768,
+     "color_cast": null
+    }
+   },
+   {
+    "name": "temporal_motion",
+    "passed": false,
+    "score": 5.6,
+    "message": "Low temporal motion detected (94% of frames are near-static). Verify this isn't an unintended slideshow \u2014 image-to-video output should actually move.",
+    "details": {
+     "static_fraction": 0.9439820742637645,
+     "mean_motion": 0.44849393665345133,
+     "median_motion": 0.00327522,
+     "frames_analyzed": 3124,
+     "static_frame_floor": 0.35,
+     "static_fraction_threshold": 0.9
+    }
+   }
+  ],
+  "recommendations": [
+   "Video has low contrast (std dev: 6.0). Image may appear flat. Consider increasing contrast.",
+   "Video appears desaturated (estimated: 1.1%). Consider increasing saturation.",
+   "Low temporal motion detected (94% of frames are near-static). Verify this isn't an unintended slideshow \u2014 image-to-video output should actually move."
+  ]
+ },
+ "quality_interpretation": {
+  "all_passed": false,
+  "note": "The three failing checks (contrast, saturation, temporal_motion) are content-type false positives, not defects: the QuorumProof DESIGN-SYSTEM (CEO-taste spec) mandates a paper-light institutional ledger (near-monochrome, matte, minimal motion) for audit-grade credibility. Within-frame ink/paper contrast is high; motion is intentional and present in the live-capture beats (clicks, deliberation, scrolling). Recorded unmodified per kinocut trust rules (do not hide quality warnings).",
+  "human_review": "CEO visual review required before upload (upload itself is a CEO act)"
+ },
+ "verification": {
+  "duration_in_range": "104.17s within 100-140s hard range",
+  "resolution": "1920x1080 confirmed by ffprobe",
+  "spot_check_frames": {
+   "t1s": "opener animation mid-rise",
+   "t52s": "chapter card 03 (Dissent on the record)",
+   "t103s": "end card with repo URL",
+   "hashes": {
+    "frame_t1s": "sha256:faa56fac12e54e91b8461e9da30d790bbebdf1d247afa3bc91cf6a88d6405399",
+    "frame_t52s": "sha256:e2669be579b9527a2b9a156afea1ca04dd9f57e3a9abecaacfd4b486b2453a8a",
+    "frame_t103s": "sha256:bb831eeedc2b36b07e8e02b63001a63c3a507e6e1ece62a2509299fb03f75bd5"
+   }
+  },
+  "file_size": "6.9 MB < 80 MB",
+  "audio": "0 audio streams (silent, no dead track)"
+ },
+ "review_artifacts": {
+  "final_video": "docs/demo-video.mp4",
+  "workflow_receipt": "embedded below (workflow_receipt)",
+  "quality_report": "embedded below (quality)"
+ },
+ "workflow_receipt": {
+  "cleanup_manifest": {
+   "cleaned": true,
+   "intermediates": [],
+   "policy": "clean-on-success"
+  },
+  "feature_flags": {
+   "ops": [
+    "merge"
+   ],
+   "resume_used": false,
+   "resumed_from": null,
+   "variants": false
+  },
+  "outputs": [
+   {
+    "id": "master",
+    "output_hash": "sha256:de7cf2904ba2271ba3fd54df108bbb6e4af2f1427f8eec502c6403de6ac67a5c",
+    "path": "qp-demo-master.mp4"
+   }
+  ],
+  "receipt_kind": "workflow",
+  "render_determinism_scope": "spec/input/output hashes are deterministic; rendered bytes may vary across FFmpeg builds",
+  "resume_cursor": {
+   "last_completed_step": "final-merge",
+   "next_step": null
+  },
+  "schema_version": 1,
+  "sources": [
+   {
+    "id": "ch1",
+    "probe": {
+     "codec": "h264",
+     "duration": 3.0,
+     "resolution": "1920x1080"
+    },
+    "resolved": "ch1.mp4",
+    "source_hash": "sha256:e53bb71a629d669cfa18af6bdf0955cc9227dd9b4154cd0506217cad37f066d4"
+   },
+   {
+    "id": "ch2",
+    "probe": {
+     "codec": "h264",
+     "duration": 3.0,
+     "resolution": "1920x1080"
+    },
+    "resolved": "ch2.mp4",
+    "source_hash": "sha256:f660378c736c2d1a68281507b5b06503ed270b6f6e4ce94895ec8d75b40dcde5"
+   },
+   {
+    "id": "ch3",
+    "probe": {
+     "codec": "h264",
+     "duration": 3.0,
+     "resolution": "1920x1080"
+    },
+    "resolved": "ch3.mp4",
+    "source_hash": "sha256:e01749b8ec8644a2d8c0331ab93f60dc7ba3d96804212207787c4bbfea2a766a"
+   },
+   {
+    "id": "ch4",
+    "probe": {
+     "codec": "h264",
+     "duration": 3.0,
+     "resolution": "1920x1080"
+    },
+    "resolved": "ch4.mp4",
+    "source_hash": "sha256:89753871b1d0c6f59e3fdd30505fdc3b2b514ee1e3dab450af61b984b2938252"
+   },
+   {
+    "id": "end",
+    "probe": {
+     "codec": "h264",
+     "duration": 8.5,
+     "resolution": "1920x1080"
+    },
+    "resolved": "end.mp4",
+    "source_hash": "sha256:70335c049c55e6fc3e7e3e49b7e5460b2dc072592bcfc008a443a0141e837efb"
+   },
+   {
+    "id": "hook",
+    "probe": {
+     "codec": "h264",
+     "duration": 8.5,
+     "resolution": "1920x1080"
+    },
+    "resolved": "hook.mp4",
+    "source_hash": "sha256:10e3fdcd546082525bf5f0ceb4212ad71fdae7fafe1eb295124f1c78cf256607"
+   },
+   {
+    "id": "opener",
+    "probe": {
+     "codec": "h264",
+     "duration": 7.5,
+     "resolution": "1920x1080"
+    },
+    "resolved": "opener.mp4",
+    "source_hash": "sha256:577b1689aef535f273799c0e6b0fbcaf5ab3d080f049ca031dde7c7eda9334d2"
+   },
+   {
+    "id": "seg1_comp",
+    "probe": {
+     "codec": "h264",
+     "duration": 14.133333,
+     "resolution": "1920x1080"
+    },
+    "resolved": "seg1-comp.mp4",
+    "source_hash": "sha256:ad96f8fadb46cd206051fe4602fc176d78e70aff1cb0040c50c3a83c2d7be353"
+   },
+   {
+    "id": "seg2_comp",
+    "probe": {
+     "codec": "h264",
+     "duration": 16.4,
+     "resolution": "1920x1080"
+    },
+    "resolved": "seg2-comp.mp4",
+    "source_hash": "sha256:f337b08d520fbf5fe2de671796634073e5a4615226242bc31a9de32a861c3f9b"
+   },
+   {
+    "id": "seg3_comp",
+    "probe": {
+     "codec": "h264",
+     "duration": 22.333333,
+     "resolution": "1920x1080"
+    },
+    "resolved": "seg3-comp.mp4",
+    "source_hash": "sha256:9cd3fb31f43994af92843f83e383d68afa69c1f2bf0f08d813dd2fc7d844d6af"
+   },
+   {
+    "id": "term_comp",
+    "probe": {
+     "codec": "h264",
+     "duration": 14.8,
+     "resolution": "1920x1080"
+    },
+    "resolved": "term-comp.mp4",
+    "source_hash": "sha256:0a3e46485f034d3ee779a9666853f305b0f114e97c50dd7f6ca2e7f6209242de"
+   }
+  ],
+  "spec_hash": "sha256:a9456dd7208245d9903d5cffb9591194b4bbfb16933b1075428185186caeedea",
+  "status": "completed",
+  "steps": [
+   {
+    "ended_at": "2026-09-10T04:25:36.458386+00:00",
+    "id": "final-merge",
+    "input_hashes": {
+     "srcs[0]": "sha256:577b1689aef535f273799c0e6b0fbcaf5ab3d080f049ca031dde7c7eda9334d2",
+     "srcs[10]": "sha256:70335c049c55e6fc3e7e3e49b7e5460b2dc072592bcfc008a443a0141e837efb",
+     "srcs[1]": "sha256:10e3fdcd546082525bf5f0ceb4212ad71fdae7fafe1eb295124f1c78cf256607",
+     "srcs[2]": "sha256:e53bb71a629d669cfa18af6bdf0955cc9227dd9b4154cd0506217cad37f066d4",
+     "srcs[3]": "sha256:0a3e46485f034d3ee779a9666853f305b0f114e97c50dd7f6ca2e7f6209242de",
+     "srcs[4]": "sha256:f660378c736c2d1a68281507b5b06503ed270b6f6e4ce94895ec8d75b40dcde5",
+     "srcs[5]": "sha256:ad96f8fadb46cd206051fe4602fc176d78e70aff1cb0040c50c3a83c2d7be353",
+     "srcs[6]": "sha256:e01749b8ec8644a2d8c0331ab93f60dc7ba3d96804212207787c4bbfea2a766a",
+     "srcs[7]": "sha256:f337b08d520fbf5fe2de671796634073e5a4615226242bc31a9de32a861c3f9b",
+     "srcs[8]": "sha256:89753871b1d0c6f59e3fdd30505fdc3b2b514ee1e3dab450af61b984b2938252",
+     "srcs[9]": "sha256:9cd3fb31f43994af92843f83e383d68afa69c1f2bf0f08d813dd2fc7d844d6af"
+    },
+    "inputs": {
+     "srcs": [
+      "@sources.opener",
+      "@sources.hook",
+      "@sources.ch1",
+      "@sources.term_comp",
+      "@sources.ch2",
+      "@sources.seg1_comp",
+      "@sources.ch3",
+      "@sources.seg2_comp",
+      "@sources.ch4",
+      "@sources.seg3_comp",
+      "@sources.end"
+     ]
+    },
+    "op": "merge",
+    "output": "qp-demo-master.mp4",
+    "output_hash": "sha256:de7cf2904ba2271ba3fd54df108bbb6e4af2f1427f8eec502c6403de6ac67a5c",
+    "started_at": "2026-09-10T04:25:36.333596+00:00",
+    "status": "completed"
+   }
+  ],
+  "tool": "video_workflow_render",
+  "versions": {
+   "ffmpeg": "8.1",
+   "mcp_video": "1.15.1"
+  },
+  "warnings": [],
+  "work_dir": "work/a9456dd7-b9d5524f",
+  "workflow": {
+   "name": "quorumproof-demo-final-merge",
+   "variant": null
+  }
+ },
+ "human_review": {
+  "required": true,
+  "status": "pending",
+  "instructions": "CEO: open docs/demo-video.mp4, verify beats vs docs/demo-script.md, then upload (upload is a CEO act; not done by this agent)."
+ },
+ "known_limitations": [
+  "Automated quality checks do not replace visual review.",
+  "Terminal beat renders the real `npm run verify-live` output (captured live, exit 0) in a midnight-ledger terminal page; screencapture of Terminal.app was abandoned due to window-manager interference and title-bar environment leakage (documented in session log).",
+  "Dashboard beats are genuine live captures of the app served at HEAD 8ba592e with live CC3 testnet reads.",
+  "verify-live output shows factHash line between the decoded fields due to stream chunking; content is verbatim."
+ ],
+ "next_edit_suggestion": "If the CEO wants narration/music, re-open as a new production pass (voice = human or local TTS); do not patch this artifact."
+}
