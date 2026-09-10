@@ -97,6 +97,10 @@ async function loadHealth() {
   } catch {
     $('netdot').classList.add('dead');
     $('nettext').textContent = 'CC3 TESTNET UNREACHABLE';
+    /* honest offline state — the court cannot verify, so it accepts no filings */
+    $('assessBtn').disabled = true;
+    $('assessBtn').textContent = 'Convene — offline';
+    $('txinput').disabled = true;
   }
 }
 
@@ -188,6 +192,7 @@ function renderChamber(entry) {
   /* § 2 — fact & proof detail */
   $('pd-case').textContent = `— case QP-${new Date(c.createdAt).getFullYear()}-${String(entry.no).padStart(3, '0')}`;
   $('pd-fact').querySelector('tbody').innerHTML = `
+    <tr><th>factHash</th><td>${esc(f.factHash)}${copyBtn(f.factHash, 'factHash')}</td></tr>
     <tr><th>from</th><td>${esc(f.from)}</td></tr>
     <tr><th>to</th><td>${esc(f.to)}</td></tr>
     <tr><th>value</th><td>${weiToEth('0x' + BigInt(f.valueWei).toString(16))} ETH (${fmtInt(f.valueWei)} wei)</td></tr>
@@ -208,7 +213,8 @@ function renderChamber(entry) {
     <tr><th>merkle root</th><td>${art ? `${esc(short(art.merkleRoot, 16))}${copyBtn(art.merkleRoot, 'merkle root')}` : '—'}</td></tr>
     <tr><th>merkle siblings</th><td>${art ? `${art.merkleSiblings.length} entries${copyBtn(artifactsJson, 'merkle siblings')}` : '—'}</td></tr>
     <tr><th>continuity</th><td>${art ? `lower-endpoint ${esc(short(art.continuity.lowerEndpointDigest, 8))} · ${art.continuity.roots.length} roots${copyBtn(art.continuity.lowerEndpointDigest, 'continuity lower-endpoint digest')}` : '—'}</td></tr>
-    <tr><th>txBytes</th><td>${f.txBytes ? `${(f.txBytes.length - 2) / 2} bytes — see raw proof bytes below${copyBtn(f.txBytes, 'raw txBytes')}` : '—'}</td></tr>`;
+    <tr><th>txBytes</th><td>${f.txBytes ? `${(f.txBytes.length - 2) / 2} bytes — see raw proof bytes below${copyBtn(f.txBytes, 'raw txBytes')}` : '—'}</td></tr>
+    <tr><th>certHash</th><td>${esc(c.certHash)}${copyBtn(c.certHash, 'certHash')}</td></tr>`;
   $('pd-txbytes').textContent = f.txBytes ?? '—';
   $('pd-artifacts').textContent = art ? artifactsJson : '—';
   $('copy-txbytes').dataset.copy = f.txBytes ?? '';
@@ -303,6 +309,7 @@ async function assess(txHash, label, btn) {
 
 $('clerk').addEventListener('submit', (ev) => {
   ev.preventDefault();
+  if ($('assessBtn').disabled) return;
   const v = $('txinput').value.trim();
   if (/^0x[0-9a-fA-F]{64}$/.test(v)) assess(v);
   else {

@@ -1,6 +1,7 @@
 /* ============================================================
-   QuorumProof — institutional ledger, light-only (DESIGN-SYSTEM.md)
-   Paper surfaces · serif ceremony · mono evidence · ruled tables
+   QuorumProof — institutional ledger, dual theme (DESIGN-SYSTEM.md)
+   light-first default + 'midnight ledger' dark · paper surfaces
+   serif ceremony · mono evidence · ruled tables
    ============================================================ */
 
 /* Self-hosted fonts — Source Serif 4 (variable, 200–900) + IBM Plex Mono */
@@ -300,7 +301,7 @@ table.ruled th {
 table.ruled td {
   font: 400 11.5px/1.5 var(--mono);
   color: var(--ink);
-  word-break: break-all;
+  overflow-wrap: anywhere; /* wraps long hashes without mid-word breaking prose */
 }
 .hint, .enforcement, .brand-tag, .note, .why { overflow-wrap: anywhere; }
 td .ok { color: var(--verdict-execute); font-weight: 500; }
@@ -362,7 +363,7 @@ td .bad { color: var(--verdict-reject); font-weight: 500; }
   margin: 0 0 2px;
   font: 700 31px/1.1 var(--serif);
   letter-spacing: 0.02em;
-  color: var(--ink-faint);
+  color: var(--ink-dim); /* resting state ≥4.5:1; ink-faint stays decorative-only per token contract */
   font-style: italic;
 }
 .verdict.EXECUTE { color: var(--verdict-execute); font-style: normal; }
@@ -456,8 +457,8 @@ table.docket td.cause { font-weight: 500; }
 table.docket td.decision.EXECUTE { color: var(--verdict-execute); font-weight: 600; letter-spacing: 0.05em; }
 table.docket td.decision.REJECT { color: var(--verdict-reject); font-weight: 600; letter-spacing: 0.05em; }
 table.docket .num { text-align: left; width: 1%; }
-tr.emptyrow td { color: var(--ink-dim); font-style: italic; cursor: default; }
-tr.emptyrow:hover { background: transparent; }
+table.docket tbody tr.emptyrow td { color: var(--ink-dim); font-style: italic; cursor: default; }
+table.docket tbody tr.emptyrow:hover { background: transparent; }
 
 /* evidence affordances — explorer links + click-to-copy */
 .evlink { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
