@@ -1,4 +1,4 @@
-# QuorumProof — 2-minute demo script (v2.4, 2026-09-13 — prosody S+ pass per E4 canon + CEO B+→S+ order; facts frozen since v2.2/v2.3)
+# QuorumProof — 2-minute demo script (v2.5, 2026-09-13 — prosody S+ pass 2: sentence-extreme unstacking per CEO "think deeply" order; facts frozen)
 
 Setup (unchanged): terminal open, dashboard at localhost, dark theme. Narration recorded via canonical Simon clone; blank lines = paragraph beats (720ms), em dashes = connective clauses (never end one on a lone period before a payoff — anti-uptalk doctrine).
 
@@ -14,7 +14,7 @@ QuorumProof is a fleet — no single agent can move value alone. Every decision 
 
 **[0:20–0:50] Live Attestcoin proof (`npm run verify-live`)**
 
-Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, 3.6 ETH. Attestcoin proves it inside Creditcoin's own trust domain: build the proof, verify it with the BlockProver precompile on CC3 testnet, decode it on-chain into a structured fact.
+Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, 3.6 ETH. Attestcoin proves it inside Creditcoin's own trust domain — build the proof, verify it with the BlockProver precompile on CC3 testnet, decode it on-chain into a structured fact.
 
 And it's all reads — zero tokens, zero keys. I don't need to spend anything to prove a fact.
 
@@ -38,7 +38,11 @@ The quorum blocks it, and the sole dissent is right there on the record — that
 
 **[1:30–1:50] Auditability**
 
-Every ballot's signed with the agent's own secp256k1 key and bound to the Attestcoin fact hash. The QuorumRegistry contract is built to recover every signature on-chain and apply the quorum gate — two of three — so the decision becomes a Creditcoin fact any lending protocol can consume, the moment it's deployed.
+Every ballot's signed with the agent's own secp256k1 key and bound to the Attestcoin fact hash.
+
+On-chain, the QuorumRegistry contract recovers every signature and applies the quorum gate — two of three.
+
+Deploy it, and the decision becomes a Creditcoin fact — one any lending protocol can consume.
 
 **[1:50–2:00] Close**
 
