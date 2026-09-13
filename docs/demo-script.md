@@ -1,4 +1,4 @@
-# QuorumProof — 2-minute demo script (v2.5, 2026-09-13 — prosody S+ pass 2: sentence-extreme unstacking per CEO "think deeply" order; facts frozen)
+# QuorumProof — 2-minute demo script (v2.6, 2026-09-13 — EXECUTE weight-line treatment (own sentence + air, mirrors REJECT) per CEO ear note; facts frozen)
 
 Setup (unchanged): terminal open, dashboard at localhost, dark theme. Narration recorded via canonical Simon clone; blank lines = paragraph beats (720ms), em dashes = connective clauses (never end one on a lone period before a payoff — anti-uptalk doctrine).
 
@@ -26,7 +26,11 @@ Now the fleet. Three agents, three mandates — not three copies of the same mod
 
 Round one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.
 
-Watch the repayment case — three out of three, EXECUTE — the certificate's sealed, every ballot signature verified.
+Watch the repayment case — three out of three.
+
+Execute.
+
+The certificate's sealed, every ballot signature verified.
 
 Now an unrelated inflow — watch the split. The fraud hunter says yes — the transaction's real, its integrity check passes. The other two say no on policy: this isn't a repayment.
 
