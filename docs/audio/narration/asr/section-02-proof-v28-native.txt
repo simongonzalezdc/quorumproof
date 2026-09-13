@@ -1,0 +1,5 @@
+Look at this, it's a real run, not a mock, that's a real Ethereum mainnet transaction, 3.6
+ETH.
+A test coin proves it inside credit coin's own trust domain.
+Build the proof, verify it with a blog-prover pre-compile on CC3Tesnet, decoded on chain into
+a structured fact, and it's all reads, zero tokens, zero keys.

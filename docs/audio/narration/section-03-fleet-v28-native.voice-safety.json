@@ -1,0 +1,707 @@
+{
+  "status": "generated_asr_failed",
+  "createdAt": "2026-09-13T16:40:40Z",
+  "generatedAt": "2026-09-13T16:40:40Z",
+  "policyVersion": "qwen3-prosody-v2",
+  "wavSha256": "9484ffd6845eb77fc1979640468e785a495a5bb19fb87c0f528c1a421bf3bb65",
+  "normalizedText": "Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real? The market analyst reads partial repayments.\n\nRound one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.\n\nWatch the repayment case — three out of three.\n\nExecute.\n\nThe certificate's sealed, every ballot signature verified.\n\nNow an unrelated inflow — watch the split. The fraud hunter says yes — the transaction's real, its integrity check passes. The other two say no on policy: this isn't a repayment.\n\nOne out of three. REJECT.\n\nThe quorum blocks it, and the sole dissent is right there on the record — that's the product working.",
+  "normalizedTextSha256": "b18f4b0ffc08170bd24e9cd23ac6311ca8306fb468425e04d6772ce0a7f90ba8",
+  "output": "/Users/simongonzalezdecruz/workspaces/buidl-ctc/docs/audio/narration/section-03-fleet-v28-native.wav",
+  "generator": "generate_safe_qwen_voiceover.py",
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+  "safeChunking": {
+    "enabled": true,
+    "maxChars": 210,
+    "chunkCount": 9,
+    "chunks": [
+      [
+        "Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real?",
+        260
+      ],
+      [
+        "The market analyst reads partial repayments.",
+        720
+      ],
+      [
+        "Round one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.",
+        720
+      ],
+      [
+        "Watch the repayment case — three out of three.",
+        720
+      ],
+      [
+        "Execute.",
+        720
+      ],
+      [
+        "The certificate's sealed, every ballot signature verified.",
+        720
+      ],
+      [
+        "Now an unrelated inflow — watch the split. The fraud hunter says yes — the transaction's real, its integrity check passes. The other two say no on policy: this isn't a repayment.",
+        720
+      ],
+      [
+        "One out of three. REJECT.",
+        720
+      ],
+      [
+        "The quorum blocks it, and the sole dissent is right there on the record — that's the product working.",
+        0
+      ]
+    ]
+  },
+  "prosodyPlan": {
+    "policyVersion": "qwen3-prosody-v2",
+    "sourceBoundaries": [
+      {
+        "ordinal": 0,
+        "intent": "semantic_pause",
+        "source": "blank_line",
+        "sourceStart": 213,
+        "sourceEnd": 215
+      },
+      {
+        "ordinal": 1,
+        "intent": "semantic_pause",
+        "source": "blank_line",
+        "sourceStart": 342,
+        "sourceEnd": 344
+      },
+      {
+        "ordinal": 2,
+        "intent": "semantic_pause",
+        "source": "blank_line",
+        "sourceStart": 390,
+        "sourceEnd": 392
+      },
+      {
+        "ordinal": 3,
+        "intent": "semantic_pause",
+        "source": "blank_line",
+        "sourceStart": 400,
+        "sourceEnd": 402
+      },
+      {
+        "ordinal": 4,
+        "intent": "semantic_pause",
+        "source": "blank_line",
+        "sourceStart": 460,
+        "sourceEnd": 462
+      },
+      {
+        "ordinal": 5,
+        "intent": "semantic_pause",
+        "source": "blank_line",
+        "sourceStart": 640,
+        "sourceEnd": 642
+      },
+      {
+        "ordinal": 6,
+        "intent": "semantic_pause",
+        "source": "blank_line",
+        "sourceStart": 667,
+        "sourceEnd": 669
+      }
+    ],
+    "units": [
+      {
+        "ordinal": 0,
+        "text": "Three agents, three mandates — not three copies of the same model.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 1,
+        "text": "The underwriter wants exact policy fit.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 2,
+        "text": "The fraud hunter asks one question: is this transaction real?",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 3,
+        "text": "The market analyst reads partial repayments.",
+        "boundaryAfter": "paragraph",
+        "boundaryIntent": "semantic_pause"
+      },
+      {
+        "ordinal": 4,
+        "text": "Round one is a secret ballot — everyone commits before anyone sees a vote.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 5,
+        "text": "Round two is debate, and each agent can revise once.",
+        "boundaryAfter": "paragraph",
+        "boundaryIntent": "semantic_pause"
+      },
+      {
+        "ordinal": 6,
+        "text": "Watch the repayment case — three out of three.",
+        "boundaryAfter": "paragraph",
+        "boundaryIntent": "semantic_pause"
+      },
+      {
+        "ordinal": 7,
+        "text": "Execute.",
+        "boundaryAfter": "paragraph",
+        "boundaryIntent": "semantic_pause"
+      },
+      {
+        "ordinal": 8,
+        "text": "The certificate's sealed, every ballot signature verified.",
+        "boundaryAfter": "paragraph",
+        "boundaryIntent": "semantic_pause"
+      },
+      {
+        "ordinal": 9,
+        "text": "Now an unrelated inflow — watch the split.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 10,
+        "text": "The fraud hunter says yes — the transaction's real, its integrity check passes.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 11,
+        "text": "The other two say no on policy: this isn't a repayment.",
+        "boundaryAfter": "paragraph",
+        "boundaryIntent": "semantic_pause"
+      },
+      {
+        "ordinal": 12,
+        "text": "One out of three.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 13,
+        "text": "REJECT.",
+        "boundaryAfter": "paragraph",
+        "boundaryIntent": "semantic_pause"
+      },
+      {
+        "ordinal": 14,
+        "text": "The quorum blocks it, and the sole dissent is right there on the record — that's the product working.",
+        "boundaryAfter": "final",
+        "boundaryIntent": "visual_only_break"
+      }
+    ],
+    "chunks": [
+      {
+        "ordinal": 0,
+        "text": "Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real?",
+        "unitOrdinals": [
+          0,
+          1,
+          2
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "visual_only_break",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 260,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 213
+      },
+      {
+        "ordinal": 1,
+        "text": "The market analyst reads partial repayments.",
+        "unitOrdinals": [
+          3
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "semantic_pause",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 720,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 44
+      },
+      {
+        "ordinal": 2,
+        "text": "Round one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.",
+        "unitOrdinals": [
+          4,
+          5
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "semantic_pause",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 720,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 127
+      },
+      {
+        "ordinal": 3,
+        "text": "Watch the repayment case — three out of three.",
+        "unitOrdinals": [
+          6
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "semantic_pause",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 720,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 46
+      },
+      {
+        "ordinal": 4,
+        "text": "Execute.",
+        "unitOrdinals": [
+          7
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "semantic_pause",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 720,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 8
+      },
+      {
+        "ordinal": 5,
+        "text": "The certificate's sealed, every ballot signature verified.",
+        "unitOrdinals": [
+          8
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "semantic_pause",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 720,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 58
+      },
+      {
+        "ordinal": 6,
+        "text": "Now an unrelated inflow — watch the split. The fraud hunter says yes — the transaction's real, its integrity check passes. The other two say no on policy: this isn't a repayment.",
+        "unitOrdinals": [
+          9,
+          10,
+          11
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "semantic_pause",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 720,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 178
+      },
+      {
+        "ordinal": 7,
+        "text": "One out of three. REJECT.",
+        "unitOrdinals": [
+          12,
+          13
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "semantic_pause",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 720,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 25
+      },
+      {
+        "ordinal": 8,
+        "text": "The quorum blocks it, and the sole dissent is right there on the record — that's the product working.",
+        "unitOrdinals": [
+          14
+        ],
+        "boundaryAfter": "final",
+        "boundaryIntent": "visual_only_break",
+        "boundaryPerformedInsideTake": true,
+        "insertedPauseMs": 0,
+        "forcedSplitReason": null,
+        "synthesisBudget": 210,
+        "observedInputSize": 101
+      }
+    ]
+  },
+  "synthesisSettings": {
+    "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+    "speed": "1.0",
+    "temperature": "0.6",
+    "topP": "0.85",
+    "repetitionPenalty": "1.0",
+    "cfgScale": "1.2",
+    "exaggeration": "0.8",
+    "pitch": "-2",
+    "ddpmSteps": "50"
+  },
+  "technicalSpeechNormalization": {
+    "enabled": true,
+    "originalText": "Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real? The market analyst reads partial repayments.\n\nRound one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.\n\nWatch the repayment case — three out of three.\n\nExecute.\n\nThe certificate's sealed, every ballot signature verified.\n\nNow an unrelated inflow — watch the split. The fraud hunter says yes — the transaction's real, its integrity check passes. The other two say no on policy: this isn't a repayment.\n\nOne out of three. REJECT.\n\nThe quorum blocks it, and the sole dissent is right there on the record — that's the product working.",
+    "ttsText": "Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real? The market analyst reads partial repayments.\n\nRound one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.\n\nWatch the repayment case — three out of three.\n\nExecute.\n\nThe certificate's sealed, every ballot signature verified.\n\nNow an unrelated inflow — watch the split. The fraud hunter says yes — the transaction's real, its integrity check passes. The other two say no on policy: this isn't a repayment.\n\nOne out of three. REJECT.\n\nThe quorum blocks it, and the sole dissent is right there on the record — that's the product working."
+  },
+  "asrAudit": {
+    "status": "failed",
+    "strict": true,
+    "requiredTerms": {},
+    "termResults": {},
+    "missing": [],
+    "scriptCoverage": {
+      "status": "failed",
+      "enabled": true,
+      "requiredTerms": {
+        "three": [
+          "3",
+          "three",
+          "threed",
+          "threes"
+        ],
+        "agents": [
+          "agent",
+          "agents",
+          "agentsed"
+        ],
+        "mandates": [
+          "mandate",
+          "mandates",
+          "mandatesed"
+        ],
+        "not": [
+          "not"
+        ],
+        "copies": [
+          "copie",
+          "copies",
+          "copiesed",
+          "copy"
+        ],
+        "same": [
+          "same",
+          "sames"
+        ],
+        "model": [
+          "model",
+          "modeled",
+          "models"
+        ],
+        "underwriter": [
+          "underwriter",
+          "underwritered",
+          "underwriters"
+        ],
+        "wants": [
+          "want",
+          "wants",
+          "wantsed"
+        ],
+        "exact": [
+          "exact",
+          "exacted",
+          "exacts"
+        ],
+        "policy": [
+          "policy",
+          "policyed",
+          "policys"
+        ],
+        "fit": [
+          "fit"
+        ],
+        "fraud": [
+          "fraud",
+          "frauded",
+          "frauds"
+        ],
+        "hunter": [
+          "hunter",
+          "huntered",
+          "hunters"
+        ],
+        "asks": [
+          "asks"
+        ],
+        "one": [
+          "1",
+          "one"
+        ],
+        "question": [
+          "question",
+          "questioned",
+          "questions"
+        ],
+        "transaction": [
+          "transaction",
+          "transactioned",
+          "transactions"
+        ],
+        "real": [
+          "real",
+          "reals"
+        ],
+        "market": [
+          "market",
+          "marketed",
+          "markets"
+        ],
+        "analyst": [
+          "analyst",
+          "analysted",
+          "analysts"
+        ],
+        "reads": [
+          "read",
+          "reads",
+          "readsed"
+        ],
+        "partial": [
+          "partial",
+          "partialed",
+          "partials"
+        ],
+        "repayments": [
+          "repayment",
+          "repayments",
+          "repaymentsed"
+        ],
+        "round": [
+          "round",
+          "rounded",
+          "rounds"
+        ],
+        "secret": [
+          "secret",
+          "secreted",
+          "secrets"
+        ],
+        "ballot": [
+          "ballot",
+          "balloted",
+          "ballots"
+        ],
+        "everyone": [
+          "everyone",
+          "everyoned",
+          "everyones"
+        ],
+        "commits": [
+          "commit",
+          "commits",
+          "commitsed"
+        ],
+        "anyone": [
+          "anyone",
+          "anyoned",
+          "anyones"
+        ],
+        "sees": [
+          "sees"
+        ],
+        "vote": [
+          "vote",
+          "votes"
+        ],
+        "two": [
+          "2",
+          "two"
+        ],
+        "debate": [
+          "debate",
+          "debated",
+          "debates"
+        ],
+        "each": [
+          "each",
+          "eachs"
+        ],
+        "agent": [
+          "agent",
+          "agented",
+          "agents"
+        ],
+        "can": [
+          "can"
+        ],
+        "revise": [
+          "revise",
+          "revised",
+          "revises"
+        ],
+        "once": [
+          "once",
+          "onces"
+        ],
+        "watch": [
+          "watch",
+          "watched",
+          "watchs"
+        ],
+        "repayment": [
+          "repayment",
+          "repaymented",
+          "repayments"
+        ],
+        "case": [
+          "case",
+          "cases"
+        ],
+        "out": [
+          "out"
+        ],
+        "execute": [
+          "execute",
+          "executed",
+          "executes"
+        ],
+        "certificate": [
+          "certificate",
+          "certificated",
+          "certificates"
+        ],
+        "sealed": [
+          "seal",
+          "sealed",
+          "sealeds"
+        ],
+        "every": [
+          "every",
+          "everyed",
+          "everys"
+        ],
+        "signature": [
+          "signature",
+          "signatured",
+          "signatures"
+        ],
+        "verified": [
+          "verifi",
+          "verified",
+          "verifieds"
+        ],
+        "now": [
+          "now"
+        ],
+        "unrelated": [
+          "unrelat",
+          "unrelated",
+          "unrelateds"
+        ],
+        "inflow": [
+          "inflow",
+          "inflowed",
+          "inflows"
+        ],
+        "split": [
+          "split",
+          "splited",
+          "splits"
+        ],
+        "says": [
+          "says"
+        ],
+        "yes": [
+          "yes"
+        ],
+        "integrity": [
+          "integrity",
+          "integrityed",
+          "integritys"
+        ],
+        "check": [
+          "check",
+          "checked",
+          "checks"
+        ],
+        "passes": [
+          "passe",
+          "passes",
+          "passesed"
+        ],
+        "other": [
+          "other",
+          "othered",
+          "others"
+        ],
+        "say": [
+          "say"
+        ],
+        "isn": [
+          "isn"
+        ],
+        "reject": [
+          "reject",
+          "rejected",
+          "rejects"
+        ],
+        "quorum": [
+          "quorum",
+          "quorumed",
+          "quorums"
+        ],
+        "blocks": [
+          "block",
+          "blocks",
+          "blocksed"
+        ],
+        "sole": [
+          "sole",
+          "soles"
+        ],
+        "dissent": [
+          "dissent",
+          "dissented",
+          "dissents"
+        ],
+        "right": [
+          "right",
+          "righted",
+          "rights"
+        ],
+        "there": [
+          "there",
+          "thered",
+          "theres"
+        ],
+        "record": [
+          "record",
+          "recorded",
+          "records"
+        ],
+        "product": [
+          "product",
+          "producted",
+          "products"
+        ],
+        "working": [
+          "work",
+          "working",
+          "workinged",
+          "workings"
+        ]
+      },
+      "missing": [
+        "isn",
+        "sole",
+        "dissent"
+      ],
+      "coverage": 0.9577,
+      "minCoverage": 0.95,
+      "maxMissing": 1
+    },
+    "transcript": "Three agents, three mandates, not three copies of the same model.\nThe underwriter wants exact policy fit.\nThe fraud hunter asks one question, is this transaction real?\nThe market analyst reads partial repayments.\nRound one is a secret ballot.\nEveryone commits before anyone sees a vote.\nRound two is debate, and each agent can revise once.\nWatch the repayment case three out of three.\nExecute.\nThe certificate sealed.\nEvery ballot signature verified.\nNow an unrelated inflow, watch the split.\nThe fraud hunter says yes, the transaction's real,\nits integrity check passes.\nThe other two say no on policy.\nThis is in a repayment.\nOne out of three reject.\nThe quorum blocks it, and the sold descent is right there on the record.\nThat's the product working.\n",
+    "normalizedTranscript": "three agents three mandates not three copies of the same model the underwriter wants exact policy fit the fraud hunter asks one question is this transaction real the market analyst reads partial repayments round one is a secret ballot everyone commits before anyone sees a vote round two is debate and each agent can revise once watch the repayment case three out of three execute the certificate sealed every ballot signature verified now an unrelated inflow watch the split the fraud hunter says yes the transaction s real its integrity check passes the other two say no on policy this is in a repayment one out of three reject the quorum blocks it and the sold descent is right there on the record that s the product working"
+  },
+  "runtime": {
+    "python": "/Users/simongonzalezdecruz/workspaces/kinocut/.venv-voice/bin/python",
+    "speed": "1.0",
+    "strict": true,
+    "asrModel": "base"
+  }
+}

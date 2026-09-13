@@ -1,4 +1,4 @@
-# QuorumProof — 2-minute demo script (v2.6, 2026-09-13 — EXECUTE weight-line treatment (own sentence + air, mirrors REJECT) per CEO ear note; facts frozen)
+# QuorumProof — 2-minute demo script (v2.7, 2026-09-13 — sub-2:00 cut: redundant S2 spend line + S3 cold-open dropped per CEO under-2-min order; all facts intact)
 
 Setup (unchanged): terminal open, dashboard at localhost, dark theme. Narration recorded via canonical Simon clone; blank lines = paragraph beats (720ms), em dashes = connective clauses (never end one on a lone period before a payoff — anti-uptalk doctrine).
 
@@ -16,13 +16,13 @@ QuorumProof is a fleet — no single agent can move value alone. Every decision 
 
 Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, 3.6 ETH. Attestcoin proves it inside Creditcoin's own trust domain — build the proof, verify it with the BlockProver precompile on CC3 testnet, decode it on-chain into a structured fact.
 
-And it's all reads — zero tokens, zero keys. I don't need to spend anything to prove a fact.
+And it's all reads — zero tokens, zero keys.
 
 - Run it; point at `[3] verified: true` and the decoded transfer.
 
 **[0:50–1:30] Fleet deliberation (`npm run demo` / dashboard)**
 
-Now the fleet. Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real? The market analyst reads partial repayments.
+Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real? The market analyst reads partial repayments.
 
 Round one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.
 
