@@ -1,0 +1,28 @@
+# TASTECHECK-LEDGER — QP-VIDEO-v3 (SELF-ATTESTED)
+
+Verdict: **HOLD — self-lane complete, independent triple gate pending.** Per gate order
+(QA spec v1.3): this ledger is self-attested only. Independent Astra visual review, full
+tastecheck battery re-run (fresh validator), and the ultraqa adversarial cycle happen
+OUTSIDE this lane before the CEO sees anything. No row below claims independent status.
+
+Artifact: `docs/video-v3/render/demo-video-v3.mp4` (1080p30, 119.100s, voiced) ·
+silent source `render/demo-video-v3-silent.mp4` · package `docs/video-v3/hyperframes/`.
+Timestamp: 2026-09-12T21:2xZ · Inspector: QP-VIDEO-v3 rebuild lane (automated tools + frame eye-pass).
+
+| skill | check_id | status | reason | remediation | evidence | provenance |
+|---|---|---|---|---|---|---|
+| tastecheck-pass | tc.direction-spec | pass | Built to CEO verbatim directive (Hyperframes-native, reuse app HTML, GSAP-only motion, chrome-only Kyanite) + binding Astra rulings; no gallery fallback shipped | — | this file; coordinator directives on record 2026-09-12 | self-attested |
+| color-system | qp.token-purity | pass | Mechanical audit: every hex/rgb/font literal in the composition traces to QP DESIGN-SYSTEM.md ∪ kyanite-system.css ∪ content-os chrome canon; named exclusions magenta #ff1a6e / blue #087dcc absent | — | `audit/token-audit-v3.json` (verdict PASS, 27 literals, 0 offenders); auditor `audit/token-audit.mjs` | self-attested |
+| theming | qp.brass-restriction | pass | Brass `--seal` appears only on the app's own seal SVG + exhibit stamps; chapter/chrome accents are amber/cyan (kyanite tokens); no large brass surfaces | — | stills: `still-1750-*`, `still-2100-*` (seal/stamp only brass) | self-attested |
+| spacing-system | qp.one-grid-no-nesting | pass | One #master 1920×1080 grid; 13 view siblings keyed by data-start/duration; no data-composition-src nesting, no screenshot-in-box, no wrappers | — | `hyperframes/index.html` (lint structure); V3-BUILD.md §1 | self-attested |
+| (lint) | hyperframes.lint | pass | 0 errors | 1 warning `composition_file_too_large` ACCEPTED: Astra #2 forbids sub-composition splitting; single-file = one coordinate grid | render log; lint output in build record | self-attested |
+| (validate) | hyperframes.validate-cold-load | pass | Headless-Chrome runtime validation: no console errors, no missing assets; 180 text elements pass WCAG AA | — | hyperframes validate output (build record §6) | self-attested |
+| micro-motion | qp.motion-contract | pass | Authored GSAP only: ballot place 180ms ease-out; stamps 250ms ease-out; entrances power3/expo; count-up via seek-safe digit stacks; ZERO zoompan/ken-burns (no scale/translate on any reading surface's container); holds stationary | — | `hyperframes/index.html` timeline (inspected line-by-line); Astra #3 binding | self-attested |
+| a11y-pass (video analog) | qp.evidence-legibility-50pct | pass | Video type scale (app × ~1.4): evidence mono ≥15–17px at 1080p (≥16px for claims: votes 17px, verdict 44px, tally 14px uppercase, close-ups 20–32px); witness frames read at half size | — | `stills/still-1860-*` (ballots), `still-2100-*` (cert), `still-2400-*` (revised), `still-3100-*` (sigs) | self-attested |
+| (terminal) | qp.terminal-clean-framing | pass | Real verify-live run, recaptured with clean prompt `buidl-ctc %` (no username/home path); command + PASS fully framed; line beginnings intact; decode run-up fix kills the black first frame; hold-join seamless | — | `/private/tmp/qp-video-v3/capture-terminal-v3.js`; boundary frames f645/f646/f650, f1363/f1365 (inspected) | self-attested |
+| (debris) | qp.no-production-debris | pass | No version markers, lane status, or diagnostics on screen; single numbering system (01–05 chapters, QP-001/QP-002 cases) bound to the same timeline | — | V3-BUILD.md §2; boundary stills | self-attested |
+| deslop-ui | qp.not-the-v2-crimes | pass | v2 root causes each addressed: no invented hues (token audit), no nested presentations (one grid), no fake camera (no zoompan; Astra #3), no duplicate numbering, no detached stickers | — | Astra verdict §6 mapped in V3-BUILD.md; this ledger | self-attested |
+| (saturation robot) | kino.quality-check | pass-with-adjudication | overall 52.1; 3 FAILs adjudicated, nothing painted to metrics: saturation 1.3% = paper-ledger design (accents semantic only; v2 crime was the inverse); contrast y-std 1.5 = whole-frame metric, local text contrast 13.3:1 + 180 elements WCAG AA pass; temporal 97% static = commissioned (Astra #3 stationary holds). Brightness/audio (−17.8 LUFS)/color-balance pass | none — no hue invented per law | `audit/quality-check-v3.json` | self-attested |
+| (audio) | qp.voice-mux | pass | program-mix-48k-final.wav muxed, video=audio=119.100s exactly; voice never stretched, video never padded/trimmed; −17.8 LUFS | — | ffprobe duration output; `docs/audio/voice-lane-provision-receipt.json` (local Qwen3-TTS, cloud false) | self-attested |
+| (self eye gate) | qp.final-film-watch | pass | Every cut boundary + every hold extracted from the actual master and inspected (Astra #9): no clipping, no overlap, no flash frames, no contradictory labels after 2 fix-and-rerender cycles (swap-stack anchor bug; terminal decode run-up) | — | `stills/` (26 hold stills), build record §6 | self-attested |
+| gate.independent | independent-triple-gate | pending | Astra re-review + fresh-validator tastecheck battery + ultraqa adversarial cycle + orchestrator full-film eyes run OUTSIDE this lane — not yet executed; nothing is CEO-ready from this lane | run the triple gate on `docs/video-v3/render/demo-video-v3.mp4` | this row | pending (by design) |

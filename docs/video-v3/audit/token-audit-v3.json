@@ -1,0 +1,24 @@
+{
+  "lane": "QP-VIDEO-v3",
+  "audit": "token-purity (union: QP DESIGN-SYSTEM.md ∪ kyanite-system.css ∪ content-os chrome canon patterns)",
+  "namedExclusions": {
+    "FF1A6E": "magenta — named in CEO v2 rejection (adjudicated out of QP-VIDEO-v3 chrome)",
+    "087DCC": "blue — named in CEO v2 rejection (adjudicated out of QP-VIDEO-v3 chrome)"
+  },
+  "files": [
+    "hyperframes/index.html"
+  ],
+  "totalLiterals": 27,
+  "offenderCount": 0,
+  "verdict": "PASS",
+  "offenders": [],
+  "perFile": {
+    "hyperframes/index.html": {
+      "file": "hyperframes/index.html",
+      "hex": 25,
+      "rgb": 2,
+      "fonts": 6,
+      "offenders": []
+    }
+  }
+}
