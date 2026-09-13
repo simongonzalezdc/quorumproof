@@ -28,7 +28,7 @@ Round one is a secret ballot — everyone commits before anyone sees a vote. Rou
 
 Watch the repayment case — three out of three, EXECUTE, the certificate lands on-chain.
 
-Now an unrelated inflow. One out of three, REJECT. The fraud hunter keeps its no — it doesn't care how confident the others sound; its job is integrity, and it says so on the record. The quorum blocks it. That's the product working.
+Now an unrelated inflow — watch the split. The fraud hunter says yes: the transaction is real, its integrity check passes. The other two say no on policy — this isn't a repayment. One out of three, REJECT — the quorum blocks it, and the sole dissent is right there on the record. That's the product working.
 
 - Dashboard: click `repayment-received` → EXECUTE 3/3, certificate appears. Click `unrelated-inflow` → REJECT 1/3 — point at the **"revised"** badge on the dissenter.
 
