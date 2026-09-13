@@ -1,3 +1,0 @@
-Every ballot is signed with the agent's own SECP 256K1 key and bound to the attest coin fact hash.
-The Quorum Registry contract recovers every signature on chain and applies the Quorum gate two of three.
-The decision becomes a credit coin fact that any lending protocol can consume.

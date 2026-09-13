@@ -1,1 +1,0 @@
-Quorum Proof — auditable autonomous decisions on the Attest coin Protocol. The fleet replaces the oracle, and the paper trail is the product.

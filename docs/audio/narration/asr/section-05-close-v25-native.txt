@@ -1,2 +1,0 @@
-Quorum proof, auditable, autonomous decisions on the attestcoin protocol.
-The fleet replaces the Oracle and the paper trail is the product.

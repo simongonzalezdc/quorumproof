@@ -1,3 +1,0 @@
-Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, 3.6 ETH. Attestcoin proves it inside Creditcoin's own trust domain — build the proof, verify it with the BlockProver precompile on CC3 testnet, decode it on-chain into a structured fact.
-
-And it's all reads — zero tokens, zero keys.

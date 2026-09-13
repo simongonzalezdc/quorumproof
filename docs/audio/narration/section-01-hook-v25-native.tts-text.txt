@@ -1,5 +1,0 @@
-Here's the problem — AI agents are about to move money on-chain, and one agent is just one confident voice holding the keys.
-
-I'm not okay with that.
-
-QuorumProof is a fleet — no single agent can move value alone. Every decision needs a quorum, and the fact they argue over is verified by Creditcoin itself. Not an oracle operator in the middle — the chain itself.

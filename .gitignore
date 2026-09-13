@@ -3,3 +3,8 @@ dist/
 *.log
 .env
 .playwright-mcp/
+
+# production media (kept on disk, not in the public repo)
+docs/audio/
+docs/video-v3/
+docs/demo-video.mp4
