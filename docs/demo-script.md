@@ -1,48 +1,45 @@
-# QuorumProof — 2-minute demo script
+# QuorumProof — 2-minute demo script (v2, 2026-09-13 — simon-voice-gate pass, CEO order; v1 in git history)
 
-Setup (before recording): `npm install` done, terminal open, dashboard tab ready
-at `http://localhost:8787` (`npm run serve`), browser window 1560×900, dark theme.
+Setup (unchanged): terminal open, dashboard at localhost, dark theme. Narration recorded via canonical Simon clone; blank lines = paragraph beats (720ms), em dashes = connective clauses (never end one on a lone period before a payoff — anti-uptalk doctrine).
 
 ---
 
 **[0:00–0:20] Hook — the problem**
-> "AI agents are about to move money on-chain — but a single agent is a single
-> point of failure with a confident voice. QuorumProof is an agent *fleet*:
-> no one agent can move value alone. Every decision comes from a quorum of
-> heterogeneous agents deliberating over a fact that Creditcoin itself has
-> cryptographically verified — no oracle operator."
+
+Here's the problem. AI agents are about to move money on-chain — and one agent is just one confident voice holding the keys.
+
+I'm not okay with that.
+
+QuorumProof is a fleet — no single agent can move value alone. Every decision needs a quorum, and the fact they argue over is verified by Creditcoin itself. Not an oracle operator in the middle — the chain.
 
 **[0:20–0:50] Live Attestcoin proof (`npm run verify-live`)**
-> "First, the trust boundary. This is a real Ethereum mainnet transaction —
-> 3.6 ETH. The Attestcoin Protocol proves it inside Creditcoin's trust domain:
-> proof build, then verification by the BlockProver precompile on CC3 testnet,
-> then the on-chain decoder turns the verified bytes into a structured fact.
-> All of these are reads — this runs with zero tokens and zero keys."
+
+Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, 3.6 ETH. Attestcoin proves it inside Creditcoin's own trust domain: build the proof, verify it with the BlockProver precompile on CC3 testnet, decode it on-chain into a structured fact.
+
+And it's all reads. Zero tokens, zero keys — I don't need to spend anything to prove a fact.
+
 - Run it; point at `[3] verified: true` and the decoded transfer.
 
-**[0:50–1:30] Fleet deliberation (`npm run demo` or dashboard)**
-> "Now the fleet. Three agents, three different mandates: an underwriter that
-> demands exact policy fit, a fraud hunter that only cares about transaction
-> integrity, and a market analyst that weights partial repayments. Round one is
-> a secret ballot — committed before anyone sees anyone's vote. Round two is
-> debate: each agent may revise once, under documented rules."
-- Dashboard: click `repayment-received` → EXECUTE, 3/3, certificate appears.
-- Click `unrelated-inflow` → REJECT, 1/3 — point at Sentinel's
-  **"revised"** badge: "sole dissent maintained — its mandate is integrity;
-  it discounts confidence and says so on the record. Quorum correctly blocks."
+**[0:50–1:30] Fleet deliberation (`npm run demo` / dashboard)**
+
+Now the fleet. Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real? The market analyst reads partial repayments.
+
+Round one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.
+
+Watch the repayment case — three out of three, EXECUTE, the certificate lands on-chain.
+
+Now an unrelated inflow. One out of three, REJECT. The fraud hunter keeps its no — it doesn't care how confident the others sound; its job is integrity, and it says so on the record. The quorum blocks it. That's the product working.
+
+- Dashboard: click `repayment-received` → EXECUTE 3/3, certificate appears. Click `unrelated-inflow` → REJECT 1/3 — point at the **"revised"** badge on the dissenter.
 
 **[1:30–1:50] Auditability**
-> "Every ballot is signed with the agent's own secp256k1 control key and bound
-> to the Attestcoin fact hash. The QuorumRegistry contract recovers every
-> signature on-chain and applies the quorum gate — the decision becomes a
-> Creditcoin state fact any lending protocol can consume."
+
+Every ballot is signed with the agent's own secp256k1 key and bound to the Attestcoin fact hash. The QuorumRegistry contract recovers every signature on-chain and applies the quorum gate — two of three. The decision becomes a Creditcoin fact that any lending protocol can consume.
 
 **[1:50–2:00] Close**
-> "QuorumProof — auditable autonomous decisions, powered by the Attestcoin
-> Protocol. The fleet is the oracle's replacement, and the paper trail is
-> the product."
+
+QuorumProof — auditable autonomous decisions on the Attestcoin Protocol. The fleet replaces the oracle, and the paper trail is the product.
 
 ---
 
-Recording notes: capture terminal at 1.1× zoom; on the dashboard, let each
-scenario finish before narrating; end frame = certificate panel (EXECUTE).
+Recording notes (unchanged): capture terminal at 1.1× zoom; let each scenario finish before narrating; end frame = certificate panel (EXECUTE).
