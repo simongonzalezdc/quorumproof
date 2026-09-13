@@ -606,9 +606,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .reject-word { margin: 0 0 26px; font: 700 128px/1 var(--serif); letter-spacing: 0.08em; color: var(--verdict-reject); }
 .reject-line { margin: 8px 0 0; font: 500 22px/1.5 var(--mono); color: var(--ink); letter-spacing: 0.04em; }
 .close-strip { position: absolute; left: 24px; right: 24px; bottom: 34px; z-index: 40; display: flex; align-items: baseline; justify-content: space-between; gap: 28px; padding: 14px 18px 12px; border-top: 2px solid var(--rule-strong); background: var(--paper-raised); }
-.brand-seal { width: 34px; height: 34px; vertical-align: -9px; margin-right: 10px; }
+.close-brandline { display: inline-flex; align-items: center; gap: 14px; }
+  .brand-seal { width: 62px; height: 62px; }
   .masthead-seal { width: 30px; height: 30px; vertical-align: -8px; margin-right: 12px; }
-  .close-brandline { font: 700 26px var(--serif); color: var(--ink); }
+  .brand-name-strip { font: 700 64px/1 var(--serif); color: var(--ink); letter-spacing: -0.01em; }
 .close-brandline .brand-mark { color: var(--ink); margin-right: 6px; }
 .close-thesis { font: 500 17px/1.4 var(--mono); color: var(--ink-dim); letter-spacing: 0.03em; }
 .close-tail-sub { font: 400 12px var(--mono); color: var(--ink-faint); letter-spacing: 0.08em; white-space: nowrap; }
@@ -666,7 +667,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 </style>
 </head>
 <body>
-<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="125.66" data-fps="30">
+<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="127.02" data-fps="30">
 
   <!-- CHROME (persistent, subordinate) -->
   <header id="chrome">
@@ -734,22 +735,22 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
   <section class="view clip dark" id="v-dissent" data-start="93.4" data-duration="4.1">${dissentView(case2)}</section>
 
   <!-- V9 · SIGNED BALLOTS 94.4 → 99.0 -->
-  <section class="view clip dark" id="v-sigs" data-start="96.7" data-duration="4.0">${sigsView(case1)}</section>
+  <section class="view clip dark" id="v-sigs" data-start="98.06" data-duration="4.0">${sigsView(case1)}</section>
 
   <!-- V10 · FACT & PROOF DETAIL 99.0 → 104.0 -->
-  <section class="view clip dark" id="v-proof" data-start="100.7" data-duration="4.6">${proofView(case1)}</section>
+  <section class="view clip dark" id="v-proof" data-start="102.06" data-duration="4.6">${proofView(case1)}</section>
 
   <!-- V11 · RAW PROOF BYTES 104.0 → 108.5 -->
-  <section class="view clip dark" id="v-bytes" data-start="105.3" data-duration="4.4">${bytesView(case1)}</section>
+  <section class="view clip dark" id="v-bytes" data-start="106.66" data-duration="4.4">${bytesView(case1)}</section>
 
   <!-- V12 · DOCKET 108.5 → 112.9 -->
-  <section class="view clip dark" id="v-docket" data-start="109.7" data-duration="4.0">${docketView()}</section>
+  <section class="view clip dark" id="v-docket" data-start="111.06" data-duration="4.0">${docketView()}</section>
 
   <!-- V13 · THE EARNED CERTIFICATE — final subject, held through the last narration line 115.0 → 124.78 -->
-  <section class="view clip" id="v-cert2" data-start="113.7" data-duration="11.96">
+  <section class="view clip" id="v-cert2" data-start="115.06" data-duration="11.96">
     ${certView(case1, 'THE SEALED DECISION — CERTIFICATE OF QUORUM', 'v-cert2')}
     <div class="close-strip mv" id="cl-strip">
-      <span class="close-brandline"><img class="ky-mark" src="assets/kyanitelabs-mark.png" alt="" width="30" height="30">${SEAL_SVG('brand-seal', null, 'sealarc-brand')} QuorumProof</span>
+      <span class="close-brandline">${SEAL_SVG('brand-seal', null, 'sealarc-brand')}<span class="brand-name-strip">QuorumProof</span></span>
       <span class="close-thesis">The fleet replaces the oracle. The paper trail is the product.</span>
       <span class="close-tail-sub">BUIDL CTC 2026 Fall · AI track · Edited with Kinocut</span>
     </div>
@@ -760,7 +761,9 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 
 
 
-    <!-- subtitle layer: script-verbatim captions (deterministic: script + silence measurement) -->
+
+
+    <!-- subtitle layer: script-verbatim (deterministic) -->
     <div class="cap" id="cap-0">Here's the problem — AI agents are about to move money on-chain, and one agent is just one confident voice holding the keys.</div>
     <div class="cap" id="cap-1">I'm not okay with that.</div>
     <div class="cap" id="cap-2">QuorumProof is a fleet — no single agent can move value alone.</div>
@@ -778,18 +781,20 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     <div class="cap top" id="cap-14">The market analyst reads partial repayments.</div>
     <div class="cap top" id="cap-15">Round one is a secret ballot — everyone commits before anyone sees a vote.</div>
     <div class="cap" id="cap-16">Round two is debate, and each agent can revise once.</div>
-    <div class="cap" id="cap-17">Watch the repayment case — three out of three, EXECUTE — the certificate's sealed, every ballot signature verified.</div>
-    <div class="cap" id="cap-18">Now an unrelated inflow — watch the split.</div>
-    <div class="cap" id="cap-19">The fraud hunter says yes — the transaction's real, its integrity check passes.</div>
-    <div class="cap" id="cap-20">The other two say no on policy: this isn't a repayment.</div>
-    <div class="cap" id="cap-21">One out of three.</div>
-    <div class="cap" id="cap-22">REJECT.</div>
-    <div class="cap" id="cap-23">The quorum blocks it, and the sole dissent is right there on the record — that's the product working.</div>
-    <div class="cap" id="cap-24">Every ballot's signed with the agent's own secp256k1 key and bound to the Attestcoin fact hash.</div>
-    <div class="cap" id="cap-25">On-chain, the QuorumRegistry contract recovers every signature and applies the quorum gate — two of three.</div>
-    <div class="cap" id="cap-26">Deploy it, and the decision becomes a Creditcoin fact — one any lending protocol can consume.</div>
-    <div class="cap" id="cap-27">QuorumProof — auditable autonomous decisions on the Attestcoin Protocol.</div>
-    <div class="cap" id="cap-28">The fleet replaces the oracle — and the paper trail is the product.</div>
+    <div class="cap" id="cap-17">Watch the repayment case — three out of three.</div>
+    <div class="cap" id="cap-18">Execute.</div>
+    <div class="cap" id="cap-19">The certificate's sealed, every ballot signature verified.</div>
+    <div class="cap" id="cap-20">Now an unrelated inflow — watch the split.</div>
+    <div class="cap" id="cap-21">The fraud hunter says yes — the transaction's real, its integrity check passes.</div>
+    <div class="cap" id="cap-22">The other two say no on policy: this isn't a repayment.</div>
+    <div class="cap" id="cap-23">One out of three.</div>
+    <div class="cap" id="cap-24">REJECT.</div>
+    <div class="cap" id="cap-25">The quorum blocks it, and the sole dissent is right there on the record — that's the product working.</div>
+    <div class="cap" id="cap-26">Every ballot's signed with the agent's own secp256k1 key and bound to the Attestcoin fact hash.</div>
+    <div class="cap" id="cap-27">On-chain, the QuorumRegistry contract recovers every signature and applies the quorum gate — two of three.</div>
+    <div class="cap" id="cap-28">Deploy it, and the decision becomes a Creditcoin fact — one any lending protocol can consume.</div>
+    <div class="cap" id="cap-29">QuorumProof — auditable autonomous decisions on the Attestcoin Protocol.</div>
+    <div class="cap" id="cap-30">The fleet replaces the oracle — and the paper trail is the product.</div>
 </div>
 <script src="assets/gsap.min.js"></script>
 <script>
@@ -806,13 +811,13 @@ const fade = (id, t, d) => tl.fromTo(id, { opacity: 0 }, { opacity: 1, duration:
 
 /* chrome: masthead settles in; progress fills over the full runtime (linear, 121.5s) */
 tl.fromTo('#chrome', { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: E_OUT }, 0.1);
-tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 125.66, ease: 'none' }, 0);
+tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 127.02, ease: 'none' }, 0);
 
 /* chapter state swaps — hard kills for seek safety */
 tl.to('#st1', { opacity: 0, duration: 0.001 }, 21.32); tl.set('#st1', { opacity: 0 }, 21.3333); tl.set('#st2', { opacity: 1 }, 21.3333);
 tl.to('#st2', { opacity: 0, duration: 0.001 }, 48.82); tl.set('#st2', { opacity: 0 }, 48.8333); tl.set('#st3', { opacity: 1 }, 48.8333);
-tl.to('#st3', { opacity: 0, duration: 0.001 }, 96.69); tl.set('#st3', { opacity: 0 }, 96.7); tl.set('#st4', { opacity: 1 }, 96.7);
-tl.to('#st4', { opacity: 0, duration: 0.001 }, 113.69); tl.set('#st4', { opacity: 0 }, 113.7); tl.set('#st5', { opacity: 1 }, 113.7);
+tl.to('#st3', { opacity: 0, duration: 0.001 }, 98.05); tl.set('#st3', { opacity: 0 }, 98.06); tl.set('#st4', { opacity: 1 }, 98.06);
+tl.to('#st4', { opacity: 0, duration: 0.001 }, 115.05); tl.set('#st4', { opacity: 0 }, 115.06); tl.set('#st5', { opacity: 1 }, 115.06);
 
 /* V1 hook — lines land on the narration clock (1.09/8.41), then clear for the product */
 up('#hk1', 1.05, 0.7, 26);
@@ -892,22 +897,22 @@ fade('#v-dissent .dissent-others', 91.6);
 fade('#v-dissent .dissent-block', 92.6);
 
 /* V9 signed ballots ("Every ballot is signed… secp256k1" 94.85→) */
-up('#v-sigs .case-strip', 96.85, 0.4);
-fade('#v-sigs .hint', 97.1, 0.35);
+up('#v-sigs .case-strip', 98.21, 0.4);
+fade('#v-sigs .hint', 98.46, 0.35);
 tl.fromTo(['#sg0', '#sg1', '#sg2'], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: E_OUT, stagger: 0.3 }, 95.0);
 
 /* V10 fact & proof detail */
-up('#v-proof .case-strip', 100.85, 0.4);
-tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 101.1);
+up('#v-proof .case-strip', 102.21, 0.4);
+tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 102.46);
 
 /* V11 raw bytes (large type, filled canvas, stationary single page) */
-up('#v-bytes .case-strip', 105.45, 0.4);
-up('#v-bytes .rawbytes', 105.65, 0.5, 14);
+up('#v-bytes .case-strip', 106.81, 0.4);
+up('#v-bytes .rawbytes', 107.01, 0.5, 14);
 
 /* V12 docket ("The decision becomes a Creditcoin fact…") */
-up('#v-docket .case-strip', 109.85, 0.4);
-tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 110.1);
-fade('#v-docket .hint', 111.8);
+up('#v-docket .case-strip', 111.21, 0.4);
+tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 111.46);
+fade('#v-docket .hint', 113.16);
 
 /* V7b REJECT verdict — QP-002 focal payoff (stamp class) */
 stamp('#v-reject .reject-plate', 90.55);
@@ -920,12 +925,14 @@ fade('#v-dissent .dissent-others', 94.4, 0.4);
 fade('#v-dissent .dissent-block', 95.4, 0.45);
 
 /* V13 the earned certificate — FINAL SUBJECT, held through the last narration line */
-up('#v-cert2 .case-strip', 113.75, 0.4);
-up('#v-cert2 .cert-doc', 113.9, 0.5, 16);
-tl.fromTo('#v-cert2 tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.1 }, 114.15);
-stamp('#v-cert2 .big-seal', 116.8);
-fade('#v-cert2 .big-enf', 117.6);
-tl.fromTo('#cl-strip', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 120.7);
+up('#v-cert2 .case-strip', 115.11, 0.4);
+up('#v-cert2 .cert-doc', 115.26, 0.5, 16);
+tl.fromTo('#v-cert2 tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.1 }, 115.51);
+stamp('#v-cert2 .big-seal', 118.16);
+fade('#v-cert2 .big-enf', 118.96);
+tl.fromTo('#cl-strip', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 122.06);
+
+
 
 
 
@@ -943,53 +950,57 @@ tl.set('#cap-3', { opacity: 0 }, 18.34);
 tl.fromTo('#cap-4', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 18.34);
 tl.set('#cap-4', { opacity: 0 }, 21.78);
 tl.fromTo('#cap-5', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 23.18);
-tl.set('#cap-5', { opacity: 0 }, 27.02);
-tl.fromTo('#cap-6', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 27.02);
-tl.set('#cap-6', { opacity: 0 }, 29.82);
-tl.fromTo('#cap-7', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 29.82);
-tl.set('#cap-7', { opacity: 0 }, 39.6);
-tl.fromTo('#cap-8', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 39.6);
-tl.set('#cap-8', { opacity: 0 }, 42.75);
-tl.fromTo('#cap-9', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 42.75);
-tl.set('#cap-9', { opacity: 0 }, 46.24);
-tl.fromTo('#cap-10', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 47.64);
-tl.set('#cap-10', { opacity: 0 }, 48.73);
-tl.fromTo('#cap-11', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 48.73);
-tl.set('#cap-11', { opacity: 0 }, 53.08);
-tl.fromTo('#cap-12', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 53.08);
-tl.set('#cap-12', { opacity: 0 }, 55.26);
-tl.fromTo('#cap-13', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 55.26);
-tl.set('#cap-13', { opacity: 0 }, 58.89);
-tl.fromTo('#cap-14', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 58.89);
-tl.set('#cap-14', { opacity: 0 }, 61.06);
-tl.fromTo('#cap-15', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 61.06);
-tl.set('#cap-15', { opacity: 0 }, 66.14);
-tl.fromTo('#cap-16', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 66.14);
-tl.set('#cap-16', { opacity: 0 }, 69.77);
-tl.fromTo('#cap-17', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 69.77);
-tl.set('#cap-17', { opacity: 0 }, 76.3);
-tl.fromTo('#cap-18', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 76.3);
-tl.set('#cap-18', { opacity: 0 }, 79.2);
-tl.fromTo('#cap-19', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 79.2);
-tl.set('#cap-19', { opacity: 0 }, 83.92);
-tl.fromTo('#cap-20', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 83.92);
-tl.set('#cap-20', { opacity: 0 }, 87.91);
-tl.fromTo('#cap-21', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 87.91);
-tl.set('#cap-21', { opacity: 0 }, 89.36);
-tl.fromTo('#cap-22', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 89.36);
-tl.set('#cap-22', { opacity: 0 }, 89.73);
-tl.fromTo('#cap-23', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 89.73);
-tl.set('#cap-23', { opacity: 0 }, 96.62);
-tl.fromTo('#cap-24', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 98.02);
-tl.set('#cap-24', { opacity: 0 }, 104.1);
-tl.fromTo('#cap-25', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 105.01);
-tl.set('#cap-25', { opacity: 0 }, 110.77);
-tl.fromTo('#cap-26', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 111.72);
-tl.set('#cap-26', { opacity: 0 }, 116.66);
-tl.fromTo('#cap-27', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 118.06);
-tl.set('#cap-27', { opacity: 0 }, 122.32);
-tl.fromTo('#cap-28', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 123.26);
-tl.set('#cap-28', { opacity: 0 }, 126.46);
+tl.set('#cap-5', { opacity: 0 }, 26.98);
+tl.fromTo('#cap-6', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 26.98);
+tl.set('#cap-6', { opacity: 0 }, 29.75);
+tl.fromTo('#cap-7', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 29.75);
+tl.set('#cap-7', { opacity: 0 }, 39.43);
+tl.fromTo('#cap-8', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 39.43);
+tl.set('#cap-8', { opacity: 0 }, 42.54);
+tl.fromTo('#cap-9', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 42.54);
+tl.set('#cap-9', { opacity: 0 }, 46.0);
+tl.fromTo('#cap-10', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 47.98);
+tl.set('#cap-10', { opacity: 0 }, 49.09);
+tl.fromTo('#cap-11', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 49.09);
+tl.set('#cap-11', { opacity: 0 }, 53.49);
+tl.fromTo('#cap-12', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 53.49);
+tl.set('#cap-12', { opacity: 0 }, 55.69);
+tl.fromTo('#cap-13', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 55.69);
+tl.set('#cap-13', { opacity: 0 }, 59.36);
+tl.fromTo('#cap-14', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 59.36);
+tl.set('#cap-14', { opacity: 0 }, 61.57);
+tl.fromTo('#cap-15', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 61.57);
+tl.set('#cap-15', { opacity: 0 }, 66.71);
+tl.fromTo('#cap-16', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 66.71);
+tl.set('#cap-16', { opacity: 0 }, 70.38);
+tl.fromTo('#cap-17', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 70.38);
+tl.set('#cap-17', { opacity: 0 }, 73.68);
+tl.fromTo('#cap-18', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 73.68);
+tl.set('#cap-18', { opacity: 0 }, 74.05);
+tl.fromTo('#cap-19', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 74.05);
+tl.set('#cap-19', { opacity: 0 }, 76.62);
+tl.fromTo('#cap-20', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 76.62);
+tl.set('#cap-20', { opacity: 0 }, 79.56);
+tl.fromTo('#cap-21', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 79.56);
+tl.set('#cap-21', { opacity: 0 }, 84.33);
+tl.fromTo('#cap-22', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 84.33);
+tl.set('#cap-22', { opacity: 0 }, 88.37);
+tl.fromTo('#cap-23', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 88.37);
+tl.set('#cap-23', { opacity: 0 }, 89.84);
+tl.fromTo('#cap-24', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 89.84);
+tl.set('#cap-24', { opacity: 0 }, 90.2);
+tl.fromTo('#cap-25', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 90.2);
+tl.set('#cap-25', { opacity: 0 }, 97.18);
+tl.fromTo('#cap-26', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 98.81);
+tl.set('#cap-26', { opacity: 0 }, 104.94);
+tl.fromTo('#cap-27', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 104.94);
+tl.set('#cap-27', { opacity: 0 }, 111.08);
+tl.fromTo('#cap-28', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 111.08);
+tl.set('#cap-28', { opacity: 0 }, 117.22);
+tl.fromTo('#cap-29', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 118.62);
+tl.set('#cap-29', { opacity: 0 }, 122.06);
+tl.fromTo('#cap-30', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power1.out' }, 122.06);
+tl.set('#cap-30', { opacity: 0 }, 127.02);
 
 window.__timelines = { master: tl };
 </script>
