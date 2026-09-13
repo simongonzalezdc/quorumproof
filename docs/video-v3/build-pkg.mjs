@@ -8,7 +8,7 @@
  * Seek-safety: reveals are CSS-hidden + opacity fromTo; text-state changes are opacity
  * swap stacks; the count-up is a digit swap-stack gated at N≥2 (ultraqa BLOCKER-1).
  *
- * v3.1 narration clock (new program mix 121.5s, voice-lane onsets 0.8/22.84/48.82/94.82/113.18;
+ * v3.3 narration clock (program mix 125.10s — script v2.3, onsets 0.8/22.84/48.82/98.42/117.10;
  * silencedetect −35dB/0.25s beats): sections re-timed; video PADS to the voice (121.5s).
  * Ceremony fixes: seal exists ONLY on earned, completed certificates (close-ups);
  * chamber certificates stay empty ruled documents until the close-up issues them;
@@ -73,11 +73,7 @@ const SEAL_SVG = (cls, id, arcId) => `
             <svg class="seal ${cls || ''}"${id ? ` id="${id}"` : ''} viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
               <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
               <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
-              <defs><path id="${arcId}" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
-              <text class="seal-arc"><textPath href="#${arcId}" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
-              <text class="seal-center" x="50" y="49">QP</text>
-              <text class="seal-sub" x="50" y="61">SEALED</text>
-              <line x1="34" y1="66.5" x2="66" y2="66.5" stroke="currentColor" stroke-width="0.9"/>
+              <text class="seal-center" x="50" y="57.5">QP</text>
             </svg>`;
 
 /* the empty certificate document — pre-decision state. NO seal (Astra P0-1: the seal is
@@ -154,7 +150,7 @@ function chamber(c, idp) {
     : `<span>1</span>`;
   const tallyMet = met
     ? `QUORUM MET — ${digits}/${q.fleetSize} APPROVALS · ≥${q.required} REQUIRED · MEAN CONFIDENCE ${mc}`
-    : `QUORUM NOT MET — <span>1</span>/${q.fleetSize} APPROVALS · ≥${q.required} REQUIRED · ACTION BLOCKED, CERTIFICATE RECORDED`;
+    : `QUORUM NOT MET — <span>1</span>/${q.fleetSize} APPROVALS · ≥${q.required} REQUIRED · ACTION BLOCKED`;
   return `
       <div class="chamber-head">
         <div class="chamber-title">
@@ -250,8 +246,28 @@ function certView(c, stripNote, idp) {
           <tr class="mv"><th>issued</th><td>${esc(cert.createdAt)}</td></tr>
         </tbody></table>
         <div class="cert-sealrow">${SEAL_SVG('big-seal mv', null, 'sealarc-' + idp)}
-          <p class="enforcement big-enf mv">${esc(d.submission.note)} · deterministic fleet</p>
+          <div class="seal-caption">
+            <p class="seal-word">SEALED</p>
+            <p class="seal-micro">QUORUMPROOF · CREDITCOIN CC3</p>
+            <p class="enforcement big-enf mv">all ballots signature-verified · EIP-191 recovery · QuorumRegistry CC3-ready — records on-chain on deploy · deterministic fleet</p>
+          </div>
         </div>
+      </div>
+    </div>`;
+}
+
+
+/* REJECT verdict close-up — QP-002 gets the same focal payoff class as EXECUTE */
+function rejectView(c) {
+  const d = c.data;
+  const cert = d.trace.certificate;
+  return `
+    <div class="detail-col centered">
+      <p class="case-strip mv">${c.no} · ${esc(c.label)} · VERDICT</p>
+      <div class="reject-plate mv">
+        <p class="reject-word bad">REJECT</p>
+        <p class="reject-line">QUORUM NOT MET — ${cert.quorum.approvals}/${cert.quorum.fleetSize} APPROVALS · ≥${cert.quorum.required} REQUIRED</p>
+        <p class="reject-line">ACTION BLOCKED · CERTIFICATE RECORDED</p>
       </div>
     </div>`;
 }
@@ -363,7 +379,7 @@ function sigsView(c) {
         </div>`).join('');
   return `
     <div class="detail-col wide centered">
-      <p class="case-strip mv">${c.no} · EVERY BALLOT SIGNED · SECP256K1 · RECOVERED ON-CHAIN BY QUORUMREGISTRY</p>
+      <p class="case-strip mv">${c.no} · EVERY BALLOT SIGNED · SECP256K1 · SIGNATURES RECOVERED + VERIFIED · EIP-191 · QUORUMREGISTRY CC3-READY</p>
       <p class="hint mv">Round II ballots, signature on the record — bound to factHash ${esc(short(d.trace.certificate.factHash, 10))}</p>
       ${rows}
     </div>`;
@@ -449,7 +465,8 @@ html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; backgro
   border: 1px solid var(--ky-hairline);
   clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
   font-family: var(--kymono); font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
-#chrome .sys { color: var(--measure); display: flex; align-items: center; gap: 40px; }
+.ky-mark { display: inline-block; vertical-align: -6px; margin-right: 10px; width: 26px; height: 26px; }
+  #chrome .sys { color: var(--measure); display: flex; align-items: center; gap: 40px; }
 #chrome .sys::before { content: ""; width: 18px; height: 2px; background: var(--measure); box-shadow: 24px 0 0 var(--amber); }
 #chrome .state { position: relative; color: var(--amber); height: 15px; min-width: 240px; }
 #chrome .state span { position: absolute; right: 0; top: 0; white-space: nowrap; opacity: 0; }
@@ -508,6 +525,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .evlink { color: var(--link); }
 
 .ballots { padding: 22px 26px; min-width: 0; }
+.ballot .why { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .round + .round { margin-top: 20px; }
 .round-h { margin: 0 0 8px; display: flex; justify-content: space-between; align-items: baseline; gap: 14px; flex-wrap: wrap;
   font: 600 14px/1.3 var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink);
@@ -543,10 +561,12 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .cert-table td { font-size: 15px; }
 .cert-sealrow { display: flex; align-items: center; gap: 18px; margin-top: 16px; }
 .seal { width: 148px; height: 148px; flex: 0 0 auto; color: var(--seal); transform: rotate(-8deg); }
-.seal-arc { font: 500 12px var(--mono); letter-spacing: 2.4px; fill: currentColor; }
-.seal-center { font: 700 24px var(--serif); letter-spacing: 1.4px; fill: currentColor; text-anchor: middle; }
+.seal-caption { display: flex; flex-direction: column; gap: 7px; max-width: 660px; }
+  .seal-word { margin: 0; font: 600 21px var(--serif); letter-spacing: 0.28em; color: var(--seal); }
+  .seal-micro { margin: 0; font: 500 12px var(--mono); letter-spacing: 0.18em; color: var(--ink-dim); }
+.seal-center { font: 700 26px var(--serif); letter-spacing: 1.2px; fill: currentColor; text-anchor: middle; }
 .seal-sub { font: 500 10px var(--mono); letter-spacing: 3.4px; fill: currentColor; text-anchor: middle; }
-.enforcement { margin: 0; font: 400 13px/1.6 var(--mono); color: var(--ink-dim); }
+.enforcement { margin: 0; font: 500 13px/1.6 var(--mono); color: var(--ink); }
 
 /* ============ DETAIL VIEWS — deliberate cuts; the claim's component becomes the subject ============ */
 .detail-col { position: absolute; left: 120px; right: 120px; top: 120px; bottom: 60px; }
@@ -564,11 +584,22 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .cert-doc.big .cert-table td { font-size: 21px; }
 .cert-doc.big .cert-table th, .cert-doc.big .cert-table td { padding: 9px 12px 8px 0; }
 .cert-decision-big { font-weight: 600; letter-spacing: 0.05em; font-size: 26px; }
-.big-seal { width: 230px; height: 230px; }
-.cert-doc.big .seal-arc { font-size: 18px; letter-spacing: 3.6px; }
-.cert-doc.big .seal-center { font-size: 38px; }
+.big-seal { width: 265px; height: 265px; }
+.cert-doc.big .seal-word { font-size: 26px; }
+  .cert-doc.big .seal-micro { font-size: 14px; }
+.cert-doc.big .seal-center { font-size: 40px; }
+.reject-plate { text-align: center; padding: 56px 40px 48px; border-top: 3px solid var(--rule-strong); border-bottom: 3px solid var(--rule-strong); }
+.reject-word { margin: 0 0 26px; font: 700 128px/1 var(--serif); letter-spacing: 0.08em; color: var(--verdict-reject); }
+.reject-line { margin: 8px 0 0; font: 500 22px/1.5 var(--mono); color: var(--ink); letter-spacing: 0.04em; }
+.close-strip { position: absolute; left: 24px; right: 24px; bottom: 34px; z-index: 40; display: flex; align-items: baseline; justify-content: space-between; gap: 28px; padding: 14px 18px 12px; border-top: 2px solid var(--rule-strong); background: var(--paper-raised); }
+.close-brandline { font: 700 26px var(--serif); color: var(--ink); }
+.close-brandline .brand-mark { color: var(--ink); margin-right: 6px; }
+.close-thesis { font: 500 17px/1.4 var(--mono); color: var(--ink-dim); letter-spacing: 0.03em; }
+.close-tail-sub { font: 400 12px var(--mono); color: var(--ink-faint); letter-spacing: 0.08em; white-space: nowrap; }
+.cert-detail .cert-doc.big { width: 1380px; padding: 46px 54px 36px; }
+.cert-detail .case-strip { font-size: 15px; }
 .cert-doc.big .seal-sub { font-size: 15px; letter-spacing: 5px; }
-.big-enf { font-size: 16px; max-width: 600px; }
+.big-enf { font-size: 17px; letter-spacing: 0.02em; max-width: 640px; }
 
 .big-ballot { border: 1px solid var(--rule-strong); background: var(--paper-raised); padding: 34px 38px; margin: 30px 0 0; }
 .big-ballot .who { font-size: 32px; }
@@ -619,11 +650,11 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 </style>
 </head>
 <body>
-<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="121.5" data-fps="30">
+<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="125.1" data-fps="30">
 
   <!-- CHROME (persistent, subordinate) -->
   <header id="chrome">
-    <span class="sys">KYANITE LABS / QUORUMPROOF</span>
+    <span class="sys"><img class="ky-mark" src="assets/kyanitelabs-mark.png" alt="" width="26" height="26">KYANITE LABS / QUORUMPROOF</span>
     <span class="state">
       <span class="on" id="st1">01 · THE PROBLEM</span>
       <span id="st2">02 · LIVE PROOF</span>
@@ -680,32 +711,31 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div>
   </section>
 
-  <!-- V8 · DISSENT CLOSE-UP QP-002 90.4 → 94.4 -->
-  <section class="view clip" id="v-dissent" data-start="90.4" data-duration="4.0">${dissentView(case2)}</section>
+  <!-- V7b · REJECT VERDICT CLOSE-UP QP-002 90.4 → 93.4 -->
+  <section class="view clip" id="v-reject" data-start="90.4" data-duration="3.0">${rejectView(case2)}</section>
+
+  <!-- V8 · DISSENT CLOSE-UP QP-002 93.4 → 98.4 -->
+  <section class="view clip" id="v-dissent" data-start="93.4" data-duration="5.0">${dissentView(case2)}</section>
 
   <!-- V9 · SIGNED BALLOTS 94.4 → 99.0 -->
-  <section class="view clip" id="v-sigs" data-start="94.4" data-duration="4.6">${sigsView(case1)}</section>
+  <section class="view clip" id="v-sigs" data-start="98.4" data-duration="3.6">${sigsView(case1)}</section>
 
   <!-- V10 · FACT & PROOF DETAIL 99.0 → 104.0 -->
-  <section class="view clip" id="v-proof" data-start="99.0" data-duration="5.0">${proofView(case1)}</section>
+  <section class="view clip" id="v-proof" data-start="102.0" data-duration="4.6">${proofView(case1)}</section>
 
   <!-- V11 · RAW PROOF BYTES 104.0 → 108.5 -->
-  <section class="view clip" id="v-bytes" data-start="104.0" data-duration="4.5">${bytesView(case1)}</section>
+  <section class="view clip" id="v-bytes" data-start="106.6" data-duration="4.4">${bytesView(case1)}</section>
 
   <!-- V12 · DOCKET 108.5 → 112.9 -->
-  <section class="view clip" id="v-docket" data-start="108.5" data-duration="4.4">${docketView()}</section>
+  <section class="view clip" id="v-docket" data-start="111.0" data-duration="4.0">${docketView()}</section>
 
-  <!-- V13 · THE EARNED CERTIFICATE, reprised as the closing subject 112.9 → 117.2 -->
-  <section class="view clip" id="v-cert2" data-start="112.9" data-duration="4.3">${certView(case1, 'THE SEALED DECISION — CERTIFICATE OF QUORUM', 'v-cert2')}</section>
-
-  <!-- V14 · CLOSE TAIL 117.2 → 121.5 -->
-  <section class="view clip" id="v-close" data-start="117.2" data-duration="4.3">
-    <div class="close-plate">
-      <div class="close-brand mv" id="cl-brand"><span class="brand-mark" aria-hidden="true">§</span><h1 class="brand-name" style="font-size:72px;">QuorumProof</h1></div>
-      <p class="close-line mv" id="cl-line">The fleet replaces the oracle. The paper trail is the product.</p>
-      <p class="close-sub mv" id="cl-sub1">auditable autonomous decisions on the Attestcoin Protocol · Creditcoin CC3 testnet · BlockProver 0x…FD2 precompile</p>
-      <p class="close-sub mv" id="cl-sub2">BUIDL CTC 2026 Fall · AI track</p>
-      <p class="close-credit mv" id="cl-credit">Edited with Kinocut · kinocut.dev</p>
+  <!-- V13 · THE EARNED CERTIFICATE — final subject, held through the last narration line 115.0 → 124.78 -->
+  <section class="view clip" id="v-cert2" data-start="115.0" data-duration="10.1">
+    ${certView(case1, 'THE SEALED DECISION — CERTIFICATE OF QUORUM', 'v-cert2')}
+    <div class="close-strip mv" id="cl-strip">
+      <span class="close-brandline"><img class="ky-mark" src="assets/kyanitelabs-mark.png" alt="" width="30" height="30"><span class="brand-mark" aria-hidden="true">§</span> QuorumProof</span>
+      <span class="close-thesis">The fleet replaces the oracle. The paper trail is the product.</span>
+      <span class="close-tail-sub">BUIDL CTC 2026 Fall · AI track · Edited with Kinocut</span>
     </div>
   </section>
 
@@ -714,8 +744,8 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 <script>
 /* QP-VIDEO-v3.1 authored motion — GSAP only. Zero zoompan/ken-burns anywhere.
    Ballot place 180ms ease-out · stamp 250ms ease-out (DESIGN-SYSTEM motion contract).
-   Clock: narration onsets 0.8/22.84/48.82/94.82/113.18 (voice-lane truth, program mix
-   121.5s); beats from silencedetect on the gained narration. */
+   Clock: narration onsets 0.8/22.84/48.82/98.42/116.78 (voice-lane truth, program mix
+   124.78s — script v2.2 honesty clause); beats re-timed to the new mix. */
 const tl = gsap.timeline({ paused: true });
 const E_OUT = 'power3.out';
 const up = (id, t, d, y) => tl.fromTo(id, { opacity: 0, y: y || 14 }, { opacity: 1, y: 0, duration: d || 0.5, ease: E_OUT }, t);
@@ -725,13 +755,13 @@ const fade = (id, t, d) => tl.fromTo(id, { opacity: 0 }, { opacity: 1, duration:
 
 /* chrome: masthead settles in; progress fills over the full runtime (linear, 121.5s) */
 tl.fromTo('#chrome', { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: E_OUT }, 0.1);
-tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 121.5, ease: 'none' }, 0);
+tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 125.1, ease: 'none' }, 0);
 
 /* chapter state swaps — hard kills for seek safety */
 tl.to('#st1', { opacity: 0, duration: 0.001 }, 21.32); tl.set('#st1', { opacity: 0 }, 21.3333); tl.set('#st2', { opacity: 1 }, 21.3333);
 tl.to('#st2', { opacity: 0, duration: 0.001 }, 48.82); tl.set('#st2', { opacity: 0 }, 48.8333); tl.set('#st3', { opacity: 1 }, 48.8333);
-tl.to('#st3', { opacity: 0, duration: 0.001 }, 94.39); tl.set('#st3', { opacity: 0 }, 94.4); tl.set('#st4', { opacity: 1 }, 94.4);
-tl.to('#st4', { opacity: 0, duration: 0.001 }, 112.89); tl.set('#st4', { opacity: 0 }, 112.9); tl.set('#st5', { opacity: 1 }, 112.9);
+tl.to('#st3', { opacity: 0, duration: 0.001 }, 97.99); tl.set('#st3', { opacity: 0 }, 98.0); tl.set('#st4', { opacity: 1 }, 98.0);
+tl.to('#st4', { opacity: 0, duration: 0.001 }, 114.99); tl.set('#st4', { opacity: 0 }, 115.0); tl.set('#st5', { opacity: 1 }, 115.0);
 
 /* V1 hook — lines land on the narration clock (1.09/8.41), then clear for the product */
 up('#hk1', 1.05, 0.7, 26);
@@ -771,8 +801,8 @@ tl.fromTo('#v-ch1 .sec', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'po
 place('#c1-r2b0', 60.0); place('#c1-r2b1', 60.5); place('#c1-r2b2', 61.0);
 /* quorum line lands ONLY at N≥2 (BLOCKER-1 gate), then counts to 3 ("three out of three" 62.62→) */
 tl.to('#v-ch1 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 63.55);
-tl.set('#v-ch1 .tally.swap > span:not(.on)', { opacity: 1 }, 63.6); /* shows "QUORUM MET — 2/3" */
-tl.set('#c1-digits > span:nth-child(1)', { opacity: 0 }, 64.3); tl.set('#c1-digits > span:nth-child(2)', { opacity: 1 }, 64.3); /* 3/3 */
+tl.set('#v-ch1 .tally.swap > span:not(.on)', { opacity: 1 }, 63.6); /* shows "QUORUM MET — 3/3" (digit pre-advanced) */
+tl.set('#c1-digits > span:nth-child(1)', { opacity: 0 }, 63.58); tl.set('#c1-digits > span:nth-child(2)', { opacity: 1 }, 63.58); /* digit=3 in the same frame MET lands */
 /* verdict stamp — the ceremony, 250ms */
 tl.to('#v-ch1 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 65.35);
 tl.fromTo('#v-ch1 .verdict-swap > p.EXECUTE, #v-ch1 .verdict-swap > p.REJECT', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 65.4);
@@ -782,7 +812,7 @@ up('#v-cert .case-strip', 66.35, 0.4);
 up('#v-cert .cert-doc', 66.45, 0.5, 16);
 tl.fromTo('#v-cert tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out', stagger: 0.12 }, 66.7);
 stamp('#v-cert .big-seal', 67.6);
-fade('#v-cert .big-enf', 68.1);
+fade('#v-cert .big-enf', 67.55);
 
 /* V7 QP-002 — exhibit → Round I secret → reveal → revised dissent → REJECT */
 up('#v-ch2 .masthead', 70.3, 0.45);
@@ -801,8 +831,8 @@ place('#c2-r2b0', 76.9); place('#c2-r2b1', 77.5); place('#c2-r2b2', 78.1); /* th
 /* "One out of three, reject" (86.97→): quorum NOT MET line + verdict stamp */
 tl.to('#v-ch2 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 87.35);
 tl.set('#v-ch2 .tally.swap > span:not(.on)', { opacity: 1 }, 87.4);
-tl.to('#v-ch2 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 88.15);
-tl.fromTo('#v-ch2 .verdict-swap > p.REJECT, #v-ch2 .verdict-swap > p.EXECUTE', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 88.2);
+tl.to('#v-ch2 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 87.30);
+tl.fromTo('#v-ch2 .verdict-swap > p.REJECT, #v-ch2 .verdict-swap > p.EXECUTE', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 87.31);
 
 /* V8 dissent close-up ("the sole dissent is right there on the record") */
 up('#v-dissent .case-strip', 90.55, 0.4);
@@ -811,36 +841,40 @@ fade('#v-dissent .dissent-others', 91.6);
 fade('#v-dissent .dissent-block', 92.6);
 
 /* V9 signed ballots ("Every ballot is signed… secp256k1" 94.85→) */
-up('#v-sigs .case-strip', 94.55, 0.4);
-fade('#v-sigs .hint', 94.8, 0.35);
+up('#v-sigs .case-strip', 98.55, 0.4);
+fade('#v-sigs .hint', 98.8, 0.35);
 tl.fromTo(['#sg0', '#sg1', '#sg2'], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: E_OUT, stagger: 0.3 }, 95.0);
 
 /* V10 fact & proof detail */
-up('#v-proof .case-strip', 99.15, 0.4);
-tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 99.4);
+up('#v-proof .case-strip', 102.15, 0.4);
+tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 102.4);
 
 /* V11 raw bytes (large type, filled canvas, stationary single page) */
-up('#v-bytes .case-strip', 104.15, 0.4);
-up('#v-bytes .rawbytes', 104.35, 0.5, 14);
+up('#v-bytes .case-strip', 106.75, 0.4);
+up('#v-bytes .rawbytes', 106.95, 0.5, 14);
 
 /* V12 docket ("The decision becomes a Creditcoin fact…") */
-up('#v-docket .case-strip', 108.65, 0.4);
-tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 108.9);
-fade('#v-docket .hint', 110.8);
+up('#v-docket .case-strip', 111.15, 0.4);
+tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 111.4);
+fade('#v-docket .hint', 113.2);
 
-/* V13 the earned certificate, reprised — final focal subject before the tail */
-up('#v-cert2 .case-strip', 113.05, 0.4);
-up('#v-cert2 .cert-doc', 113.2, 0.5, 16);
-tl.fromTo('#v-cert2 tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.1 }, 113.45);
-stamp('#v-cert2 .big-seal', 114.3);
-fade('#v-cert2 .big-enf', 114.8);
+/* V7b REJECT verdict — QP-002 focal payoff (stamp class) */
+stamp('#v-reject .reject-plate', 90.55);
+fade('#v-reject .case-strip', 90.4, 0.35);
 
-/* V14 close tail — the thesis, then the canon credit */
-tl.fromTo('#cl-brand', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out' }, 117.4);
-tl.fromTo('#cl-line', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out' }, 118.1);
-fade('#cl-sub1', 118.9, 0.5);
-fade('#cl-sub2', 119.15, 0.5);
-fade('#cl-credit', 119.7, 0.5);
+/* V8 dissent close-up */
+up('#v-dissent .case-strip', 93.45, 0.35);
+up('#v-dissent .big-ballot', 93.6, 0.45, 12);
+fade('#v-dissent .dissent-others', 94.4, 0.4);
+fade('#v-dissent .dissent-block', 95.4, 0.45);
+
+/* V13 the earned certificate — FINAL SUBJECT, held through the last narration line */
+up('#v-cert2 .case-strip', 115.05, 0.4);
+up('#v-cert2 .cert-doc', 115.2, 0.5, 16);
+tl.fromTo('#v-cert2 tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.1 }, 115.45);
+stamp('#v-cert2 .big-seal', 116.9);
+fade('#v-cert2 .big-enf', 117.5);
+tl.fromTo('#cl-strip', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 120.9);
 
 window.__timelines = { master: tl };
 </script>

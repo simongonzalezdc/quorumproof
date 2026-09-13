@@ -1,0 +1,21 @@
+Here's the problem. AI agents are about to move money on chain and one agent is just one
+confident voice holding the key. I'm not okay with that. Quorum proof is a fleet. No
+single agent can move value alone. Every decision needs a quorum and the fact they argue
+over is verified by credit coin itself. Not an Oracle operator in the middle, the chain.
+Look at this. It's a real run. Not a mock. That's a real Ethereum mainnet transaction.
+3.6 ETH. A test coin proves it inside credit coins own trust domain. Build a proof, verify
+it with the block-prover pre-compile on CC3 testnet, decoded on chain into a structured
+fact. And it's all reads, zero tokens, zero keys. I don't need to spend anything to prove
+a fact. Now the fleet, three agents, three mandates,
+not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks
+one question, is this transaction real? The market analyst reads partial repayments.
+Round one is a secret ballot. Everyone commits before anyone sees a vote. Round two is debate
+and each agent can revise once. Watch the repayment case three out of three execute the
+certificate lands on chain. Now an unrelated inflow, one out of three reject. The fraud hunter
+keeps its no. It doesn't care how confident the other sound. Its job is integrity and it
+says so on the record. The quorum blocks it. That's the product working.
+Every ballot is signed with the agent's own SECP 256K1 key and bound to the a test coin
+fact hash. The quorum registry contract recovers every signature on chain and applies
+the quorum gate two of three. The decision becomes a credit coin fact that any lending
+protocol can consume. Quorum proof, auditable autonomous decisions on the
+a test coin protocol. The fleet replaces the oracle and the paper trail is the product.

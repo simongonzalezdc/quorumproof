@@ -1,0 +1,3 @@
+Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, three point six E T H. Attest coin proves it inside Credit coin's own trust domain: build the proof, verify it with the Block Prover precompile on C C three testnet, decode it on-chain into a structured fact.
+
+And it's all reads. Zero tokens, zero keys — I don't need to spend anything to prove a fact.

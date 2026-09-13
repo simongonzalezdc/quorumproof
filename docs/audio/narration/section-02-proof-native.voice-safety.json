@@ -1,0 +1,352 @@
+{
+  "status": "generated_asr_failed",
+  "createdAt": "2026-09-13T02:35:32Z",
+  "generatedAt": "2026-09-13T02:35:32Z",
+  "policyVersion": "qwen3-prosody-v2",
+  "wavSha256": "a5f28e9bd6e32b2319d802b86b6709d3df548a27b647d42e0b3b6bf859e470a0",
+  "normalizedText": "Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, three point six E T H. Attest coin proves it inside Credit coin's own trust domain: build the proof, verify it with the Block Prover precompile on C C three testnet, decode it on-chain into a structured fact.\n\nAnd it's all reads. Zero tokens, zero keys — I don't need to spend anything to prove a fact.",
+  "normalizedTextSha256": "a343d33b28fe5da8db59efaf8f2e130637958ba00416bac8e9b8b7c46e06a658",
+  "output": "/Users/simongonzalezdecruz/workspaces/buidl-ctc/docs/audio/narration/section-02-proof-native.wav",
+  "generator": "generate_safe_qwen_voiceover.py",
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+  "safeChunking": {
+    "enabled": true,
+    "maxChars": 210,
+    "chunkCount": 3,
+    "chunks": [
+      [
+        "Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, three point six E T H.",
+        260
+      ],
+      [
+        "Attest coin proves it inside Credit coin's own trust domain: build the proof, verify it with the Block Prover precompile on C C three testnet, decode it on-chain into a structured fact.",
+        720
+      ],
+      [
+        "And it's all reads. Zero tokens, zero keys — I don't need to spend anything to prove a fact.",
+        0
+      ]
+    ]
+  },
+  "prosodyPlan": {
+    "policyVersion": "qwen3-prosody-v2",
+    "sourceBoundaries": [
+      {
+        "ordinal": 0,
+        "intent": "semantic_pause",
+        "source": "blank_line",
+        "sourceStart": 296,
+        "sourceEnd": 298
+      }
+    ],
+    "units": [
+      {
+        "ordinal": 0,
+        "text": "Look at this — it's a real run, not a mock.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 1,
+        "text": "That's a real Ethereum mainnet transaction, three point six E T H.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 2,
+        "text": "Attest coin proves it inside Credit coin's own trust domain: build the proof, verify it with the Block Prover precompile on C C three testnet, decode it on-chain into a structured fact.",
+        "boundaryAfter": "paragraph",
+        "boundaryIntent": "semantic_pause"
+      },
+      {
+        "ordinal": 3,
+        "text": "And it's all reads.",
+        "boundaryAfter": "sentence",
+        "boundaryIntent": "visual_only_break"
+      },
+      {
+        "ordinal": 4,
+        "text": "Zero tokens, zero keys — I don't need to spend anything to prove a fact.",
+        "boundaryAfter": "final",
+        "boundaryIntent": "visual_only_break"
+      }
+    ],
+    "chunks": [
+      {
+        "ordinal": 0,
+        "text": "Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, three point six E T H.",
+        "unitOrdinals": [
+          0,
+          1
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "visual_only_break",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 260,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 296
+      },
+      {
+        "ordinal": 1,
+        "text": "Attest coin proves it inside Credit coin's own trust domain: build the proof, verify it with the Block Prover precompile on C C three testnet, decode it on-chain into a structured fact.",
+        "unitOrdinals": [
+          2
+        ],
+        "boundaryAfter": "forced_limit",
+        "boundaryIntent": "semantic_pause",
+        "boundaryPerformedInsideTake": false,
+        "insertedPauseMs": 720,
+        "forcedSplitReason": "max_chars",
+        "synthesisBudget": 210,
+        "observedInputSize": 185
+      },
+      {
+        "ordinal": 2,
+        "text": "And it's all reads. Zero tokens, zero keys — I don't need to spend anything to prove a fact.",
+        "unitOrdinals": [
+          3,
+          4
+        ],
+        "boundaryAfter": "final",
+        "boundaryIntent": "visual_only_break",
+        "boundaryPerformedInsideTake": true,
+        "insertedPauseMs": 0,
+        "forcedSplitReason": null,
+        "synthesisBudget": 210,
+        "observedInputSize": 92
+      }
+    ]
+  },
+  "synthesisSettings": {
+    "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+    "speed": "1.0",
+    "temperature": "0.6",
+    "topP": "0.85",
+    "repetitionPenalty": "1.0",
+    "cfgScale": "1.2",
+    "exaggeration": "0.8",
+    "pitch": "-2",
+    "ddpmSteps": "50"
+  },
+  "technicalSpeechNormalization": {
+    "enabled": true,
+    "originalText": "Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, three point six E T H. Attest coin proves it inside Credit coin's own trust domain: build the proof, verify it with the Block Prover precompile on C C three testnet, decode it on-chain into a structured fact.\n\nAnd it's all reads. Zero tokens, zero keys — I don't need to spend anything to prove a fact.",
+    "ttsText": "Look at this — it's a real run, not a mock. That's a real Ethereum mainnet transaction, three point six E T H. Attest coin proves it inside Credit coin's own trust domain: build the proof, verify it with the Block Prover precompile on C C three testnet, decode it on-chain into a structured fact.\n\nAnd it's all reads. Zero tokens, zero keys — I don't need to spend anything to prove a fact."
+  },
+  "asrAudit": {
+    "status": "failed",
+    "strict": true,
+    "requiredTerms": {},
+    "termResults": {},
+    "missing": [],
+    "scriptCoverage": {
+      "status": "failed",
+      "enabled": true,
+      "requiredTerms": {
+        "look": [
+          "look",
+          "looks"
+        ],
+        "real": [
+          "real",
+          "reals"
+        ],
+        "run": [
+          "run"
+        ],
+        "not": [
+          "not"
+        ],
+        "mock": [
+          "mock",
+          "mocks"
+        ],
+        "ethereum": [
+          "ethereum",
+          "ethereumed",
+          "ethereums"
+        ],
+        "mainnet": [
+          "mainnet",
+          "mainneted",
+          "mainnets"
+        ],
+        "transaction": [
+          "transaction",
+          "transactioned",
+          "transactions"
+        ],
+        "three": [
+          "3",
+          "three",
+          "threed",
+          "threes"
+        ],
+        "point": [
+          "point",
+          "pointed",
+          "points"
+        ],
+        "six": [
+          "6",
+          "six"
+        ],
+        "attest": [
+          "attest",
+          "attested",
+          "attests"
+        ],
+        "coin": [
+          "coin",
+          "coins"
+        ],
+        "proves": [
+          "prove",
+          "proves",
+          "provesed"
+        ],
+        "inside": [
+          "inside",
+          "insided",
+          "insides"
+        ],
+        "credit": [
+          "credit",
+          "credited",
+          "credits"
+        ],
+        "own": [
+          "own"
+        ],
+        "trust": [
+          "trust",
+          "trusted",
+          "trusts"
+        ],
+        "domain": [
+          "domain",
+          "domained",
+          "domains"
+        ],
+        "build": [
+          "build",
+          "builded",
+          "builds"
+        ],
+        "proof": [
+          "proof",
+          "proofed",
+          "proofs"
+        ],
+        "verify": [
+          "verify",
+          "verifyed",
+          "verifys"
+        ],
+        "block": [
+          "block",
+          "blocked",
+          "blocks"
+        ],
+        "prover": [
+          "prover",
+          "provered",
+          "provers"
+        ],
+        "precompile": [
+          "precompile",
+          "precompiled",
+          "precompiles"
+        ],
+        "testnet": [
+          "testnet",
+          "testneted",
+          "testnets"
+        ],
+        "decode": [
+          "decode",
+          "decoded",
+          "decodes"
+        ],
+        "chain": [
+          "chain",
+          "chained",
+          "chains"
+        ],
+        "into": [
+          "into",
+          "intos"
+        ],
+        "structured": [
+          "structur",
+          "structured",
+          "structureds"
+        ],
+        "fact": [
+          "fact",
+          "facts"
+        ],
+        "all": [
+          "all"
+        ],
+        "reads": [
+          "read",
+          "reads",
+          "readsed"
+        ],
+        "zero": [
+          "zero",
+          "zeros"
+        ],
+        "tokens": [
+          "token",
+          "tokens",
+          "tokensed"
+        ],
+        "keys": [
+          "keys"
+        ],
+        "don": [
+          "don"
+        ],
+        "need": [
+          "need",
+          "needs"
+        ],
+        "spend": [
+          "spend",
+          "spended",
+          "spends"
+        ],
+        "anything": [
+          "anyth",
+          "anything",
+          "anythinged",
+          "anythings"
+        ],
+        "prove": [
+          "prove",
+          "proved",
+          "proves"
+        ]
+      },
+      "missing": [
+        "point",
+        "attest",
+        "prover"
+      ],
+      "coverage": 0.9268,
+      "minCoverage": 0.95,
+      "maxMissing": 1
+    },
+    "transcript": "Look at this, it's a real run, not a mock.\nThat's a really Ethereum mainnet transaction, 3.6 ETH.\nA test coin proves it inside credit coins' own trust domain.\nBuild a proof, verify it with the block-proofer precompile on CC3 testnet\ndecoded on-chain into a structured fact.\nAnd it's all reads, zero tokens, zero keys, I don't need to spend anything to prove a fact.\n",
+    "normalizedTranscript": "look at this it s a real run not a mock that s a really ethereum mainnet transaction 3 6 eth a test coin proves it inside credit coins own trust domain build a proof verify it with the block proofer precompile on cc3 testnet decoded on chain into a structured fact and it s all reads zero tokens zero keys i don t need to spend anything to prove a fact"
+  },
+  "runtime": {
+    "python": "/Users/simongonzalezdecruz/workspaces/kinocut/.venv-voice/bin/python",
+    "speed": "1.0",
+    "strict": true,
+    "asrModel": "base"
+  }
+}

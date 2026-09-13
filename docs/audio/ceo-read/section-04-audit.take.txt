@@ -1,0 +1,2 @@
+[1:42.5 — auditability scroll]
+Every ballot is signed with the agent's own secp256k1 key and bound to the Attestcoin fact hash. The QuorumRegistry contract recovers every signature on-chain and applies the quorum gate — two of three. The decision becomes a Creditcoin fact that any lending protocol can consume.
