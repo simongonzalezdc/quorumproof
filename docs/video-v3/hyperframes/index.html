@@ -201,6 +201,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .reject-line { margin: 8px 0 0; font: 500 22px/1.5 var(--mono); color: var(--ink); letter-spacing: 0.04em; }
 .close-strip { position: absolute; left: 24px; right: 24px; bottom: 34px; z-index: 40; display: flex; align-items: baseline; justify-content: space-between; gap: 28px; padding: 14px 18px 12px; border-top: 2px solid var(--rule-strong); background: var(--paper-raised); }
 .brand-seal { width: 34px; height: 34px; vertical-align: -9px; margin-right: 10px; }
+  .masthead-seal { width: 30px; height: 30px; vertical-align: -8px; margin-right: 12px; }
   .close-brandline { font: 700 26px var(--serif); color: var(--ink); }
 .close-brandline .brand-mark { color: var(--ink); margin-right: 6px; }
 .close-thesis { font: 500 17px/1.4 var(--mono); color: var(--ink-dim); letter-spacing: 0.03em; }
@@ -259,7 +260,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 </style>
 </head>
 <body>
-<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="126.46" data-fps="30">
+<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="125.66" data-fps="30">
 
   <!-- CHROME (persistent, subordinate) -->
   <header id="chrome">
@@ -289,7 +290,12 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
       
     <header class="masthead">
       <div class="brand">
-        <span class="brand-mark" aria-hidden="true">§</span>
+        
+            <svg class="seal brand-seal masthead-seal" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
+              <text class="seal-center" x="50" y="57.5">QP</text>
+            </svg>
         <div class="brand-text">
           <h1 class="brand-name">QuorumProof</h1>
           <p class="brand-tag">an agent fleet that reaches auditable decisions from attestcoin-verified cross-chain facts</p>
@@ -383,7 +389,12 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
       
     <header class="masthead">
       <div class="brand">
-        <span class="brand-mark" aria-hidden="true">§</span>
+        
+            <svg class="seal brand-seal masthead-seal" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
+              <text class="seal-center" x="50" y="57.5">QP</text>
+            </svg>
         <div class="brand-text">
           <h1 class="brand-name">QuorumProof</h1>
           <p class="brand-tag">an agent fleet that reaches auditable decisions from attestcoin-verified cross-chain facts</p>
@@ -561,7 +572,12 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
       
     <header class="masthead">
       <div class="brand">
-        <span class="brand-mark" aria-hidden="true">§</span>
+        
+            <svg class="seal brand-seal masthead-seal" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
+              <text class="seal-center" x="50" y="57.5">QP</text>
+            </svg>
         <div class="brand-text">
           <h1 class="brand-name">QuorumProof</h1>
           <p class="brand-tag">an agent fleet that reaches auditable decisions from attestcoin-verified cross-chain facts</p>
@@ -735,7 +751,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div></section>
 
   <!-- V9 · SIGNED BALLOTS 94.4 → 99.0 -->
-  <section class="view clip dark" id="v-sigs" data-start="97.5" data-duration="4.0">
+  <section class="view clip dark" id="v-sigs" data-start="96.7" data-duration="4.0">
     <div class="detail-col wide centered">
       <p class="case-strip mv">QP-001 · EVERY BALLOT SIGNED · SECP256K1 · SIGNATURES RECOVERED + VERIFIED · EIP-191 · QUORUMREGISTRY CC3-READY</p>
       <p class="hint mv">Round II ballots, signature on the record — bound to factHash 0xbcd02b57ca…7824</p>
@@ -764,7 +780,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div></section>
 
   <!-- V10 · FACT & PROOF DETAIL 99.0 → 104.0 -->
-  <section class="view clip dark" id="v-proof" data-start="101.5" data-duration="4.6">
+  <section class="view clip dark" id="v-proof" data-start="100.7" data-duration="4.6">
     <div class="detail-col wide">
       <p class="case-strip mv">QP-001 · FACT &amp; PROOF DETAIL · BLOCKPROVER 0x…FD2 ON CC3</p>
       <div class="pd-grid">
@@ -795,7 +811,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div></section>
 
   <!-- V11 · RAW PROOF BYTES 104.0 → 108.5 -->
-  <section class="view clip dark" id="v-bytes" data-start="106.1" data-duration="4.4">
+  <section class="view clip dark" id="v-bytes" data-start="105.3" data-duration="4.4">
     <div class="detail-col wide centered">
       <p class="case-strip mv">QP-001 · RAW PROOF BYTES — TXBYTES AS PROVEN INTO THE CC3 PRECOMPILE</p>
       <div class="rawbytes mv">
@@ -805,7 +821,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div></section>
 
   <!-- V12 · DOCKET 108.5 → 112.9 -->
-  <section class="view clip dark" id="v-docket" data-start="110.5" data-duration="4.0">
+  <section class="view clip dark" id="v-docket" data-start="109.7" data-duration="4.0">
     <div class="detail-col wide centered">
       <p class="case-strip mv">DOCKET OF PROCEEDINGS · CREDITCOIN CC3 TESTNET</p>
       <table class="ruled docket big-table">
@@ -834,7 +850,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div></section>
 
   <!-- V13 · THE EARNED CERTIFICATE — final subject, held through the last narration line 115.0 → 124.78 -->
-  <section class="view clip" id="v-cert2" data-start="114.5" data-duration="11.96">
+  <section class="view clip" id="v-cert2" data-start="113.7" data-duration="11.96">
     
     <div class="detail-col cert-detail">
       <p class="case-strip mv">QP-001 · repayment-received · THE SEALED DECISION — CERTIFICATE OF QUORUM</p>
@@ -925,13 +941,13 @@ const fade = (id, t, d) => tl.fromTo(id, { opacity: 0 }, { opacity: 1, duration:
 
 /* chrome: masthead settles in; progress fills over the full runtime (linear, 121.5s) */
 tl.fromTo('#chrome', { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: E_OUT }, 0.1);
-tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 126.46, ease: 'none' }, 0);
+tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 125.66, ease: 'none' }, 0);
 
 /* chapter state swaps — hard kills for seek safety */
 tl.to('#st1', { opacity: 0, duration: 0.001 }, 21.32); tl.set('#st1', { opacity: 0 }, 21.3333); tl.set('#st2', { opacity: 1 }, 21.3333);
 tl.to('#st2', { opacity: 0, duration: 0.001 }, 48.82); tl.set('#st2', { opacity: 0 }, 48.8333); tl.set('#st3', { opacity: 1 }, 48.8333);
-tl.to('#st3', { opacity: 0, duration: 0.001 }, 97.49); tl.set('#st3', { opacity: 0 }, 97.5); tl.set('#st4', { opacity: 1 }, 97.5);
-tl.to('#st4', { opacity: 0, duration: 0.001 }, 114.49); tl.set('#st4', { opacity: 0 }, 114.5); tl.set('#st5', { opacity: 1 }, 114.5);
+tl.to('#st3', { opacity: 0, duration: 0.001 }, 96.69); tl.set('#st3', { opacity: 0 }, 96.7); tl.set('#st4', { opacity: 1 }, 96.7);
+tl.to('#st4', { opacity: 0, duration: 0.001 }, 113.69); tl.set('#st4', { opacity: 0 }, 113.7); tl.set('#st5', { opacity: 1 }, 113.7);
 
 /* V1 hook — lines land on the narration clock (1.09/8.41), then clear for the product */
 up('#hk1', 1.05, 0.7, 26);
@@ -1011,22 +1027,22 @@ fade('#v-dissent .dissent-others', 91.6);
 fade('#v-dissent .dissent-block', 92.6);
 
 /* V9 signed ballots ("Every ballot is signed… secp256k1" 94.85→) */
-up('#v-sigs .case-strip', 97.65, 0.4);
-fade('#v-sigs .hint', 97.9, 0.35);
+up('#v-sigs .case-strip', 96.85, 0.4);
+fade('#v-sigs .hint', 97.1, 0.35);
 tl.fromTo(['#sg0', '#sg1', '#sg2'], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: E_OUT, stagger: 0.3 }, 95.0);
 
 /* V10 fact & proof detail */
-up('#v-proof .case-strip', 101.65, 0.4);
-tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 101.9);
+up('#v-proof .case-strip', 100.85, 0.4);
+tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 101.1);
 
 /* V11 raw bytes (large type, filled canvas, stationary single page) */
-up('#v-bytes .case-strip', 106.25, 0.4);
-up('#v-bytes .rawbytes', 106.45, 0.5, 14);
+up('#v-bytes .case-strip', 105.45, 0.4);
+up('#v-bytes .rawbytes', 105.65, 0.5, 14);
 
 /* V12 docket ("The decision becomes a Creditcoin fact…") */
-up('#v-docket .case-strip', 110.65, 0.4);
-tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 110.9);
-fade('#v-docket .hint', 112.6);
+up('#v-docket .case-strip', 109.85, 0.4);
+tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 110.1);
+fade('#v-docket .hint', 111.8);
 
 /* V7b REJECT verdict — QP-002 focal payoff (stamp class) */
 stamp('#v-reject .reject-plate', 90.55);
@@ -1039,12 +1055,12 @@ fade('#v-dissent .dissent-others', 94.4, 0.4);
 fade('#v-dissent .dissent-block', 95.4, 0.45);
 
 /* V13 the earned certificate — FINAL SUBJECT, held through the last narration line */
-up('#v-cert2 .case-strip', 114.55, 0.4);
-up('#v-cert2 .cert-doc', 114.7, 0.5, 16);
-tl.fromTo('#v-cert2 tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.1 }, 114.95);
-stamp('#v-cert2 .big-seal', 117.6);
-fade('#v-cert2 .big-enf', 118.4);
-tl.fromTo('#cl-strip', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 121.5);
+up('#v-cert2 .case-strip', 113.75, 0.4);
+up('#v-cert2 .cert-doc', 113.9, 0.5, 16);
+tl.fromTo('#v-cert2 tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.1 }, 114.15);
+stamp('#v-cert2 .big-seal', 116.8);
+fade('#v-cert2 .big-enf', 117.6);
+tl.fromTo('#cl-strip', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 120.7);
 
 
 
