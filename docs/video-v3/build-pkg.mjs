@@ -1,13 +1,20 @@
 #!/usr/bin/env node
-/* QP-VIDEO-v3 — Hyperframes package builder.
- * Reuses the APP'S REAL HTML component idioms (src/web/index.html + app.js render
- * functions ported verbatim) rendered as native Hyperframes elements on ONE #master
- * coordinate grid — no nested canvases, no screenshots-in-boxes.
- * All case data comes from src/web/seed-trace.json (the app's own deterministic seed).
+/* QP-VIDEO-v3.1 — Hyperframes package builder (fix pass: Astra 4×P0/2×P1/2×P2 + battery P3s + ultraqa BLOCKER-1).
+ * Reuses the APP'S REAL HTML component idioms (src/web/index.html + app.js render functions
+ * ported verbatim) rendered as native Hyperframes elements on ONE #master coordinate grid.
+ * Case data comes from src/web/seed-trace.json (the app's own deterministic seed).
  * Motion: authored GSAP only (ballot place 180ms, stamp 250ms, entrances, count-ups).
  * Chrome: ONE subordinate kyanite control-plane masthead + 3px progress tick (canon).
- * Seek-safety: every revealed element starts opacity:0 in CSS; tweens are fromTo 0→1;
- * text-state changes use opacity swap stacks (no onUpdate — silent seeks suppress it).
+ * Seek-safety: reveals are CSS-hidden + opacity fromTo; text-state changes are opacity
+ * swap stacks; the count-up is a digit swap-stack gated at N≥2 (ultraqa BLOCKER-1).
+ *
+ * v3.1 narration clock (new program mix 121.5s, voice-lane onsets 0.8/22.84/48.82/94.82/113.18;
+ * silencedetect −35dB/0.25s beats): sections re-timed; video PADS to the voice (121.5s).
+ * Ceremony fixes: seal exists ONLY on earned, completed certificates (close-ups);
+ * chamber certificates stay empty ruled documents until the close-up issues them;
+ * ballot secrecy window — Round I places without vote content, votes + "box opened"
+ * caption land together at the Round-II reveal; S5 = completed EXECUTE certificate
+ * close-up reprise as the final focal subject, close plate demoted to a short tail.
  * Output: hyperframes/index.html
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -44,32 +51,53 @@ function exhibitRows(f) {
         <tr class="mv exr"><th>attested to</th><td>${f.attestedHeight ? fmtInt(f.attestedHeight) : '—'} <span class="hint" style="display:inline;">(CC3 height at proof time)</span></td></tr>`;
 }
 
-function ballotRow(v, prev, id) {
+/* Round-I ballots: vote (.what) and reasoning (.why) carry class "sec" — hidden until the
+   Round-II reveal (ballot secrecy window; ultraqa P1-8). Commitment evidence (.who/.sig) shows. */
+function ballotRow(v, prev, id, secret) {
   const changed = prev && (prev.vote !== v.vote || Math.abs(prev.confidence - v.confidence) > 1e-9);
   return `
         <div class="ballot mv" id="${id}">
           <div class="ballot-head">
             <span class="who">${esc(v.agentId)}</span>
             ${changed ? '<span class="flip">revised</span>' : ''}
-            <span class="what ${esc(v.vote)}">${esc(v.vote)} ${v.confidence.toFixed(2)}</span>
+            <span class="what ${esc(v.vote)}${secret ? ' sec' : ''}">${esc(v.vote)} ${v.confidence.toFixed(2)}</span>
           </div>
           <div class="ballot-sub">
-            <span class="why">${esc(v.reasons.join(' · '))}</span>
+            <span class="why${secret ? ' sec' : ''}">${esc(v.reasons.join(' · '))}</span>
             <span class="sig">sig ${esc(short(v.signature, 8))}</span>
           </div>
         </div>`;
 }
 
-const SEAL_SVG = (cls, id) => `
+const SEAL_SVG = (cls, id, arcId) => `
             <svg class="seal ${cls || ''}"${id ? ` id="${id}"` : ''} viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
               <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
               <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
-              <defs><path id="sealarc" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
-              <text class="seal-arc"><textPath href="#sealarc" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
+              <defs><path id="${arcId}" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
+              <text class="seal-arc"><textPath href="#${arcId}" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
               <text class="seal-center" x="50" y="49">QP</text>
               <text class="seal-sub" x="50" y="61">SEALED</text>
               <line x1="34" y1="66.5" x2="66" y2="66.5" stroke="currentColor" stroke-width="0.9"/>
             </svg>`;
+
+/* the empty certificate document — pre-decision state. NO seal (Astra P0-1: the seal is
+   earned only by a completed decision; it exists solely in the close-up views). */
+function emptyCertDoc() {
+  return `
+          <div class="certificate">
+            <div class="cert-doc">
+              <h3 class="cert-h">Certificate of quorum decision</h3>
+              <table class="ruled cert-table"><tbody>
+                <tr><th>decision</th><td>—</td></tr>
+                <tr><th>factHash</th><td>—</td></tr>
+                <tr><th>policyId</th><td>—</td></tr>
+                <tr><th>certHash</th><td>—</td></tr>
+                <tr><th>ballots</th><td>—</td></tr>
+                <tr><th>issued</th><td>—</td></tr>
+              </tbody></table>
+            </div>
+          </div>`;
+}
 
 /* the chamber — the app's §0 component at video type scale */
 function chamber(c, idp) {
@@ -106,20 +134,7 @@ function chamber(c, idp) {
         <article class="outcome">
           <p class="verdict">Awaiting proceeding</p>
           <p class="tally">convene a proceeding to open the record</p>
-          <div class="certificate">
-            <div class="cert-doc">
-              <h3 class="cert-h">Certificate of quorum decision</h3>
-              <table class="ruled cert-table"><tbody>
-                <tr><th>decision</th><td>—</td></tr>
-                <tr><th>factHash</th><td>—</td></tr>
-                <tr><th>policyId</th><td>—</td></tr>
-                <tr><th>certHash</th><td>—</td></tr>
-                <tr><th>ballots</th><td>—</td></tr>
-                <tr><th>issued</th><td>—</td></tr>
-              </tbody></table>
-              <div class="cert-sealrow">${SEAL_SVG('')}<p class="enforcement"></p></div>
-            </div>
-          </div>
+          ${emptyCertDoc()}
         </article>
       </div>`;
   }
@@ -132,11 +147,14 @@ function chamber(c, idp) {
   const met = cert.decision === 'EXECUTE';
   const q = cert.quorum;
   const mc = meanConf(r2).toFixed(2);
-  /* approvals digit stack: seek-safe count-up (1 → 2 → 3 for the EXECUTE case) */
+  /* count-up digit stack gated at N≥2 (ultraqa BLOCKER-1): the QUORUM MET line never
+     shows with fewer than the required approvals. EXECUTE reveals at 2, counts to 3. */
   const digits = met
-    ? `<span class="digitbox" id="${idp}digits"><span class="on">1</span><span>2</span><span>3</span></span>`
+    ? `<span class="digitbox" id="${idp}digits"><span class="on">2</span><span>3</span></span>`
     : `<span>1</span>`;
-  const tallyMet = `QUORUM ${met ? 'MET' : 'NOT MET'} — ${digits}/${q.fleetSize} APPROVALS · ≥${q.required} REQUIRED${met ? ` · MEAN CONFIDENCE ${mc}` : ' · ACTION BLOCKED, CERTIFICATE RECORDED'}`;
+  const tallyMet = met
+    ? `QUORUM MET — ${digits}/${q.fleetSize} APPROVALS · ≥${q.required} REQUIRED · MEAN CONFIDENCE ${mc}`
+    : `QUORUM NOT MET — <span>1</span>/${q.fleetSize} APPROVALS · ≥${q.required} REQUIRED · ACTION BLOCKED, CERTIFICATE RECORDED`;
   return `
       <div class="chamber-head">
         <div class="chamber-title">
@@ -157,40 +175,25 @@ function chamber(c, idp) {
         <article class="ballots">
           <section class="round">
             <h3 class="round-h"><span>Round I — secret ballot</span><span class="round-box swap"><span class="on">ballot box —</span><span>votes sealed — box opened at round II</span></span></h3>
-            <div class="ballotlist">${r1.map((v, i) => ballotRow(v, null, idp + 'r1b' + i)).join('')}</div>
+            <div class="ballotlist">${r1.map((v, i) => ballotRow(v, null, idp + 'r1b' + i, true)).join('')}</div>
           </section>
           <section class="round">
             <h3 class="round-h"><span>Round II — debate &amp; revision</span><span class="round-box swap"><span class="on">ballot box —</span><span>box ${esc(short(d.trace.ballotBoxHash, 8))}</span></span></h3>
-            <div class="ballotlist">${r2.map((v, i) => ballotRow(v, r1[i], idp + 'r2b' + i)).join('')}</div>
+            <div class="ballotlist">${r2.map((v, i) => ballotRow(v, r1[i], idp + 'r2b' + i, false)).join('')}</div>
           </section>
         </article>
         <article class="outcome">
           <div class="swap verdict-swap">
-            <p class="verdict on">Awaiting proceeding</p>
+            <p class="verdict on">Awaiting verdict</p>
             <p class="verdict ${met ? 'EXECUTE' : 'REJECT'}">${cert.decision}</p>
           </div>
-          <p class="tally swap"><span class="on">convene a proceeding to open the record</span><span>${tallyMet}</span></p>
-          <div class="certificate">
-            <div class="cert-doc">
-              <h3 class="cert-h">Certificate of quorum decision</h3>
-              <table class="ruled cert-table"><tbody>
-                <tr class="mv cr"><th>decision</th><td>${met ? '<span class="ok">EXECUTE — quorum met</span>' : '<span class="bad">REJECT — quorum not met</span>'}</td></tr>
-                <tr class="mv cr"><th>factHash</th><td>${esc(short(cert.factHash, 12))}</td></tr>
-                <tr class="mv cr"><th>policyId</th><td>${esc(short(cert.policyId, 12))}</td></tr>
-                <tr class="mv cr"><th>certHash</th><td>${esc(short(cert.certHash, 12))}</td></tr>
-                <tr class="mv cr"><th>ballots</th><td>${cert.votes.length} signed · audit <span class="ok">clean</span></td></tr>
-                <tr class="mv cr"><th>issued</th><td>${esc(cert.createdAt)}</td></tr>
-              </tbody></table>
-              <div class="cert-sealrow">${SEAL_SVG('mv', idp + 'certseal')}
-                <p class="enforcement mv">${esc(d.submission.mode)} enforcement — ${esc(d.submission.note)} · deterministic fleet</p>
-              </div>
-            </div>
-          </div>
+          <p class="tally swap"><span class="on">quorum gate — ≥${q.required} of ${q.fleetSize} approvals required</span><span>${tallyMet}</span></p>
+          ${emptyCertDoc()}
         </article>
       </div>`;
 }
 
-/* masthead + clerk — the app's own header strip */
+/* masthead + clerk — the app's own header strip (§ mark in ink: brass stays seal/stamps-only) */
 function masthead() {
   return `
     <header class="masthead">
@@ -228,14 +231,14 @@ function rosterView() {
     </div>`;
 }
 
-/* certificate close-up — the cert-doc component becomes the subject */
-function certView(c) {
+/* certificate close-up — the cert-doc component becomes the subject (earned seal lives here) */
+function certView(c, stripNote, idp) {
   const d = c.data;
   const cert = d.trace.certificate;
   const met = cert.decision === 'EXECUTE';
   return `
     <div class="detail-col cert-detail">
-      <p class="case-strip mv">${c.no} · ${esc(c.label)} · CERTIFICATE OF QUORUM DECISION</p>
+      <p class="case-strip mv">${c.no} · ${esc(c.label)} · ${stripNote || 'CERTIFICATE OF QUORUM DECISION'}</p>
       <div class="cert-doc big mv">
         <h3 class="cert-h">Certificate of quorum decision</h3>
         <table class="ruled cert-table"><tbody>
@@ -246,8 +249,8 @@ function certView(c) {
           <tr class="mv"><th>ballots</th><td>${cert.votes.length} signed · audit <span class="ok">clean</span></td></tr>
           <tr class="mv"><th>issued</th><td>${esc(cert.createdAt)}</td></tr>
         </tbody></table>
-        <div class="cert-sealrow">${SEAL_SVG('big-seal mv')}
-          <p class="enforcement big-enf mv">${esc(d.submission.mode)} enforcement — ${esc(d.submission.note)} · deterministic fleet</p>
+        <div class="cert-sealrow">${SEAL_SVG('big-seal mv', null, 'sealarc-' + idp)}
+          <p class="enforcement big-enf mv">${esc(d.submission.note)} · deterministic fleet</p>
         </div>
       </div>
     </div>`;
@@ -298,7 +301,7 @@ function docketView() {
   }).join('');
   return `
     <div class="detail-col wide centered">
-      <p class="case-strip mv">§ 1 · DOCKET OF PROCEEDINGS · CREDITCOIN CC3 TESTNET</p>
+      <p class="case-strip mv">DOCKET OF PROCEEDINGS · CREDITCOIN CC3 TESTNET</p>
       <table class="ruled docket big-table">
         <thead><tr><th class="num">No.</th><th>cause</th><th>source tx</th><th class="num">approvals</th><th>decision</th><th>certHash</th><th>convened</th></tr></thead>
         <tbody>${rows}</tbody>
@@ -366,27 +369,30 @@ function sigsView(c) {
     </div>`;
 }
 
-/* raw proof bytes — the app's rawbytes component, opened */
+/* raw proof bytes — the real txBytes, large, filling the canvas (stationary single page) */
 function bytesView(c) {
   const f = c.data.trace.fact;
   return `
-    <div class="detail-col wide">
+    <div class="detail-col wide centered">
       <p class="case-strip mv">${c.no} · RAW PROOF BYTES — TXBYTES AS PROVEN INTO THE CC3 PRECOMPILE</p>
       <div class="rawbytes mv">
-        <summary>Raw proof bytes — txBytes · ${(f.txBytes.length - 2) / 2} bytes</summary>
+        <summary>Raw proof bytes — txBytes · ${(f.txBytes.length - 2) / 2} bytes · factHash ${esc(short(f.factHash, 10))}</summary>
         <pre class="bytes">${esc(f.txBytes)}</pre>
       </div>
     </div>`;
 }
 
 /* ---------- assembly ---------- */
-const ATTESTED = fmtInt(case1.data.trace.fact.attestedHeight);
+const TERM_DUR = Number(process.env.TERM_DUR || '23.95'); /* actual capture length, set after recapture */
+const TERM_START = 19.8333;   /* 1.5s decode run-up UNDER the opaque rest view */
+const TERM_CUT = 21.3333;     /* the visible cut into the terminal */
+const TERM_END = TERM_START + TERM_DUR;
 
 const html = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>QP-VIDEO-v3</title>
+<title>QP-VIDEO-v3.1</title>
 <style>
 /* ============ UNION TOKENS — audited set (audit/token-audit.mjs) ============
    [QP]  DESIGN-SYSTEM.md build contract, both themes
@@ -427,6 +433,7 @@ html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; backgro
 
 /* seek-safety: everything a tween reveals starts hidden */
 .mv { opacity: 0; }
+.sec { opacity: 0; } /* Round-I vote content: hidden until the box-open reveal */
 .swap { position: relative; display: block; }
 .swap > span, .swap > p { position: absolute; inset: 0; opacity: 0; }
 .swap > .on { position: relative; opacity: 1; }
@@ -435,9 +442,7 @@ html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; backgro
 .digitbox > span { position: absolute; left: 0; top: 0; opacity: 0; }
 .digitbox > .on { position: relative; opacity: 1; }
 
-/* ============ CHROME — one subordinate kyanite control-plane system ============
-   kyanite topbar idiom: dark #071018 panel, hairline border, bevel corner (canon),
-   mono microtype. Footprint ≈ 60px of 1080 ≈ 5.6% (below the 8% ceiling). */
+/* ============ CHROME — one subordinate kyanite control-plane system ============ */
 #chrome { position: absolute; top: 16px; left: 24px; right: 24px; height: 44px; z-index: 50;
   display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
   background: var(--ky-midnight);
@@ -458,7 +463,7 @@ html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; backgro
 .masthead { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
   padding: 20px 40px 14px; border-bottom: 1px solid var(--rule-strong); background: var(--paper); }
 .brand { display: flex; align-items: baseline; gap: 16px; }
-.brand-mark { font: 600 36px/1 var(--serif); color: var(--seal); transform: translateY(3px); }
+.brand-mark { font: 600 36px/1 var(--serif); color: var(--ink); transform: translateY(3px); } /* P2: ink, brass = seal/stamps only */
 .brand-name { margin: 0; font: 700 32px/1.1 var(--serif); letter-spacing: 0.01em; color: var(--ink); }
 .brand-tag { margin: 5px 0 0; font: 500 13px/1.4 var(--mono); letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-dim); }
 .netstatus { margin: 0; display: flex; align-items: center; gap: 10px; font: 400 14px/1 var(--mono); letter-spacing: 0.08em; color: var(--ink-dim); white-space: nowrap; }
@@ -519,8 +524,8 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .ballot .what.DENY { color: var(--verdict-reject); }
 .ballot .flip { font: 600 12px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); border: 1px solid var(--ink-dim); padding: 3px 7px 2px; white-space: nowrap; }
 .ballot-sub { display: flex; justify-content: space-between; gap: 18px; margin-top: 2px; }
-.ballot .why { font: 400 14px/1.5 var(--mono); color: var(--ink-dim); }
-.ballot .sig { font: 400 14px/1.6 var(--mono); color: var(--ink-dim); white-space: nowrap; }
+.ballot .why { font: 400 17px/1.5 var(--mono); color: var(--ink-dim); } /* P0-4: evidence scale */
+.ballot .sig { font: 400 15px/1.6 var(--mono); color: var(--ink-dim); white-space: nowrap; }
 .empty { margin: 8px 0; font: 400 15px/1.5 var(--mono); color: var(--ink-dim); font-style: italic; }
 
 .outcome { padding: 22px 26px; border-left: 1px solid var(--rule); }
@@ -579,9 +584,9 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .openrow { font: 600 18px/1.5 var(--mono); letter-spacing: 0.08em; color: var(--ink); }
 
 .pd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
-.sub-h { margin: 0 0 10px; font: 600 15px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-dim); }
-.small-table th { width: 190px; font-size: 14px; }
-.small-table td { font-size: 15.5px; }
+.sub-h { margin: 0 0 10px; font: 600 16px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-dim); }
+.small-table th { width: 190px; font-size: 16px; }   /* P0-4: trace labels at evidence scale */
+.small-table td { font-size: 17px; }
 
 .sig-row { border-bottom: 1px solid var(--rule); padding: 18px 0 16px; }
 .sig-row .who { font: 500 24px/1.4 var(--mono); color: var(--ink); }
@@ -590,11 +595,11 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .sig-row .what.DENY { color: var(--verdict-reject); }
 .sig-full { font: 400 16px/1.7 var(--mono); color: var(--ink-dim); overflow-wrap: anywhere; margin-top: 6px; }
 
-.rawbytes { margin-top: 24px; border: 1px solid var(--rule); background: var(--paper-raised); }
-.rawbytes summary { display: block; padding: 16px 20px; font: 500 16px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.1em;
+.rawbytes { border: 1px solid var(--rule); background: var(--paper-raised); }
+.rawbytes summary { display: block; padding: 18px 22px; font: 500 18px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.1em;
   color: var(--ink-dim); border-bottom: 1px solid var(--rule); }
-.bytes { margin: 0; padding: 20px; max-height: 640px; overflow: hidden;
-  font: 400 15px/1.7 var(--mono); color: var(--ink-dim); word-break: break-all; white-space: pre-wrap; }
+.bytes { margin: 0; padding: 22px; overflow: hidden;
+  font: 400 20px/1.7 var(--mono); color: var(--ink-dim); word-break: break-all; white-space: pre-wrap; } /* P0-4: fills the canvas */
 
 /* ============ HOOK + CLOSE (QP serif voice on paper) ============ */
 .hook-block { position: absolute; left: 140px; right: 200px; top: 76px; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
@@ -614,7 +619,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 </style>
 </head>
 <body>
-<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="119.1" data-fps="30">
+<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="121.5" data-fps="30">
 
   <!-- CHROME (persistent, subordinate) -->
   <header id="chrome">
@@ -638,61 +643,63 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div>
   </section>
 
-  <!-- V2 · DASHBOARD AT REST 10.1 → 21.5 -->
-  <section class="view clip" id="v-rest" data-start="10.1" data-duration="11.4">
+  <!-- V2 · DASHBOARD AT REST 10.1 → 21.33 (no seal on the empty certificate) -->
+  <section class="view clip" id="v-rest" data-start="10.1" data-duration="11.2333">
     <div class="app-page">
       ${masthead()}
       <section class="chamber">${chamber('awaiting', 'rst-')}</section>
     </div>
   </section>
 
-  <!-- V3 · TERMINAL — real verify-live capture, full-bleed. The video starts 1.5s early
-       UNDER the opaque rest view so it is fully decoded when the cut reveals it at 21.5. -->
-  <video class="clip" id="v-term" data-start="20.0" data-duration="23.97" data-media-start="0"
+  <!-- V3 · TERMINAL — real verify-live capture; starts 1.5s early UNDER the rest view -->
+  <video class="clip" id="v-term" data-start="${TERM_START}" data-duration="${TERM_DUR}" data-media-start="0"
          src="assets/terminal-verify-live.mp4" muted playsinline preload="auto"
          style="position:absolute; inset:0; width:1920px; height:1080px; object-fit:cover; z-index:0;"></video>
-  <img class="clip" id="v-term-hold" data-start="43.93" data-duration="5.42" src="assets/terminal-hold.png"
+  <img class="clip" id="v-term-hold" data-start="${(TERM_END - 0.0333).toFixed(4)}" data-duration="${(48.8333 - TERM_END + 0.0333).toFixed(4)}" src="assets/terminal-hold.png"
        style="position:absolute; inset:0; width:1920px; height:1080px; object-fit:cover; z-index:1;"/>
 
-  <!-- V4 · FLEET ROSTER 49.35 → 56.0 -->
-  <section class="view clip" id="v-roster" data-start="49.35" data-duration="6.65">${rosterView()}</section>
+  <!-- V4 · FLEET ROSTER 48.83 → 56.0 -->
+  <section class="view clip" id="v-roster" data-start="48.8333" data-duration="7.1667">${rosterView()}</section>
 
-  <!-- V5 · CHAMBER QP-001 — exhibit → ballots → quorum → EXECUTE 56.0 → 68.4 -->
-  <section class="view clip" id="v-ch1" data-start="56.0" data-duration="12.4">
+  <!-- V5 · CHAMBER QP-001 — exhibit → secret ballots → reveal → quorum → verdict 56.0 → 66.2 -->
+  <section class="view clip" id="v-ch1" data-start="56.0" data-duration="10.2">
     <div class="app-page">
       ${masthead()}
       <section class="chamber">${chamber(case1, 'c1-')}</section>
     </div>
   </section>
 
-  <!-- V6 · CERTIFICATE CLOSE-UP QP-001 68.4 → 72.3 -->
-  <section class="view clip" id="v-cert" data-start="68.4" data-duration="3.9">${certView(case1)}</section>
+  <!-- V6 · CERTIFICATE CLOSE-UP QP-001 — the earned seal 66.2 → 70.2 -->
+  <section class="view clip" id="v-cert" data-start="66.2" data-duration="4.0">${certView(case1, null, 'v-cert')}</section>
 
-  <!-- V7 · CHAMBER QP-002 — dissent → REJECT 72.3 → 86.3 -->
-  <section class="view clip" id="v-ch2" data-start="72.3" data-duration="14.0">
+  <!-- V7 · CHAMBER QP-002 — secret ballots → reveal → dissent → REJECT 70.2 → 90.4 -->
+  <section class="view clip" id="v-ch2" data-start="70.2" data-duration="20.2">
     <div class="app-page">
       ${masthead()}
       <section class="chamber">${chamber(case2, 'c2-')}</section>
     </div>
   </section>
 
-  <!-- V8 · DISSENT CLOSE-UP QP-002 86.3 → 92.63 -->
-  <section class="view clip" id="v-dissent" data-start="86.3" data-duration="6.35">${dissentView(case2)}</section>
+  <!-- V8 · DISSENT CLOSE-UP QP-002 90.4 → 94.4 -->
+  <section class="view clip" id="v-dissent" data-start="90.4" data-duration="4.0">${dissentView(case2)}</section>
 
-  <!-- V9 · DOCKET 92.65 → 96.8 -->
-  <section class="view clip" id="v-docket" data-start="92.65" data-duration="4.15">${docketView()}</section>
+  <!-- V9 · SIGNED BALLOTS 94.4 → 99.0 -->
+  <section class="view clip" id="v-sigs" data-start="94.4" data-duration="4.6">${sigsView(case1)}</section>
 
-  <!-- V10 · FACT & PROOF DETAIL 96.8 → 102.3 -->
-  <section class="view clip" id="v-proof" data-start="96.8" data-duration="5.5">${proofView(case1)}</section>
+  <!-- V10 · FACT & PROOF DETAIL 99.0 → 104.0 -->
+  <section class="view clip" id="v-proof" data-start="99.0" data-duration="5.0">${proofView(case1)}</section>
 
-  <!-- V11 · SIGNED BALLOTS 102.3 → 106.5 -->
-  <section class="view clip" id="v-sigs" data-start="102.3" data-duration="4.2">${sigsView(case1)}</section>
+  <!-- V11 · RAW PROOF BYTES 104.0 → 108.5 -->
+  <section class="view clip" id="v-bytes" data-start="104.0" data-duration="4.5">${bytesView(case1)}</section>
 
-  <!-- V12 · RAW PROOF BYTES 106.5 → 111.0 -->
-  <section class="view clip" id="v-bytes" data-start="106.5" data-duration="4.5">${bytesView(case1)}</section>
+  <!-- V12 · DOCKET 108.5 → 112.9 -->
+  <section class="view clip" id="v-docket" data-start="108.5" data-duration="4.4">${docketView()}</section>
 
-  <!-- V13 · CLOSE 111.0 → 119.1 -->
-  <section class="view clip" id="v-close" data-start="111.0" data-duration="8.1">
+  <!-- V13 · THE EARNED CERTIFICATE, reprised as the closing subject 112.9 → 117.2 -->
+  <section class="view clip" id="v-cert2" data-start="112.9" data-duration="4.3">${certView(case1, 'THE SEALED DECISION — CERTIFICATE OF QUORUM', 'v-cert2')}</section>
+
+  <!-- V14 · CLOSE TAIL 117.2 → 121.5 -->
+  <section class="view clip" id="v-close" data-start="117.2" data-duration="4.3">
     <div class="close-plate">
       <div class="close-brand mv" id="cl-brand"><span class="brand-mark" aria-hidden="true">§</span><h1 class="brand-name" style="font-size:72px;">QuorumProof</h1></div>
       <p class="close-line mv" id="cl-line">The fleet replaces the oracle. The paper trail is the product.</p>
@@ -705,11 +712,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 </div>
 <script src="assets/gsap.min.js"></script>
 <script>
-/* QP-VIDEO-v3 authored motion — GSAP only. Zero zoompan/ken-burns anywhere.
+/* QP-VIDEO-v3.1 authored motion — GSAP only. Zero zoompan/ken-burns anywhere.
    Ballot place 180ms ease-out · stamp 250ms ease-out (DESIGN-SYSTEM motion contract).
-   Eases: power2/power3/expo — smooth, high-quality. Reading surfaces stay stationary.
-   All reveals are opacity fromTo 0→1 (CSS holds the hidden state), so any render seek
-   shows the correct frame. Text-state changes are opacity swap stacks — no onUpdate. */
+   Clock: narration onsets 0.8/22.84/48.82/94.82/113.18 (voice-lane truth, program mix
+   121.5s); beats from silencedetect on the gained narration. */
 const tl = gsap.timeline({ paused: true });
 const E_OUT = 'power3.out';
 const up = (id, t, d, y) => tl.fromTo(id, { opacity: 0, y: y || 14 }, { opacity: 1, y: 0, duration: d || 0.5, ease: E_OUT }, t);
@@ -717,116 +723,124 @@ const place = (id, t) => tl.fromTo(id, { opacity: 0, y: 4 }, { opacity: 1, y: 0,
 const stamp = (id, t) => tl.fromTo(id, { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, t); /* 250ms stamp */
 const fade = (id, t, d) => tl.fromTo(id, { opacity: 0 }, { opacity: 1, duration: d || 0.4, ease: 'power2.out' }, t);
 
-/* chrome: masthead settles in; progress fills over the full runtime (linear) */
+/* chrome: masthead settles in; progress fills over the full runtime (linear, 121.5s) */
 tl.fromTo('#chrome', { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: E_OUT }, 0.1);
-tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 119.1, ease: 'none' }, 0);
+tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 121.5, ease: 'none' }, 0);
 
-/* chapter state swaps — bound to the same clock as the evidence (hard kills for seek safety) */
-tl.to('#st1', { opacity: 0, duration: 0.001 }, 21.49); tl.set('#st1', { opacity: 0 }, 21.5); tl.set('#st2', { opacity: 1 }, 21.5);
-tl.to('#st2', { opacity: 0, duration: 0.001 }, 49.34); tl.set('#st2', { opacity: 0 }, 49.35); tl.set('#st3', { opacity: 1 }, 49.35);
-tl.to('#st3', { opacity: 0, duration: 0.001 }, 92.64); tl.set('#st3', { opacity: 0 }, 92.65); tl.set('#st4', { opacity: 1 }, 92.65);
-tl.to('#st4', { opacity: 0, duration: 0.001 }, 110.99); tl.set('#st4', { opacity: 0 }, 111.0); tl.set('#st5', { opacity: 1 }, 111.0);
+/* chapter state swaps — hard kills for seek safety */
+tl.to('#st1', { opacity: 0, duration: 0.001 }, 21.32); tl.set('#st1', { opacity: 0 }, 21.3333); tl.set('#st2', { opacity: 1 }, 21.3333);
+tl.to('#st2', { opacity: 0, duration: 0.001 }, 48.82); tl.set('#st2', { opacity: 0 }, 48.8333); tl.set('#st3', { opacity: 1 }, 48.8333);
+tl.to('#st3', { opacity: 0, duration: 0.001 }, 94.39); tl.set('#st3', { opacity: 0 }, 94.4); tl.set('#st4', { opacity: 1 }, 94.4);
+tl.to('#st4', { opacity: 0, duration: 0.001 }, 112.89); tl.set('#st4', { opacity: 0 }, 112.9); tl.set('#st5', { opacity: 1 }, 112.9);
 
-/* V1 hook — lines land on the narration clock, then clear for the product */
-up('#hk1', 0.95, 0.7, 26);
+/* V1 hook — lines land on the narration clock (1.09/8.41), then clear for the product */
+up('#hk1', 1.05, 0.7, 26);
 up('#hk2', 4.3, 0.7, 26);
-up('#hk3', 8.35, 0.6, 18);
-tl.to(['#hk1', '#hk2', '#hk3'], { opacity: 0, y: -14, duration: 0.4, ease: 'power2.in', stagger: 0.05 }, 9.6);
+up('#hk3', 8.4, 0.6, 18);
+tl.to(['#hk1', '#hk2', '#hk3'], { opacity: 0, y: -14, duration: 0.4, ease: 'power2.in', stagger: 0.05 }, 9.65);
+tl.set(['#hk1', '#hk2', '#hk3'], { opacity: 0 }, 10.1);
 
-/* V2 dashboard at rest — the product shell assembles, then holds */
-up('#v-rest .masthead', 10.25, 0.5);
-up('#v-rest .clerk', 10.4, 0.5);
-up('#v-rest .chamber', 10.55, 0.5);
-stamp('#rst-exstamp', 10.9);
+/* V2 dashboard at rest — the product shell assembles, then holds (cert stays empty, unsealed) */
+up('#v-rest .masthead', 10.5, 0.5);
+up('#v-rest .clerk', 10.65, 0.5);
+up('#v-rest .chamber', 10.8, 0.5);
+stamp('#rst-exstamp', 11.2);
 
-/* V4 roster — the fleet, named on the narration */
-up('#v-roster .case-strip', 49.5, 0.45);
-up('#v-roster .detail-h', 49.6, 0.45);
-up('#v-roster .hint', 49.75, 0.4);
-up('#ros0', 50.2, 0.45, 12);
-up('#ros1', 51.3, 0.45, 12);
-up('#ros2', 52.4, 0.45, 12);
+/* V4 roster — the fleet, named on the narration (48.98 → 57.9) */
+up('#v-roster .case-strip', 49.0, 0.45);
+up('#v-roster .detail-h', 49.1, 0.45);
+up('#v-roster .hint', 49.25, 0.4);
+up('#ros0', 49.8, 0.45, 12);
+up('#ros1', 50.9, 0.45, 12);
+up('#ros2', 52.0, 0.45, 12);
 
-/* V5 QP-001 — exhibit → round I (secret) → round II → tally → verdict → certificate */
+/* V5 QP-001 — exhibit → Round I secret → REVEAL → Round II → quorum → verdict */
 up('#v-ch1 .masthead', 56.1, 0.45);
 up('#v-ch1 .clerk', 56.2, 0.45);
 up('#v-ch1 .chamber', 56.3, 0.45);
-stamp('#c1-exstamp', 56.7); /* the exhibit stamp — 250ms */
+stamp('#c1-exstamp', 56.7);
 tl.fromTo('#v-ch1 .exr', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.08 }, 56.9);
 fade('#c1-proofchecks', 57.3);
-place('#c1-r1b0', 57.6); place('#c1-r1b1', 58.4); place('#c1-r1b2', 59.2); /* secret ballot, 180ms each */
-tl.to('#v-ch1 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 60.6);
-tl.set('#v-ch1 .round-h .swap > span:not(.on)', { opacity: 1 }, 60.61); /* boxes unsealed at round II */
-place('#c1-r2b0', 60.8); place('#c1-r2b1', 61.5); place('#c1-r2b2', 62.2); /* debate */
-/* tally: quorum line lands; approvals count up 1 → 2 → 3 (digit swap stacks — seek-safe) */
-tl.to('#v-ch1 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 63.9);
-tl.set('#v-ch1 .tally.swap > span:not(.on)', { opacity: 1 }, 63.92);
-tl.set('#c1-digits > span:nth-child(1)', { opacity: 0 }, 64.55); tl.set('#c1-digits > span:nth-child(2)', { opacity: 1 }, 64.55);
-tl.set('#c1-digits > span:nth-child(2)', { opacity: 0 }, 65.15); tl.set('#c1-digits > span:nth-child(3)', { opacity: 1 }, 65.15);
+/* Round I — commitment: ballots place WITHOUT vote content (secrecy window) */
+place('#c1-r1b0', 58.0); place('#c1-r1b1', 58.4); place('#c1-r1b2', 58.8);
+/* Round II reveal at 59.63 ("Round two is debate…"): box-open caption + votes land together */
+tl.to('#v-ch1 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 59.62);
+tl.set('#v-ch1 .round-h .swap > span:not(.on)', { opacity: 1 }, 59.63);
+tl.fromTo('#v-ch1 .sec', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power2.out', stagger: 0.06 }, 59.63);
+/* Round II — debate ballots place */
+place('#c1-r2b0', 60.0); place('#c1-r2b1', 60.5); place('#c1-r2b2', 61.0);
+/* quorum line lands ONLY at N≥2 (BLOCKER-1 gate), then counts to 3 ("three out of three" 62.62→) */
+tl.to('#v-ch1 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 63.55);
+tl.set('#v-ch1 .tally.swap > span:not(.on)', { opacity: 1 }, 63.6); /* shows "QUORUM MET — 2/3" */
+tl.set('#c1-digits > span:nth-child(1)', { opacity: 0 }, 64.3); tl.set('#c1-digits > span:nth-child(2)', { opacity: 1 }, 64.3); /* 3/3 */
 /* verdict stamp — the ceremony, 250ms */
-tl.to('#v-ch1 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 65.95);
-tl.fromTo('#v-ch1 .verdict-swap > p.EXECUTE, #v-ch1 .verdict-swap > p.REJECT', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 66.0);
-/* the certificate issues only after the verdict */
-tl.fromTo('#v-ch1 tr.cr', { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'power2.out', stagger: 0.1 }, 66.3);
-stamp('#c1-certseal', 67.1);
-fade('#v-ch1 .enforcement', 67.5);
+tl.to('#v-ch1 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 65.35);
+tl.fromTo('#v-ch1 .verdict-swap > p.EXECUTE, #v-ch1 .verdict-swap > p.REJECT', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 65.4);
 
-/* V6 certificate close-up — the signature moment becomes the subject */
-up('#v-cert .case-strip', 68.55, 0.4);
-up('#v-cert .cert-doc', 68.65, 0.5, 16);
-tl.fromTo('#v-cert tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out', stagger: 0.12 }, 68.95);
-stamp('#v-cert .big-seal', 70.2); /* the seal stamp */
-fade('#v-cert .big-enf', 70.8);
+/* V6 certificate close-up — the earned seal; the certificate ISSUES here */
+up('#v-cert .case-strip', 66.35, 0.4);
+up('#v-cert .cert-doc', 66.45, 0.5, 16);
+tl.fromTo('#v-cert tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out', stagger: 0.12 }, 66.7);
+stamp('#v-cert .big-seal', 67.6);
+fade('#v-cert .big-enf', 68.1);
 
-/* V7 QP-002 — new exhibit, ballots, the revision, REJECT */
-up('#v-ch2 .masthead', 72.4, 0.45);
-up('#v-ch2 .clerk', 72.5, 0.45);
-up('#v-ch2 .chamber', 72.6, 0.45);
-stamp('#c2-exstamp', 73.0);
-tl.fromTo('#v-ch2 .exr', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.08 }, 73.2);
-fade('#c2-proofchecks', 73.7);
-place('#c2-r1b0', 74.6); place('#c2-r1b1', 75.4); place('#c2-r1b2', 76.2);
-tl.to('#v-ch2 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 77.9);
-tl.set('#v-ch2 .round-h .swap > span:not(.on)', { opacity: 1 }, 77.91);
-place('#c2-r2b0', 78.1); place('#c2-r2b1', 78.9); place('#c2-r2b2', 79.6); /* the revised ballot places at 78.9 */
-tl.to('#v-ch2 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 83.9);
-tl.set('#v-ch2 .tally.swap > span:not(.on)', { opacity: 1 }, 83.92);
-tl.to('#v-ch2 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 83.95);
-tl.fromTo('#v-ch2 .verdict-swap > p.REJECT, #v-ch2 .verdict-swap > p.EXECUTE', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 84.0);
-tl.fromTo('#v-ch2 tr.cr', { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'power2.out', stagger: 0.1 }, 84.3);
-stamp('#c2-certseal', 85.2);
-fade('#v-ch2 .enforcement', 85.6);
+/* V7 QP-002 — exhibit → Round I secret → reveal → revised dissent → REJECT */
+up('#v-ch2 .masthead', 70.3, 0.45);
+up('#v-ch2 .clerk', 70.4, 0.45);
+up('#v-ch2 .chamber', 70.5, 0.45);
+stamp('#c2-exstamp', 70.9);
+tl.fromTo('#v-ch2 .exr', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.08 }, 71.1);
+fade('#c2-proofchecks', 71.5);
+/* Round I — secret commitment (no vote content) */
+place('#c2-r1b0', 72.4); place('#c2-r1b1', 72.8); place('#c2-r1b2', 73.2);
+/* Round II reveal at 76.7 ("The fraud hunter says yes…" = the box opening) */
+tl.to('#v-ch2 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 76.69);
+tl.set('#v-ch2 .round-h .swap > span:not(.on)', { opacity: 1 }, 76.7);
+tl.fromTo('#v-ch2 .sec', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power2.out', stagger: 0.06 }, 76.7);
+place('#c2-r2b0', 76.9); place('#c2-r2b1', 77.5); place('#c2-r2b2', 78.1); /* the revised ballot places at 77.5 */
+/* "One out of three, reject" (86.97→): quorum NOT MET line + verdict stamp */
+tl.to('#v-ch2 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 87.35);
+tl.set('#v-ch2 .tally.swap > span:not(.on)', { opacity: 1 }, 87.4);
+tl.to('#v-ch2 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 88.15);
+tl.fromTo('#v-ch2 .verdict-swap > p.REJECT, #v-ch2 .verdict-swap > p.EXECUTE', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 88.2);
 
-/* V8 dissent close-up */
-up('#v-dissent .case-strip', 86.45, 0.4);
-up('#v-dissent .big-ballot', 86.6, 0.5, 16);
-fade('#v-dissent .dissent-others', 87.5);
-fade('#v-dissent .dissent-block', 88.5);
+/* V8 dissent close-up ("the sole dissent is right there on the record") */
+up('#v-dissent .case-strip', 90.55, 0.4);
+up('#v-dissent .big-ballot', 90.7, 0.5, 16);
+fade('#v-dissent .dissent-others', 91.6);
+fade('#v-dissent .dissent-block', 92.6);
 
-/* V9 docket */
-up('#v-docket .case-strip', 92.8, 0.4);
-tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 93.0);
-fade('#v-docket .hint', 95.4);
+/* V9 signed ballots ("Every ballot is signed… secp256k1" 94.85→) */
+up('#v-sigs .case-strip', 94.55, 0.4);
+fade('#v-sigs .hint', 94.8, 0.35);
+tl.fromTo(['#sg0', '#sg1', '#sg2'], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: E_OUT, stagger: 0.3 }, 95.0);
 
 /* V10 fact & proof detail */
-up('#v-proof .case-strip', 96.95, 0.4);
-tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 97.2);
+up('#v-proof .case-strip', 99.15, 0.4);
+tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 99.4);
 
-/* V11 signed ballots */
-up('#v-sigs .case-strip', 102.45, 0.4);
-fade('#v-sigs .hint', 102.7, 0.35);
-tl.fromTo(['#sg0', '#sg1', '#sg2'], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: E_OUT, stagger: 0.3 }, 102.9);
+/* V11 raw bytes (large type, filled canvas, stationary single page) */
+up('#v-bytes .case-strip', 104.15, 0.4);
+up('#v-bytes .rawbytes', 104.35, 0.5, 14);
 
-/* V12 raw bytes */
-up('#v-bytes .case-strip', 106.65, 0.4);
-up('#v-bytes .rawbytes', 106.8, 0.5, 14);
+/* V12 docket ("The decision becomes a Creditcoin fact…") */
+up('#v-docket .case-strip', 108.65, 0.4);
+tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 108.9);
+fade('#v-docket .hint', 110.8);
 
-/* V13 close — QP voice, then the canon credit */
-tl.fromTo('#cl-brand', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 111.35);
-tl.fromTo('#cl-line', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 112.1);
-fade('#cl-sub1', 112.9, 0.5);
-fade('#cl-sub2', 113.15, 0.5);
-fade('#cl-credit', 114.2, 0.5);
+/* V13 the earned certificate, reprised — final focal subject before the tail */
+up('#v-cert2 .case-strip', 113.05, 0.4);
+up('#v-cert2 .cert-doc', 113.2, 0.5, 16);
+tl.fromTo('#v-cert2 tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.1 }, 113.45);
+stamp('#v-cert2 .big-seal', 114.3);
+fade('#v-cert2 .big-enf', 114.8);
+
+/* V14 close tail — the thesis, then the canon credit */
+tl.fromTo('#cl-brand', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out' }, 117.4);
+tl.fromTo('#cl-line', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out' }, 118.1);
+fade('#cl-sub1', 118.9, 0.5);
+fade('#cl-sub2', 119.15, 0.5);
+fade('#cl-credit', 119.7, 0.5);
 
 window.__timelines = { master: tl };
 </script>
@@ -835,4 +849,4 @@ window.__timelines = { master: tl };
 `;
 
 writeFileSync(join(here, 'hyperframes', 'index.html'), html);
-console.log('QP-VIDEO-v3 build: hyperframes/index.html written,', (html.length / 1024).toFixed(1) + ' KiB');
+console.log('QP-VIDEO-v3.1 build: hyperframes/index.html written,', (html.length / 1024).toFixed(1) + ' KiB');

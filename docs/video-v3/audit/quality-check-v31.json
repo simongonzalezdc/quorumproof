@@ -1,0 +1,112 @@
+
+{
+  "video": "/Users/simongonzalezdecruz/workspaces/buidl-ctc/docs/video-v3/render/demo-video-v3.mp4",
+  "overall_score": 52.6,
+  "all_passed": false,
+  "checks": [
+    {
+      "name": "brightness",
+      "passed": true,
+      "score": 58.9,
+      "message": "Brightness is well-balanced (brightness: 180.6)",
+      "details": {
+        "y_avg": 180.56545956104253,
+        "target_range": [
+          40,
+          200
+        ]
+      }
+    },
+    {
+      "name": "contrast",
+      "passed": false,
+      "score": 4.6,
+      "message": "Video has low contrast (std dev: 2.3). Image may appear flat. Consider increasing contrast.",
+      "details": {
+        "y_std": 2.324888545953363,
+        "y_low": 182.60548696844992,
+        "y_high": 188.55720164609053,
+        "target_range": [
+          20,
+          100
+        ],
+        "metric": {
+          "name": "ffmpeg.signalstats.YHIGH-YLOW",
+          "available": true,
+          "value": 2.324888545953363,
+          "unit": "percent_of_8bit_luma_range",
+          "raw": {
+            "y_low": 182.60548696844992,
+            "y_high": 188.55720164609053,
+            "unit": "8bit_luma"
+          }
+        }
+      }
+    },
+    {
+      "name": "saturation",
+      "passed": false,
+      "score": 2.6,
+      "message": "Video appears desaturated (estimated: 1.3%). Consider increasing saturation.",
+      "details": {
+        "saturation_pct": 1.3159599148155727,
+        "sat_avg": 2.381887445816187,
+        "metric": {
+          "name": "ffmpeg.signalstats.SATAVG",
+          "available": true,
+          "value": 1.3159599148155727,
+          "unit": "percent_of_8bit_yuv_saturation_range",
+          "raw": {
+            "value": 2.381887445816187,
+            "unit": "signalstats_chroma_magnitude",
+            "full_scale": 181.0
+          }
+        }
+      }
+    },
+    {
+      "name": "audio_levels",
+      "passed": true,
+      "score": 98.0,
+      "message": "Audio loudness is good (-17.0 LUFS)",
+      "details": {
+        "lufs": -16.99,
+        "true_peak": -1.52,
+        "loudness_range": 3.4,
+        "target_lufs": -16
+      }
+    },
+    {
+      "name": "color_balance",
+      "passed": true,
+      "score": 98.5,
+      "message": "Color balance is good (max deviation: 0.5%)",
+      "details": {
+        "r_mean": 179.64054689108366,
+        "g_mean": 181.1465015215232,
+        "b_mean": 179.99946914897123,
+        "max_deviation": 0.4905793537445905,
+        "color_cast": null
+      }
+    },
+    {
+      "name": "temporal_motion",
+      "passed": false,
+      "score": 3.4,
+      "message": "Low temporal motion detected (97% of frames are near-static). Verify this isn't an unintended slideshow \u2014 image-to-video output should actually move.",
+      "details": {
+        "static_fraction": 0.9656970362239298,
+        "mean_motion": 0.16429710848627305,
+        "median_motion": 4.87076e-05,
+        "frames_analyzed": 3644,
+        "static_frame_floor": 0.35,
+        "static_fraction_threshold": 0.9
+      }
+    }
+  ],
+  "recommendations": [
+    "Video has low contrast (std dev: 2.3). Image may appear flat. Consider increasing contrast.",
+    "Video appears desaturated (estimated: 1.3%). Consider increasing saturation.",
+    "Low temporal motion detected (97% of frames are near-static). Verify this isn't an unintended slideshow \u2014 image-to-video output should actually move."
+  ]
+}

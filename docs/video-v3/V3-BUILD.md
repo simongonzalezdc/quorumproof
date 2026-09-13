@@ -1,4 +1,4 @@
-# QP-VIDEO-v3 — BUILD RECORD
+# QP-VIDEO-v3.1 — BUILD RECORD (v3.1 fix pass; v3 history in git d61540f)
 
 Lane: QP-VIDEO-v3 (org PRODUCT lane) · 2026-09-12 · master: `docs/video-v3/demo-video-v3.mp4`
 Spec source: CEO verbatim directive (Hyperframes-native, reuse the app's real HTML, authored GSAP motion only, chrome-only Kyanite) + Astra visual-review rulings (gpt-6, `/tmp/qp-astra-review-output.md` L5644–5862, binding) + v1.3 QA gate order.
@@ -26,21 +26,27 @@ Narration: `docs/audio/program-mix-48k-final.wav` (119.100s — identical to vid
 stretching, no padding needed). Onset re-verify (silencedetect −38dB/0.45s on
 `narration-gained.wav`): **0.93 / 23.08 / 49.32 / 92.63 / 111.07** vs spec 0.8/23.0/49.2/92.6/111.0 ✓.
 
+Narration v2.1 (script 254fc7c section-3 re-render): program mix **121.500s** — video PADS to the
+voice (3645 frames @30fps). Voice-lane onsets **0.8 / 22.84 / 48.82 / 94.82 / 113.18**; verified by
+silencedetect on `narration-gained.wav` (−35dB/0.25s): speech at 0.93 / 22.95 / 48.98 / 94.85 / 113.26.
+Section-3 script now matches the data (fraud hunter's minority APPROVE 0.74→0.66, two policy denials).
+
 | # | Timeline | Frames | Scene | Content |
 |---|----------|--------|-------|---------|
-| 1 | 0 – 10.1 | 0–303 | Hook | QP serif thesis lines land on narration beats (0.95/4.3/8.35), exit 9.6 |
-| 2 | 10.1 – 21.5 | 303–645 | Dashboard at rest | Real app masthead + clerk + Chamber "awaiting proceeding" (app boot state) |
-| 3 | 21.5 – 49.35 | 645–1480 | Live proof | Real `verify-live` capture full-bleed (recapture, §4); PASS hold to section end |
-| 4 | 49.35 – 56.0 | 1480–1680 | The fleet | App §3 fleet roster (agentId, kind, address, charter) |
-| 5 | 56.0 – 68.4 | 1680–2052 | QP-001 repayment-received | Exhibit stamp → proof checks → Round I (secret) → Round II → tally count-up 1→2→3 → verdict stamp EXECUTE → certificate issues |
-| 6 | 68.4 – 72.3 | 2052–2169 | Certificate close-up | cert-doc component becomes the subject; seal stamp 250ms; enforcement line |
-| 7 | 72.3 – 86.3 | 2169–2589 | QP-002 unrelated-inflow | New exhibit re-stamp → Round I → Round II (revised badge on sentinel-02 0.74→0.66) → tally 1/3 → verdict stamp REJECT |
-| 8 | 86.3 – 92.63 | 2589–2779 | Dissent close-up | The revised ballot enlarged; others line; ACTION BLOCKED strip |
-| 9 | 92.63 – 96.8 | 2779–2904 | Docket | App §1 docket, QP-002/QP-001 rows (latest-first, app order) |
-| 10 | 96.8 – 102.3 | 2904–3069 | Fact & proof detail | App §2 decoded fact + BlockProver precompile trace |
-| 11 | 102.3 – 106.5 | 3069–3195 | Signed ballots | Round II signature lines (secp256k1), bound to factHash |
-| 12 | 106.5 – 111.0 | 3195–3330 | Raw proof bytes | App rawbytes component, txBytes as proven |
-| 13 | 111.0 – 119.1 | 3330–3573 | Close | QP serif close plate + canon Kinocut credit |
+| 1 | 0 – 10.1 | 0–303 | Hook | QP serif thesis lines land on narration beats (1.05/4.3/8.4), exit 9.65 |
+| 2 | 10.1 – 21.33 | 303–640 | Dashboard at rest | App masthead + clerk + Chamber awaiting; certificate EMPTY and UNSEALED (Astra P0-1) |
+| 3 | 21.33 – 48.83 | 640–1465 | Live proof | Real `verify-live` capture (v3.1 recapture, reflowed decoded block §4); PASS hold |
+| 4 | 48.83 – 56.0 | 1465–1680 | The fleet | App §3 fleet roster |
+| 5 | 56.0 – 66.2 | 1680–1986 | QP-001 repayment-received | Exhibit → Round I SECRET (no vote content on screen) → box-open REVEAL at 59.63 → Round II → tally gates at 2/3→3/3 → verdict stamp EXECUTE (ultraqa BLOCKER-1 fixed) |
+| 6 | 66.2 – 70.2 | 1986–2106 | Certificate close-up | The certificate ISSUES here: rows fill, brass seal stamps 250ms, enforcement line |
+| 7 | 70.2 – 90.4 | 2106–2712 | QP-002 unrelated-inflow | Exhibit → Round I SECRET → reveal at 76.7 ("The fraud hunter says yes…") → revised ballot → REJECT stamp at 88.2 ("One out of three, reject") |
+| 8 | 90.4 – 94.4 | 2712–2832 | Dissent close-up | Revised ballot enlarged; ACTION BLOCKED strip |
+| 9 | 94.4 – 99.0 | 2832–2970 | Signed ballots | secp256k1 signature lines, bound to factHash (matches narration order) |
+| 10 | 99.0 – 104.0 | 2970–3120 | Fact & proof detail | §2 decoded fact + precompile trace (labels ≥16px) |
+| 11 | 104.0 – 108.5 | 3120–3255 | Raw proof bytes | Real txBytes, 20px mono, canvas-filling single stationary page |
+| 12 | 108.5 – 112.9 | 3255–3387 | Docket | Both decisions as recorded Creditcoin facts |
+| 13 | 112.9 – 117.2 | 3387–3516 | THE SEALED DECISION (reprise) | Completed EXECUTE certificate is the final focal subject (Astra P0-2) |
+| 14 | 117.2 – 121.5 | 3516–3645 | Close tail | QP serif thesis + canon Kinocut credit, demoted to a short tail |
 
 One numbering system: chapters `01–05` (chrome state), cases `QP-001/QP-002` everywhere
 (chamber meta, docket, close-ups). No version markers, no lane status, no diagnostics on
@@ -57,8 +63,13 @@ screen (Astra #7).
   (GSAP suppresses callbacks on silent seeks; renderer verified this).
 - Text-state changes (round boxes sealed→opened, awaiting→verdict, tally line): opacity
   swap stacks with lint-mandated hard-kill `tl.set`s for non-linear seek safety.
-- Chrome: masthead settles in at 0.1s; progress tick fills 0→100% linear over 119.1s.
-- Chapter state text swaps at 21.5/49.35/92.65/111.0 — same clock as the evidence.
+- Ballot secrecy window (Round I): ballots place with agent + signature only; vote and
+  reasoning reveal together WITH the "box opened" caption swap (59.63 / 76.7) — one instant.
+- QUORUM-MET gate (ultraqa BLOCKER-1): the quorum line reveals only at N=2 ("QUORUM MET —
+  2/3") then counts to 3/3; no frame can show QUORUM MET with 1/3. QP-002 mirror: "QUORUM
+  NOT MET — 1/3" is semantically correct and verified consistent.
+- Chrome: masthead settles in at 0.1s; progress tick fills 0→100% linear over 121.5s.
+- Chapter state text swaps at 21.33/48.83/94.4/112.9 — same clock as the evidence.
 
 ## 4. Terminal capture (the one content exception)
 
@@ -68,9 +79,14 @@ CC3 testnet (read-only; exit 0; this run: attested height 25965850, proof 6995ms
 501ms, decode 349ms, `VERIFY-LIVE: PASS`). Staged midnight-ledger terminal page (v2's
 `termpage.html`, QP dark tokens) + Playwright recording, 1920×1080 → 23.97s mp4 (30fps).
 Script: `/private/tmp/qp-video-v3/capture-terminal-v3.js` (adapted from v2's).
-Render fix: video starts at 20.0s UNDER the opaque rest view (z-order) so it is fully
-decoded when the 21.5s cut reveals it — no black first-frame; a still of the final PASS
-frame (`assets/terminal-hold.png`) continues 43.93→49.35 (identical pixels, seamless join).
+v3.1: decoded fields reflow onto intentional lines (`[4] decoded:` / from→to / value /
+factHash) — no orphaned fragment (Astra P1); pump serialized so line order can never
+interleave under stdout chunk races (v3.1 first capture had a scrambled double-PASS —
+caught and recaptured). Render fix: video starts 1.5s early (19.83s) UNDER the opaque rest
+view so it is fully decoded when the 21.33s cut reveals it — no black first-frame; a still
+of the final PASS frame (`assets/terminal-hold.png`) continues 36.70→48.83 (identical
+pixels, seamless join). This run: attested height 25966260, proof 851ms, verify 332ms,
+decode 320ms, PASS (exit 0).
 
 ## 5. Chrome — ONE subordinate kyanite system (canon-copied)
 
@@ -109,6 +125,23 @@ IBM Plex Mono evidence. Brass `--seal` appears ONLY on the app's own seal + exhi
   width, terminal black first-frame (decode run-up), roster/docket/dissent/sigs vertical
   centering. Final render re-inspected at the terminal cut (645/646/650), hold join
   (1363/1365) and final frame (3572).
+
+## 6b. v3.1 fix ledger (consolidated brief → shipped state)
+
+| Finding | Fix shipped |
+|---|---|
+| Astra P0-1 seal on empty certificate | Seal removed from every pre-decision certificate; exists ONLY in the two close-ups, after the decision (chamber `stills/still-450-*`) |
+| Astra P0-2 ending payoff | S13 reprise: completed EXECUTE certificate close-up is the final focal subject (112.9–117.2); close plate demoted to a 4.3s tail |
+| Astra P0-3 narration v2.1 | New 121.5s program mix muxed; video padded to voice; every beat re-timed to the new onsets (§2 table) |
+| Astra P0-4 evidence microtype | Ballot why 17px, sig 15px; trace labels 16px, trace data 17px; raw bytes 20px mono filling the canvas |
+| Astra P1 awaiting label | "Awaiting verdict" + factual quorum-gate line in case chambers ("Awaiting proceeding" kept only in the true boot state) |
+| Astra P1 terminal reflow | Forced intentional reflow of the decoded block; serialized pump; recaptured |
+| ultraqa BLOCKER-1 QUORUM MET at 1/3 | Tally line reveals at N=2 (digit stack starts at 2); frame-exact verification n1906–n1968 |
+| battery P3 + ultraqa secrecy | Round I places without vote content; votes + box-open caption land together |
+| Astra P2 §1 sub-counter | Docket strip now "DOCKET OF PROCEEDINGS · CREDITCOIN CC3 TESTNET" |
+| Astra P2 brass § | Brand mark § renders in ink everywhere; brass only on seal + exhibit stamps |
+| battery P3 doubled phrase | "local enforcement — local enforcement:" collapsed to the seed note alone |
+| battery P3 DARK-theme beat | SKIPPED — accepted residual (scope discipline; midnight evidenced via terminal + chrome) |
 
 ## 7. Saturation-robot adjudication (measure → record → adjudicate; nothing invented)
 

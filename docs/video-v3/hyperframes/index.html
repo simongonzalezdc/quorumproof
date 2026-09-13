@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>QP-VIDEO-v3</title>
+<title>QP-VIDEO-v3.1</title>
 <style>
 /* ============ UNION TOKENS — audited set (audit/token-audit.mjs) ============
    [QP]  DESIGN-SYSTEM.md build contract, both themes
@@ -43,6 +43,7 @@ html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; backgro
 
 /* seek-safety: everything a tween reveals starts hidden */
 .mv { opacity: 0; }
+.sec { opacity: 0; } /* Round-I vote content: hidden until the box-open reveal */
 .swap { position: relative; display: block; }
 .swap > span, .swap > p { position: absolute; inset: 0; opacity: 0; }
 .swap > .on { position: relative; opacity: 1; }
@@ -51,9 +52,7 @@ html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; backgro
 .digitbox > span { position: absolute; left: 0; top: 0; opacity: 0; }
 .digitbox > .on { position: relative; opacity: 1; }
 
-/* ============ CHROME — one subordinate kyanite control-plane system ============
-   kyanite topbar idiom: dark #071018 panel, hairline border, bevel corner (canon),
-   mono microtype. Footprint ≈ 60px of 1080 ≈ 5.6% (below the 8% ceiling). */
+/* ============ CHROME — one subordinate kyanite control-plane system ============ */
 #chrome { position: absolute; top: 16px; left: 24px; right: 24px; height: 44px; z-index: 50;
   display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
   background: var(--ky-midnight);
@@ -74,7 +73,7 @@ html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; backgro
 .masthead { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
   padding: 20px 40px 14px; border-bottom: 1px solid var(--rule-strong); background: var(--paper); }
 .brand { display: flex; align-items: baseline; gap: 16px; }
-.brand-mark { font: 600 36px/1 var(--serif); color: var(--seal); transform: translateY(3px); }
+.brand-mark { font: 600 36px/1 var(--serif); color: var(--ink); transform: translateY(3px); } /* P2: ink, brass = seal/stamps only */
 .brand-name { margin: 0; font: 700 32px/1.1 var(--serif); letter-spacing: 0.01em; color: var(--ink); }
 .brand-tag { margin: 5px 0 0; font: 500 13px/1.4 var(--mono); letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-dim); }
 .netstatus { margin: 0; display: flex; align-items: center; gap: 10px; font: 400 14px/1 var(--mono); letter-spacing: 0.08em; color: var(--ink-dim); white-space: nowrap; }
@@ -135,8 +134,8 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .ballot .what.DENY { color: var(--verdict-reject); }
 .ballot .flip { font: 600 12px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); border: 1px solid var(--ink-dim); padding: 3px 7px 2px; white-space: nowrap; }
 .ballot-sub { display: flex; justify-content: space-between; gap: 18px; margin-top: 2px; }
-.ballot .why { font: 400 14px/1.5 var(--mono); color: var(--ink-dim); }
-.ballot .sig { font: 400 14px/1.6 var(--mono); color: var(--ink-dim); white-space: nowrap; }
+.ballot .why { font: 400 17px/1.5 var(--mono); color: var(--ink-dim); } /* P0-4: evidence scale */
+.ballot .sig { font: 400 15px/1.6 var(--mono); color: var(--ink-dim); white-space: nowrap; }
 .empty { margin: 8px 0; font: 400 15px/1.5 var(--mono); color: var(--ink-dim); font-style: italic; }
 
 .outcome { padding: 22px 26px; border-left: 1px solid var(--rule); }
@@ -195,9 +194,9 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .openrow { font: 600 18px/1.5 var(--mono); letter-spacing: 0.08em; color: var(--ink); }
 
 .pd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
-.sub-h { margin: 0 0 10px; font: 600 15px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-dim); }
-.small-table th { width: 190px; font-size: 14px; }
-.small-table td { font-size: 15.5px; }
+.sub-h { margin: 0 0 10px; font: 600 16px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-dim); }
+.small-table th { width: 190px; font-size: 16px; }   /* P0-4: trace labels at evidence scale */
+.small-table td { font-size: 17px; }
 
 .sig-row { border-bottom: 1px solid var(--rule); padding: 18px 0 16px; }
 .sig-row .who { font: 500 24px/1.4 var(--mono); color: var(--ink); }
@@ -206,11 +205,11 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .sig-row .what.DENY { color: var(--verdict-reject); }
 .sig-full { font: 400 16px/1.7 var(--mono); color: var(--ink-dim); overflow-wrap: anywhere; margin-top: 6px; }
 
-.rawbytes { margin-top: 24px; border: 1px solid var(--rule); background: var(--paper-raised); }
-.rawbytes summary { display: block; padding: 16px 20px; font: 500 16px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.1em;
+.rawbytes { border: 1px solid var(--rule); background: var(--paper-raised); }
+.rawbytes summary { display: block; padding: 18px 22px; font: 500 18px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.1em;
   color: var(--ink-dim); border-bottom: 1px solid var(--rule); }
-.bytes { margin: 0; padding: 20px; max-height: 640px; overflow: hidden;
-  font: 400 15px/1.7 var(--mono); color: var(--ink-dim); word-break: break-all; white-space: pre-wrap; }
+.bytes { margin: 0; padding: 22px; overflow: hidden;
+  font: 400 20px/1.7 var(--mono); color: var(--ink-dim); word-break: break-all; white-space: pre-wrap; } /* P0-4: fills the canvas */
 
 /* ============ HOOK + CLOSE (QP serif voice on paper) ============ */
 .hook-block { position: absolute; left: 140px; right: 200px; top: 76px; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
@@ -230,7 +229,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 </style>
 </head>
 <body>
-<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="119.1" data-fps="30">
+<div id="master" data-composition-id="master" data-width="1920" data-height="1080" data-duration="121.5" data-fps="30">
 
   <!-- CHROME (persistent, subordinate) -->
   <header id="chrome">
@@ -254,8 +253,8 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div>
   </section>
 
-  <!-- V2 · DASHBOARD AT REST 10.1 → 21.5 -->
-  <section class="view clip" id="v-rest" data-start="10.1" data-duration="11.4">
+  <!-- V2 · DASHBOARD AT REST 10.1 → 21.33 (no seal on the empty certificate) -->
+  <section class="view clip" id="v-rest" data-start="10.1" data-duration="11.2333">
     <div class="app-page">
       
     <header class="masthead">
@@ -310,6 +309,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
         <article class="outcome">
           <p class="verdict">Awaiting proceeding</p>
           <p class="tally">convene a proceeding to open the record</p>
+          
           <div class="certificate">
             <div class="cert-doc">
               <h3 class="cert-h">Certificate of quorum decision</h3>
@@ -321,16 +321,6 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
                 <tr><th>ballots</th><td>—</td></tr>
                 <tr><th>issued</th><td>—</td></tr>
               </tbody></table>
-              <div class="cert-sealrow">
-            <svg class="seal " viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
-              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
-              <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
-              <defs><path id="sealarc" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
-              <text class="seal-arc"><textPath href="#sealarc" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
-              <text class="seal-center" x="50" y="49">QP</text>
-              <text class="seal-sub" x="50" y="61">SEALED</text>
-              <line x1="34" y1="66.5" x2="66" y2="66.5" stroke="currentColor" stroke-width="0.9"/>
-            </svg><p class="enforcement"></p></div>
             </div>
           </div>
         </article>
@@ -338,16 +328,15 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div>
   </section>
 
-  <!-- V3 · TERMINAL — real verify-live capture, full-bleed. The video starts 1.5s early
-       UNDER the opaque rest view so it is fully decoded when the cut reveals it at 21.5. -->
-  <video class="clip" id="v-term" data-start="20.0" data-duration="23.97" data-media-start="0"
+  <!-- V3 · TERMINAL — real verify-live capture; starts 1.5s early UNDER the rest view -->
+  <video class="clip" id="v-term" data-start="19.8333" data-duration="16.8667" data-media-start="0"
          src="assets/terminal-verify-live.mp4" muted playsinline preload="auto"
          style="position:absolute; inset:0; width:1920px; height:1080px; object-fit:cover; z-index:0;"></video>
-  <img class="clip" id="v-term-hold" data-start="43.93" data-duration="5.42" src="assets/terminal-hold.png"
+  <img class="clip" id="v-term-hold" data-start="36.6667" data-duration="12.1666" src="assets/terminal-hold.png"
        style="position:absolute; inset:0; width:1920px; height:1080px; object-fit:cover; z-index:1;"/>
 
-  <!-- V4 · FLEET ROSTER 49.35 → 56.0 -->
-  <section class="view clip" id="v-roster" data-start="49.35" data-duration="6.65">
+  <!-- V4 · FLEET ROSTER 48.83 → 56.0 -->
+  <section class="view clip" id="v-roster" data-start="48.8333" data-duration="7.1667">
     <div class="detail-col wide centered">
       <p class="case-strip mv">THE FLEET · THREE AGENTS, THREE MANDATES · EPHEMERAL SECP256K1 CONTROL KEYS</p>
       <h2 class="detail-h mv">Fleet roster</h2>
@@ -358,8 +347,8 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
         <tr class="mv" id="ros2"><th>meridian-03</th><td>deterministic · 0xe5304a23cD80d6174dc8Cdb0b48c3979da311338<br/><span class="hint">Market &amp; timing analyst: partial repayments get weighted, not zeroed.</span></td></tr></tbody></table>
     </div></section>
 
-  <!-- V5 · CHAMBER QP-001 — exhibit → ballots → quorum → EXECUTE 56.0 → 68.4 -->
-  <section class="view clip" id="v-ch1" data-start="56.0" data-duration="12.4">
+  <!-- V5 · CHAMBER QP-001 — exhibit → secret ballots → reveal → quorum → verdict 56.0 → 66.2 -->
+  <section class="view clip" id="v-ch1" data-start="56.0" data-duration="10.2">
     <div class="app-page">
       
     <header class="masthead">
@@ -414,10 +403,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
           <div class="ballot-head">
             <span class="who">ledger-01</span>
             
-            <span class="what APPROVE">APPROVE 0.86</span>
+            <span class="what APPROVE sec">APPROVE 0.86</span>
           </div>
           <div class="ballot-sub">
-            <span class="why">recipient matches policy lender · amount 3.5999664 ETH within tolerated window · fact proven on CC3 via BlockProver precompile 0x...FD2 on CC3 testnet (eth_call/staticCall)</span>
+            <span class="why sec">recipient matches policy lender · amount 3.5999664 ETH within tolerated window · fact proven on CC3 via BlockProver precompile 0x...FD2 on CC3 testnet (eth_call/staticCall)</span>
             <span class="sig">sig 0x1dca79b4…621b</span>
           </div>
         </div>
@@ -425,10 +414,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
           <div class="ballot-head">
             <span class="who">sentinel-02</span>
             
-            <span class="what APPROVE">APPROVE 0.74</span>
+            <span class="what APPROVE sec">APPROVE 0.74</span>
           </div>
           <div class="ballot-sub">
-            <span class="why">no anomalies: value 3.5999664 ETH, distinct counterparties, status 1</span>
+            <span class="why sec">no anomalies: value 3.5999664 ETH, distinct counterparties, status 1</span>
             <span class="sig">sig 0x8d0a23dd…151c</span>
           </div>
         </div>
@@ -436,10 +425,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
           <div class="ballot-head">
             <span class="who">meridian-03</span>
             
-            <span class="what APPROVE">APPROVE 0.90</span>
+            <span class="what APPROVE sec">APPROVE 0.90</span>
           </div>
           <div class="ballot-sub">
-            <span class="why">recipient correct; coverage ratio 100.00% of expected · attestation depth: source block 25914979 vs attested height 25923250</span>
+            <span class="why sec">recipient correct; coverage ratio 100.00% of expected · attestation depth: source block 25914979 vs attested height 25923250</span>
             <span class="sig">sig 0xb7bcf9cb…0e1b</span>
           </div>
         </div></div>
@@ -484,33 +473,22 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
         </article>
         <article class="outcome">
           <div class="swap verdict-swap">
-            <p class="verdict on">Awaiting proceeding</p>
+            <p class="verdict on">Awaiting verdict</p>
             <p class="verdict EXECUTE">EXECUTE</p>
           </div>
-          <p class="tally swap"><span class="on">convene a proceeding to open the record</span><span>QUORUM MET — <span class="digitbox" id="c1-digits"><span class="on">1</span><span>2</span><span>3</span></span>/3 APPROVALS · ≥2 REQUIRED · MEAN CONFIDENCE 0.83</span></p>
+          <p class="tally swap"><span class="on">quorum gate — ≥2 of 3 approvals required</span><span>QUORUM MET — <span class="digitbox" id="c1-digits"><span class="on">2</span><span>3</span></span>/3 APPROVALS · ≥2 REQUIRED · MEAN CONFIDENCE 0.83</span></p>
+          
           <div class="certificate">
             <div class="cert-doc">
               <h3 class="cert-h">Certificate of quorum decision</h3>
               <table class="ruled cert-table"><tbody>
-                <tr class="mv cr"><th>decision</th><td><span class="ok">EXECUTE — quorum met</span></td></tr>
-                <tr class="mv cr"><th>factHash</th><td>0xbcd02b57ca4e…7824</td></tr>
-                <tr class="mv cr"><th>policyId</th><td>0x96cecf5998e3…b359</td></tr>
-                <tr class="mv cr"><th>certHash</th><td>0xa139ff31b394…8839</td></tr>
-                <tr class="mv cr"><th>ballots</th><td>6 signed · audit <span class="ok">clean</span></td></tr>
-                <tr class="mv cr"><th>issued</th><td>2026-09-07T05:08:07.190Z</td></tr>
+                <tr><th>decision</th><td>—</td></tr>
+                <tr><th>factHash</th><td>—</td></tr>
+                <tr><th>policyId</th><td>—</td></tr>
+                <tr><th>certHash</th><td>—</td></tr>
+                <tr><th>ballots</th><td>—</td></tr>
+                <tr><th>issued</th><td>—</td></tr>
               </tbody></table>
-              <div class="cert-sealrow">
-            <svg class="seal mv" id="c1-certseal" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
-              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
-              <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
-              <defs><path id="sealarc" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
-              <text class="seal-arc"><textPath href="#sealarc" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
-              <text class="seal-center" x="50" y="49">QP</text>
-              <text class="seal-sub" x="50" y="61">SEALED</text>
-              <line x1="34" y1="66.5" x2="66" y2="66.5" stroke="currentColor" stroke-width="0.9"/>
-            </svg>
-                <p class="enforcement mv">local enforcement — local enforcement: all ballots signature-verified; set QUORUMPROOF_REGISTRY_ADDRESS to submit the certificate on-chain (needs CC3 testnet gas from the faucet) · deterministic fleet</p>
-              </div>
             </div>
           </div>
         </article>
@@ -518,8 +496,8 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div>
   </section>
 
-  <!-- V6 · CERTIFICATE CLOSE-UP QP-001 68.4 → 72.3 -->
-  <section class="view clip" id="v-cert" data-start="68.4" data-duration="3.9">
+  <!-- V6 · CERTIFICATE CLOSE-UP QP-001 — the earned seal 66.2 → 70.2 -->
+  <section class="view clip" id="v-cert" data-start="66.2" data-duration="4.0">
     <div class="detail-col cert-detail">
       <p class="case-strip mv">QP-001 · repayment-received · CERTIFICATE OF QUORUM DECISION</p>
       <div class="cert-doc big mv">
@@ -536,19 +514,19 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
             <svg class="seal big-seal mv" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
               <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
               <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
-              <defs><path id="sealarc" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
-              <text class="seal-arc"><textPath href="#sealarc" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
+              <defs><path id="sealarc-v-cert" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
+              <text class="seal-arc"><textPath href="#sealarc-v-cert" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
               <text class="seal-center" x="50" y="49">QP</text>
               <text class="seal-sub" x="50" y="61">SEALED</text>
               <line x1="34" y1="66.5" x2="66" y2="66.5" stroke="currentColor" stroke-width="0.9"/>
             </svg>
-          <p class="enforcement big-enf mv">local enforcement — local enforcement: all ballots signature-verified; set QUORUMPROOF_REGISTRY_ADDRESS to submit the certificate on-chain (needs CC3 testnet gas from the faucet) · deterministic fleet</p>
+          <p class="enforcement big-enf mv">local enforcement: all ballots signature-verified; set QUORUMPROOF_REGISTRY_ADDRESS to submit the certificate on-chain (needs CC3 testnet gas from the faucet) · deterministic fleet</p>
         </div>
       </div>
     </div></section>
 
-  <!-- V7 · CHAMBER QP-002 — dissent → REJECT 72.3 → 86.3 -->
-  <section class="view clip" id="v-ch2" data-start="72.3" data-duration="14.0">
+  <!-- V7 · CHAMBER QP-002 — secret ballots → reveal → dissent → REJECT 70.2 → 90.4 -->
+  <section class="view clip" id="v-ch2" data-start="70.2" data-duration="20.2">
     <div class="app-page">
       
     <header class="masthead">
@@ -603,10 +581,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
           <div class="ballot-head">
             <span class="who">ledger-01</span>
             
-            <span class="what DENY">DENY 0.90</span>
+            <span class="what DENY sec">DENY 0.90</span>
           </div>
           <div class="ballot-sub">
-            <span class="why">recipient 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 is not the policy lender 0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489</span>
+            <span class="why sec">recipient 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 is not the policy lender 0x172AC97E50915292F2B3E8B56f6b4DDf80aC0489</span>
             <span class="sig">sig 0xd3906629…0c1c</span>
           </div>
         </div>
@@ -614,10 +592,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
           <div class="ballot-head">
             <span class="who">sentinel-02</span>
             
-            <span class="what APPROVE">APPROVE 0.74</span>
+            <span class="what APPROVE sec">APPROVE 0.74</span>
           </div>
           <div class="ballot-sub">
-            <span class="why">no anomalies: value 0.05686936645929935 ETH, distinct counterparties, status 1</span>
+            <span class="why sec">no anomalies: value 0.05686936645929935 ETH, distinct counterparties, status 1</span>
             <span class="sig">sig 0x9208a225…d51c</span>
           </div>
         </div>
@@ -625,10 +603,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
           <div class="ballot-head">
             <span class="who">meridian-03</span>
             
-            <span class="what DENY">DENY 0.70</span>
+            <span class="what DENY sec">DENY 0.70</span>
           </div>
           <div class="ballot-sub">
-            <span class="why">material payment observed but policy match incomplete — recommend restructuring, not execution</span>
+            <span class="why sec">material payment observed but policy match incomplete — recommend restructuring, not execution</span>
             <span class="sig">sig 0xb1990803…4a1b</span>
           </div>
         </div></div>
@@ -673,33 +651,22 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
         </article>
         <article class="outcome">
           <div class="swap verdict-swap">
-            <p class="verdict on">Awaiting proceeding</p>
+            <p class="verdict on">Awaiting verdict</p>
             <p class="verdict REJECT">REJECT</p>
           </div>
-          <p class="tally swap"><span class="on">convene a proceeding to open the record</span><span>QUORUM NOT MET — <span>1</span>/3 APPROVALS · ≥2 REQUIRED · ACTION BLOCKED, CERTIFICATE RECORDED</span></p>
+          <p class="tally swap"><span class="on">quorum gate — ≥2 of 3 approvals required</span><span>QUORUM NOT MET — <span>1</span>/3 APPROVALS · ≥2 REQUIRED · ACTION BLOCKED, CERTIFICATE RECORDED</span></p>
+          
           <div class="certificate">
             <div class="cert-doc">
               <h3 class="cert-h">Certificate of quorum decision</h3>
               <table class="ruled cert-table"><tbody>
-                <tr class="mv cr"><th>decision</th><td><span class="bad">REJECT — quorum not met</span></td></tr>
-                <tr class="mv cr"><th>factHash</th><td>0xa7fa40b400f0…44a8</td></tr>
-                <tr class="mv cr"><th>policyId</th><td>0x96cecf5998e3…b359</td></tr>
-                <tr class="mv cr"><th>certHash</th><td>0xe20d4dfea139…e598</td></tr>
-                <tr class="mv cr"><th>ballots</th><td>6 signed · audit <span class="ok">clean</span></td></tr>
-                <tr class="mv cr"><th>issued</th><td>2026-09-07T05:07:58.517Z</td></tr>
+                <tr><th>decision</th><td>—</td></tr>
+                <tr><th>factHash</th><td>—</td></tr>
+                <tr><th>policyId</th><td>—</td></tr>
+                <tr><th>certHash</th><td>—</td></tr>
+                <tr><th>ballots</th><td>—</td></tr>
+                <tr><th>issued</th><td>—</td></tr>
               </tbody></table>
-              <div class="cert-sealrow">
-            <svg class="seal mv" id="c2-certseal" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
-              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
-              <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
-              <defs><path id="sealarc" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
-              <text class="seal-arc"><textPath href="#sealarc" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
-              <text class="seal-center" x="50" y="49">QP</text>
-              <text class="seal-sub" x="50" y="61">SEALED</text>
-              <line x1="34" y1="66.5" x2="66" y2="66.5" stroke="currentColor" stroke-width="0.9"/>
-            </svg>
-                <p class="enforcement mv">local enforcement — local enforcement: all ballots signature-verified; set QUORUMPROOF_REGISTRY_ADDRESS to submit the certificate on-chain (needs CC3 testnet gas from the faucet) · deterministic fleet</p>
-              </div>
             </div>
           </div>
         </article>
@@ -707,8 +674,8 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     </div>
   </section>
 
-  <!-- V8 · DISSENT CLOSE-UP QP-002 86.3 → 92.63 -->
-  <section class="view clip" id="v-dissent" data-start="86.3" data-duration="6.35">
+  <!-- V8 · DISSENT CLOSE-UP QP-002 90.4 → 94.4 -->
+  <section class="view clip" id="v-dissent" data-start="90.4" data-duration="4.0">
     <div class="detail-col centered">
       <p class="case-strip mv">QP-002 · unrelated-inflow · ROUND II — THE REVISED BALLOT, ON THE RECORD</p>
       <div class="ballot big-ballot mv">
@@ -726,37 +693,37 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
       <p class="dissent-block bad mv">QUORUM NOT MET — 1/3 APPROVALS · ≥2 REQUIRED · ACTION BLOCKED, CERTIFICATE RECORDED</p>
     </div></section>
 
-  <!-- V9 · DOCKET 92.65 → 96.8 -->
-  <section class="view clip" id="v-docket" data-start="92.65" data-duration="4.15">
+  <!-- V9 · SIGNED BALLOTS 94.4 → 99.0 -->
+  <section class="view clip" id="v-sigs" data-start="94.4" data-duration="4.6">
     <div class="detail-col wide centered">
-      <p class="case-strip mv">§ 1 · DOCKET OF PROCEEDINGS · CREDITCOIN CC3 TESTNET</p>
-      <table class="ruled docket big-table">
-        <thead><tr><th class="num">No.</th><th>cause</th><th>source tx</th><th class="num">approvals</th><th>decision</th><th>certHash</th><th>convened</th></tr></thead>
-        <tbody>
-        <tr class="mv">
-          <td class="num"><span class="openrow">QP-002</span></td>
-          <td class="cause">unrelated-inflow</td>
-          <td><span class="evlink">0x890dbaaf16…c744</span></td>
-          <td>1/3 (≥2)</td>
-          <td class="decision REJECT">REJECT</td>
-          <td>0xe20d4dfe…e598</td>
-          <td>2026-09-07T05:07:58.517Z</td>
-        </tr>
-        <tr class="mv">
-          <td class="num"><span class="openrow">QP-001</span></td>
-          <td class="cause">repayment-received</td>
-          <td><span class="evlink">0x27e55494f5…80d7</span></td>
-          <td>3/3 (≥2)</td>
-          <td class="decision EXECUTE">EXECUTE</td>
-          <td>0xa139ff31…8839</td>
-          <td>2026-09-07T05:08:07.190Z</td>
-        </tr></tbody>
-      </table>
-      <p class="hint mv">The decision becomes a Creditcoin fact that any lending protocol can consume.</p>
+      <p class="case-strip mv">QP-001 · EVERY BALLOT SIGNED · SECP256K1 · RECOVERED ON-CHAIN BY QUORUMREGISTRY</p>
+      <p class="hint mv">Round II ballots, signature on the record — bound to factHash 0xbcd02b57ca…7824</p>
+      
+        <div class="sig-row mv" id="sg0">
+          <div class="ballot-head">
+            <span class="who">ledger-01</span>
+            <span class="what APPROVE">APPROVE 0.86</span>
+          </div>
+          <div class="sig-full">0x308dadab12836804d07b618c260813466aab157ac8434f89b7b9d0bff4eae52675885fd56091eb5548fe651976994766df3e2022fb801aeeb385d64777a7c75a1c</div>
+        </div>
+        <div class="sig-row mv" id="sg1">
+          <div class="ballot-head">
+            <span class="who">sentinel-02</span>
+            <span class="what APPROVE">APPROVE 0.74</span>
+          </div>
+          <div class="sig-full">0x9ce4fd1b8085be794392a9ffb439bcf61037352895b1e89a910834a6828aeb23508c0dabb631cbac013d0b7bcc461548c1e6c6c76c15a36c7cab87203a7752b21b</div>
+        </div>
+        <div class="sig-row mv" id="sg2">
+          <div class="ballot-head">
+            <span class="who">meridian-03</span>
+            <span class="what APPROVE">APPROVE 0.90</span>
+          </div>
+          <div class="sig-full">0x604cb553430b8dc436d02c271845dfbc540ba298c2529795573de1489d88d7b737f6feae06dac0c11fc2f55a8dd1089a86541c045cfe6082e9f810d854f669a51c</div>
+        </div>
     </div></section>
 
-  <!-- V10 · FACT & PROOF DETAIL 96.8 → 102.3 -->
-  <section class="view clip" id="v-proof" data-start="96.8" data-duration="5.5">
+  <!-- V10 · FACT & PROOF DETAIL 99.0 → 104.0 -->
+  <section class="view clip" id="v-proof" data-start="99.0" data-duration="5.0">
     <div class="detail-col wide">
       <p class="case-strip mv">QP-001 · FACT &amp; PROOF DETAIL · BLOCKPROVER 0x…FD2 ON CC3</p>
       <div class="pd-grid">
@@ -786,47 +753,76 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
       </div>
     </div></section>
 
-  <!-- V11 · SIGNED BALLOTS 102.3 → 106.5 -->
-  <section class="view clip" id="v-sigs" data-start="102.3" data-duration="4.2">
+  <!-- V11 · RAW PROOF BYTES 104.0 → 108.5 -->
+  <section class="view clip" id="v-bytes" data-start="104.0" data-duration="4.5">
     <div class="detail-col wide centered">
-      <p class="case-strip mv">QP-001 · EVERY BALLOT SIGNED · SECP256K1 · RECOVERED ON-CHAIN BY QUORUMREGISTRY</p>
-      <p class="hint mv">Round II ballots, signature on the record — bound to factHash 0xbcd02b57ca…7824</p>
-      
-        <div class="sig-row mv" id="sg0">
-          <div class="ballot-head">
-            <span class="who">ledger-01</span>
-            <span class="what APPROVE">APPROVE 0.86</span>
-          </div>
-          <div class="sig-full">0x308dadab12836804d07b618c260813466aab157ac8434f89b7b9d0bff4eae52675885fd56091eb5548fe651976994766df3e2022fb801aeeb385d64777a7c75a1c</div>
-        </div>
-        <div class="sig-row mv" id="sg1">
-          <div class="ballot-head">
-            <span class="who">sentinel-02</span>
-            <span class="what APPROVE">APPROVE 0.74</span>
-          </div>
-          <div class="sig-full">0x9ce4fd1b8085be794392a9ffb439bcf61037352895b1e89a910834a6828aeb23508c0dabb631cbac013d0b7bcc461548c1e6c6c76c15a36c7cab87203a7752b21b</div>
-        </div>
-        <div class="sig-row mv" id="sg2">
-          <div class="ballot-head">
-            <span class="who">meridian-03</span>
-            <span class="what APPROVE">APPROVE 0.90</span>
-          </div>
-          <div class="sig-full">0x604cb553430b8dc436d02c271845dfbc540ba298c2529795573de1489d88d7b737f6feae06dac0c11fc2f55a8dd1089a86541c045cfe6082e9f810d854f669a51c</div>
-        </div>
-    </div></section>
-
-  <!-- V12 · RAW PROOF BYTES 106.5 → 111.0 -->
-  <section class="view clip" id="v-bytes" data-start="106.5" data-duration="4.5">
-    <div class="detail-col wide">
       <p class="case-strip mv">QP-001 · RAW PROOF BYTES — TXBYTES AS PROVEN INTO THE CC3 PRECOMPILE</p>
       <div class="rawbytes mv">
-        <summary>Raw proof bytes — txBytes · 1120 bytes</summary>
+        <summary>Raw proof bytes — txBytes · 1120 bytes · factHash 0xbcd02b57ca…7824</summary>
         <pre class="bytes">0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000002200000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000d00000000000000000000000000000000000000000000000000000000000052080000000000000000000000009395704e478eb664d5eb58ecfcf7031724cf367b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000172ac97e50915292f2b3e8b56f6b4ddf80ac048900000000000000000000000000000000000000000000000031f5a65e0b57800000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000005f5e100000000000000000000000000000000000000000000000000000000000000000258888de9217ca377251f157eedf17fae9e1d393df45bc4164f0a30b5394802a31105808aaea86aea8b78c611b4249ebf2af2acaafd8b434aad47a4d5b720ee5ba00000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000005208000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</pre>
       </div>
     </div></section>
 
-  <!-- V13 · CLOSE 111.0 → 119.1 -->
-  <section class="view clip" id="v-close" data-start="111.0" data-duration="8.1">
+  <!-- V12 · DOCKET 108.5 → 112.9 -->
+  <section class="view clip" id="v-docket" data-start="108.5" data-duration="4.4">
+    <div class="detail-col wide centered">
+      <p class="case-strip mv">DOCKET OF PROCEEDINGS · CREDITCOIN CC3 TESTNET</p>
+      <table class="ruled docket big-table">
+        <thead><tr><th class="num">No.</th><th>cause</th><th>source tx</th><th class="num">approvals</th><th>decision</th><th>certHash</th><th>convened</th></tr></thead>
+        <tbody>
+        <tr class="mv">
+          <td class="num"><span class="openrow">QP-002</span></td>
+          <td class="cause">unrelated-inflow</td>
+          <td><span class="evlink">0x890dbaaf16…c744</span></td>
+          <td>1/3 (≥2)</td>
+          <td class="decision REJECT">REJECT</td>
+          <td>0xe20d4dfe…e598</td>
+          <td>2026-09-07T05:07:58.517Z</td>
+        </tr>
+        <tr class="mv">
+          <td class="num"><span class="openrow">QP-001</span></td>
+          <td class="cause">repayment-received</td>
+          <td><span class="evlink">0x27e55494f5…80d7</span></td>
+          <td>3/3 (≥2)</td>
+          <td class="decision EXECUTE">EXECUTE</td>
+          <td>0xa139ff31…8839</td>
+          <td>2026-09-07T05:08:07.190Z</td>
+        </tr></tbody>
+      </table>
+      <p class="hint mv">The decision becomes a Creditcoin fact that any lending protocol can consume.</p>
+    </div></section>
+
+  <!-- V13 · THE EARNED CERTIFICATE, reprised as the closing subject 112.9 → 117.2 -->
+  <section class="view clip" id="v-cert2" data-start="112.9" data-duration="4.3">
+    <div class="detail-col cert-detail">
+      <p class="case-strip mv">QP-001 · repayment-received · THE SEALED DECISION — CERTIFICATE OF QUORUM</p>
+      <div class="cert-doc big mv">
+        <h3 class="cert-h">Certificate of quorum decision</h3>
+        <table class="ruled cert-table"><tbody>
+          <tr class="mv"><th>decision</th><td class="cert-decision-big ok">EXECUTE — quorum met</td></tr>
+          <tr class="mv"><th>factHash</th><td>0xbcd02b57ca4ec9dd97469444…7824</td></tr>
+          <tr class="mv"><th>policyId</th><td>0x96cecf5998e33b8b0d723258…b359</td></tr>
+          <tr class="mv"><th>certHash</th><td>0xa139ff31b39429c083e4c7b4…8839</td></tr>
+          <tr class="mv"><th>ballots</th><td>6 signed · audit <span class="ok">clean</span></td></tr>
+          <tr class="mv"><th>issued</th><td>2026-09-07T05:08:07.190Z</td></tr>
+        </tbody></table>
+        <div class="cert-sealrow">
+            <svg class="seal big-seal mv" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
+              <defs><path id="sealarc-v-cert2" d="M 50,50 m -32.5,0 a 32.5,32.5 0 1,1 65,0 a 32.5,32.5 0 1,1 -65,0"/></defs>
+              <text class="seal-arc"><textPath href="#sealarc-v-cert2" startOffset="0">QUORUMPROOF · CREDITCOIN CC3 · CERTIFICATE OF QUORUM ·</textPath></text>
+              <text class="seal-center" x="50" y="49">QP</text>
+              <text class="seal-sub" x="50" y="61">SEALED</text>
+              <line x1="34" y1="66.5" x2="66" y2="66.5" stroke="currentColor" stroke-width="0.9"/>
+            </svg>
+          <p class="enforcement big-enf mv">local enforcement: all ballots signature-verified; set QUORUMPROOF_REGISTRY_ADDRESS to submit the certificate on-chain (needs CC3 testnet gas from the faucet) · deterministic fleet</p>
+        </div>
+      </div>
+    </div></section>
+
+  <!-- V14 · CLOSE TAIL 117.2 → 121.5 -->
+  <section class="view clip" id="v-close" data-start="117.2" data-duration="4.3">
     <div class="close-plate">
       <div class="close-brand mv" id="cl-brand"><span class="brand-mark" aria-hidden="true">§</span><h1 class="brand-name" style="font-size:72px;">QuorumProof</h1></div>
       <p class="close-line mv" id="cl-line">The fleet replaces the oracle. The paper trail is the product.</p>
@@ -839,11 +835,10 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 </div>
 <script src="assets/gsap.min.js"></script>
 <script>
-/* QP-VIDEO-v3 authored motion — GSAP only. Zero zoompan/ken-burns anywhere.
+/* QP-VIDEO-v3.1 authored motion — GSAP only. Zero zoompan/ken-burns anywhere.
    Ballot place 180ms ease-out · stamp 250ms ease-out (DESIGN-SYSTEM motion contract).
-   Eases: power2/power3/expo — smooth, high-quality. Reading surfaces stay stationary.
-   All reveals are opacity fromTo 0→1 (CSS holds the hidden state), so any render seek
-   shows the correct frame. Text-state changes are opacity swap stacks — no onUpdate. */
+   Clock: narration onsets 0.8/22.84/48.82/94.82/113.18 (voice-lane truth, program mix
+   121.5s); beats from silencedetect on the gained narration. */
 const tl = gsap.timeline({ paused: true });
 const E_OUT = 'power3.out';
 const up = (id, t, d, y) => tl.fromTo(id, { opacity: 0, y: y || 14 }, { opacity: 1, y: 0, duration: d || 0.5, ease: E_OUT }, t);
@@ -851,116 +846,124 @@ const place = (id, t) => tl.fromTo(id, { opacity: 0, y: 4 }, { opacity: 1, y: 0,
 const stamp = (id, t) => tl.fromTo(id, { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, t); /* 250ms stamp */
 const fade = (id, t, d) => tl.fromTo(id, { opacity: 0 }, { opacity: 1, duration: d || 0.4, ease: 'power2.out' }, t);
 
-/* chrome: masthead settles in; progress fills over the full runtime (linear) */
+/* chrome: masthead settles in; progress fills over the full runtime (linear, 121.5s) */
 tl.fromTo('#chrome', { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: E_OUT }, 0.1);
-tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 119.1, ease: 'none' }, 0);
+tl.fromTo('#progress-fill', { width: '0%' }, { width: '100%', duration: 121.5, ease: 'none' }, 0);
 
-/* chapter state swaps — bound to the same clock as the evidence (hard kills for seek safety) */
-tl.to('#st1', { opacity: 0, duration: 0.001 }, 21.49); tl.set('#st1', { opacity: 0 }, 21.5); tl.set('#st2', { opacity: 1 }, 21.5);
-tl.to('#st2', { opacity: 0, duration: 0.001 }, 49.34); tl.set('#st2', { opacity: 0 }, 49.35); tl.set('#st3', { opacity: 1 }, 49.35);
-tl.to('#st3', { opacity: 0, duration: 0.001 }, 92.64); tl.set('#st3', { opacity: 0 }, 92.65); tl.set('#st4', { opacity: 1 }, 92.65);
-tl.to('#st4', { opacity: 0, duration: 0.001 }, 110.99); tl.set('#st4', { opacity: 0 }, 111.0); tl.set('#st5', { opacity: 1 }, 111.0);
+/* chapter state swaps — hard kills for seek safety */
+tl.to('#st1', { opacity: 0, duration: 0.001 }, 21.32); tl.set('#st1', { opacity: 0 }, 21.3333); tl.set('#st2', { opacity: 1 }, 21.3333);
+tl.to('#st2', { opacity: 0, duration: 0.001 }, 48.82); tl.set('#st2', { opacity: 0 }, 48.8333); tl.set('#st3', { opacity: 1 }, 48.8333);
+tl.to('#st3', { opacity: 0, duration: 0.001 }, 94.39); tl.set('#st3', { opacity: 0 }, 94.4); tl.set('#st4', { opacity: 1 }, 94.4);
+tl.to('#st4', { opacity: 0, duration: 0.001 }, 112.89); tl.set('#st4', { opacity: 0 }, 112.9); tl.set('#st5', { opacity: 1 }, 112.9);
 
-/* V1 hook — lines land on the narration clock, then clear for the product */
-up('#hk1', 0.95, 0.7, 26);
+/* V1 hook — lines land on the narration clock (1.09/8.41), then clear for the product */
+up('#hk1', 1.05, 0.7, 26);
 up('#hk2', 4.3, 0.7, 26);
-up('#hk3', 8.35, 0.6, 18);
-tl.to(['#hk1', '#hk2', '#hk3'], { opacity: 0, y: -14, duration: 0.4, ease: 'power2.in', stagger: 0.05 }, 9.6);
+up('#hk3', 8.4, 0.6, 18);
+tl.to(['#hk1', '#hk2', '#hk3'], { opacity: 0, y: -14, duration: 0.4, ease: 'power2.in', stagger: 0.05 }, 9.65);
+tl.set(['#hk1', '#hk2', '#hk3'], { opacity: 0 }, 10.1);
 
-/* V2 dashboard at rest — the product shell assembles, then holds */
-up('#v-rest .masthead', 10.25, 0.5);
-up('#v-rest .clerk', 10.4, 0.5);
-up('#v-rest .chamber', 10.55, 0.5);
-stamp('#rst-exstamp', 10.9);
+/* V2 dashboard at rest — the product shell assembles, then holds (cert stays empty, unsealed) */
+up('#v-rest .masthead', 10.5, 0.5);
+up('#v-rest .clerk', 10.65, 0.5);
+up('#v-rest .chamber', 10.8, 0.5);
+stamp('#rst-exstamp', 11.2);
 
-/* V4 roster — the fleet, named on the narration */
-up('#v-roster .case-strip', 49.5, 0.45);
-up('#v-roster .detail-h', 49.6, 0.45);
-up('#v-roster .hint', 49.75, 0.4);
-up('#ros0', 50.2, 0.45, 12);
-up('#ros1', 51.3, 0.45, 12);
-up('#ros2', 52.4, 0.45, 12);
+/* V4 roster — the fleet, named on the narration (48.98 → 57.9) */
+up('#v-roster .case-strip', 49.0, 0.45);
+up('#v-roster .detail-h', 49.1, 0.45);
+up('#v-roster .hint', 49.25, 0.4);
+up('#ros0', 49.8, 0.45, 12);
+up('#ros1', 50.9, 0.45, 12);
+up('#ros2', 52.0, 0.45, 12);
 
-/* V5 QP-001 — exhibit → round I (secret) → round II → tally → verdict → certificate */
+/* V5 QP-001 — exhibit → Round I secret → REVEAL → Round II → quorum → verdict */
 up('#v-ch1 .masthead', 56.1, 0.45);
 up('#v-ch1 .clerk', 56.2, 0.45);
 up('#v-ch1 .chamber', 56.3, 0.45);
-stamp('#c1-exstamp', 56.7); /* the exhibit stamp — 250ms */
+stamp('#c1-exstamp', 56.7);
 tl.fromTo('#v-ch1 .exr', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.08 }, 56.9);
 fade('#c1-proofchecks', 57.3);
-place('#c1-r1b0', 57.6); place('#c1-r1b1', 58.4); place('#c1-r1b2', 59.2); /* secret ballot, 180ms each */
-tl.to('#v-ch1 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 60.6);
-tl.set('#v-ch1 .round-h .swap > span:not(.on)', { opacity: 1 }, 60.61); /* boxes unsealed at round II */
-place('#c1-r2b0', 60.8); place('#c1-r2b1', 61.5); place('#c1-r2b2', 62.2); /* debate */
-/* tally: quorum line lands; approvals count up 1 → 2 → 3 (digit swap stacks — seek-safe) */
-tl.to('#v-ch1 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 63.9);
-tl.set('#v-ch1 .tally.swap > span:not(.on)', { opacity: 1 }, 63.92);
-tl.set('#c1-digits > span:nth-child(1)', { opacity: 0 }, 64.55); tl.set('#c1-digits > span:nth-child(2)', { opacity: 1 }, 64.55);
-tl.set('#c1-digits > span:nth-child(2)', { opacity: 0 }, 65.15); tl.set('#c1-digits > span:nth-child(3)', { opacity: 1 }, 65.15);
+/* Round I — commitment: ballots place WITHOUT vote content (secrecy window) */
+place('#c1-r1b0', 58.0); place('#c1-r1b1', 58.4); place('#c1-r1b2', 58.8);
+/* Round II reveal at 59.63 ("Round two is debate…"): box-open caption + votes land together */
+tl.to('#v-ch1 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 59.62);
+tl.set('#v-ch1 .round-h .swap > span:not(.on)', { opacity: 1 }, 59.63);
+tl.fromTo('#v-ch1 .sec', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power2.out', stagger: 0.06 }, 59.63);
+/* Round II — debate ballots place */
+place('#c1-r2b0', 60.0); place('#c1-r2b1', 60.5); place('#c1-r2b2', 61.0);
+/* quorum line lands ONLY at N≥2 (BLOCKER-1 gate), then counts to 3 ("three out of three" 62.62→) */
+tl.to('#v-ch1 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 63.55);
+tl.set('#v-ch1 .tally.swap > span:not(.on)', { opacity: 1 }, 63.6); /* shows "QUORUM MET — 2/3" */
+tl.set('#c1-digits > span:nth-child(1)', { opacity: 0 }, 64.3); tl.set('#c1-digits > span:nth-child(2)', { opacity: 1 }, 64.3); /* 3/3 */
 /* verdict stamp — the ceremony, 250ms */
-tl.to('#v-ch1 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 65.95);
-tl.fromTo('#v-ch1 .verdict-swap > p.EXECUTE, #v-ch1 .verdict-swap > p.REJECT', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 66.0);
-/* the certificate issues only after the verdict */
-tl.fromTo('#v-ch1 tr.cr', { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'power2.out', stagger: 0.1 }, 66.3);
-stamp('#c1-certseal', 67.1);
-fade('#v-ch1 .enforcement', 67.5);
+tl.to('#v-ch1 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 65.35);
+tl.fromTo('#v-ch1 .verdict-swap > p.EXECUTE, #v-ch1 .verdict-swap > p.REJECT', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 65.4);
 
-/* V6 certificate close-up — the signature moment becomes the subject */
-up('#v-cert .case-strip', 68.55, 0.4);
-up('#v-cert .cert-doc', 68.65, 0.5, 16);
-tl.fromTo('#v-cert tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out', stagger: 0.12 }, 68.95);
-stamp('#v-cert .big-seal', 70.2); /* the seal stamp */
-fade('#v-cert .big-enf', 70.8);
+/* V6 certificate close-up — the earned seal; the certificate ISSUES here */
+up('#v-cert .case-strip', 66.35, 0.4);
+up('#v-cert .cert-doc', 66.45, 0.5, 16);
+tl.fromTo('#v-cert tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out', stagger: 0.12 }, 66.7);
+stamp('#v-cert .big-seal', 67.6);
+fade('#v-cert .big-enf', 68.1);
 
-/* V7 QP-002 — new exhibit, ballots, the revision, REJECT */
-up('#v-ch2 .masthead', 72.4, 0.45);
-up('#v-ch2 .clerk', 72.5, 0.45);
-up('#v-ch2 .chamber', 72.6, 0.45);
-stamp('#c2-exstamp', 73.0);
-tl.fromTo('#v-ch2 .exr', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.08 }, 73.2);
-fade('#c2-proofchecks', 73.7);
-place('#c2-r1b0', 74.6); place('#c2-r1b1', 75.4); place('#c2-r1b2', 76.2);
-tl.to('#v-ch2 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 77.9);
-tl.set('#v-ch2 .round-h .swap > span:not(.on)', { opacity: 1 }, 77.91);
-place('#c2-r2b0', 78.1); place('#c2-r2b1', 78.9); place('#c2-r2b2', 79.6); /* the revised ballot places at 78.9 */
-tl.to('#v-ch2 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 83.9);
-tl.set('#v-ch2 .tally.swap > span:not(.on)', { opacity: 1 }, 83.92);
-tl.to('#v-ch2 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 83.95);
-tl.fromTo('#v-ch2 .verdict-swap > p.REJECT, #v-ch2 .verdict-swap > p.EXECUTE', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 84.0);
-tl.fromTo('#v-ch2 tr.cr', { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'power2.out', stagger: 0.1 }, 84.3);
-stamp('#c2-certseal', 85.2);
-fade('#v-ch2 .enforcement', 85.6);
+/* V7 QP-002 — exhibit → Round I secret → reveal → revised dissent → REJECT */
+up('#v-ch2 .masthead', 70.3, 0.45);
+up('#v-ch2 .clerk', 70.4, 0.45);
+up('#v-ch2 .chamber', 70.5, 0.45);
+stamp('#c2-exstamp', 70.9);
+tl.fromTo('#v-ch2 .exr', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.08 }, 71.1);
+fade('#c2-proofchecks', 71.5);
+/* Round I — secret commitment (no vote content) */
+place('#c2-r1b0', 72.4); place('#c2-r1b1', 72.8); place('#c2-r1b2', 73.2);
+/* Round II reveal at 76.7 ("The fraud hunter says yes…" = the box opening) */
+tl.to('#v-ch2 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 76.69);
+tl.set('#v-ch2 .round-h .swap > span:not(.on)', { opacity: 1 }, 76.7);
+tl.fromTo('#v-ch2 .sec', { opacity: 0 }, { opacity: 1, duration: 0.18, ease: 'power2.out', stagger: 0.06 }, 76.7);
+place('#c2-r2b0', 76.9); place('#c2-r2b1', 77.5); place('#c2-r2b2', 78.1); /* the revised ballot places at 77.5 */
+/* "One out of three, reject" (86.97→): quorum NOT MET line + verdict stamp */
+tl.to('#v-ch2 .tally.swap > span.on', { opacity: 0, duration: 0.001 }, 87.35);
+tl.set('#v-ch2 .tally.swap > span:not(.on)', { opacity: 1 }, 87.4);
+tl.to('#v-ch2 .verdict-swap > p.on', { opacity: 0, duration: 0.001 }, 88.15);
+tl.fromTo('#v-ch2 .verdict-swap > p.REJECT, #v-ch2 .verdict-swap > p.EXECUTE', { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 88.2);
 
-/* V8 dissent close-up */
-up('#v-dissent .case-strip', 86.45, 0.4);
-up('#v-dissent .big-ballot', 86.6, 0.5, 16);
-fade('#v-dissent .dissent-others', 87.5);
-fade('#v-dissent .dissent-block', 88.5);
+/* V8 dissent close-up ("the sole dissent is right there on the record") */
+up('#v-dissent .case-strip', 90.55, 0.4);
+up('#v-dissent .big-ballot', 90.7, 0.5, 16);
+fade('#v-dissent .dissent-others', 91.6);
+fade('#v-dissent .dissent-block', 92.6);
 
-/* V9 docket */
-up('#v-docket .case-strip', 92.8, 0.4);
-tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 93.0);
-fade('#v-docket .hint', 95.4);
+/* V9 signed ballots ("Every ballot is signed… secp256k1" 94.85→) */
+up('#v-sigs .case-strip', 94.55, 0.4);
+fade('#v-sigs .hint', 94.8, 0.35);
+tl.fromTo(['#sg0', '#sg1', '#sg2'], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: E_OUT, stagger: 0.3 }, 95.0);
 
 /* V10 fact & proof detail */
-up('#v-proof .case-strip', 96.95, 0.4);
-tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 97.2);
+up('#v-proof .case-strip', 99.15, 0.4);
+tl.fromTo('#v-proof tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.07 }, 99.4);
 
-/* V11 signed ballots */
-up('#v-sigs .case-strip', 102.45, 0.4);
-fade('#v-sigs .hint', 102.7, 0.35);
-tl.fromTo(['#sg0', '#sg1', '#sg2'], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: E_OUT, stagger: 0.3 }, 102.9);
+/* V11 raw bytes (large type, filled canvas, stationary single page) */
+up('#v-bytes .case-strip', 104.15, 0.4);
+up('#v-bytes .rawbytes', 104.35, 0.5, 14);
 
-/* V12 raw bytes */
-up('#v-bytes .case-strip', 106.65, 0.4);
-up('#v-bytes .rawbytes', 106.8, 0.5, 14);
+/* V12 docket ("The decision becomes a Creditcoin fact…") */
+up('#v-docket .case-strip', 108.65, 0.4);
+tl.fromTo('#v-docket tbody tr', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: E_OUT, stagger: 0.35 }, 108.9);
+fade('#v-docket .hint', 110.8);
 
-/* V13 close — QP voice, then the canon credit */
-tl.fromTo('#cl-brand', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 111.35);
-tl.fromTo('#cl-line', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 112.1);
-fade('#cl-sub1', 112.9, 0.5);
-fade('#cl-sub2', 113.15, 0.5);
-fade('#cl-credit', 114.2, 0.5);
+/* V13 the earned certificate, reprised — final focal subject before the tail */
+up('#v-cert2 .case-strip', 113.05, 0.4);
+up('#v-cert2 .cert-doc', 113.2, 0.5, 16);
+tl.fromTo('#v-cert2 tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.1 }, 113.45);
+stamp('#v-cert2 .big-seal', 114.3);
+fade('#v-cert2 .big-enf', 114.8);
+
+/* V14 close tail — the thesis, then the canon credit */
+tl.fromTo('#cl-brand', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out' }, 117.4);
+tl.fromTo('#cl-line', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out' }, 118.1);
+fade('#cl-sub1', 118.9, 0.5);
+fade('#cl-sub2', 119.15, 0.5);
+fade('#cl-credit', 119.7, 0.5);
 
 window.__timelines = { master: tl };
 </script>

@@ -1,13 +1,17 @@
-# TASTECHECK-LEDGER — QP-VIDEO-v3 (SELF-ATTESTED)
+# TASTECHECK-LEDGER — QP-VIDEO-v3.1 (SELF-ATTESTED)
+
+v3.1 = consolidated fix pass over the CHECK 1/2/3 findings. v3 rows (superseded) are in
+git d61540f. Rows below are SELF-ATTESTED only; independent re-runs follow. Nothing here
+claims CEO-readiness.
 
 Verdict: **HOLD — self-lane complete, independent triple gate pending.** Per gate order
 (QA spec v1.3): this ledger is self-attested only. Independent Astra visual review, full
 tastecheck battery re-run (fresh validator), and the ultraqa adversarial cycle happen
 OUTSIDE this lane before the CEO sees anything. No row below claims independent status.
 
-Artifact: `docs/video-v3/render/demo-video-v3.mp4` (1080p30, 119.100s, voiced) ·
+Artifact: `docs/video-v3/render/demo-video-v3.mp4` (1080p30, 121.500s, voiced, narration v2.1) ·
 silent source `render/demo-video-v3-silent.mp4` · package `docs/video-v3/hyperframes/`.
-Timestamp: 2026-09-12T21:2xZ · Inspector: QP-VIDEO-v3 rebuild lane (automated tools + frame eye-pass).
+Timestamp: 2026-09-12T22:1xZ · Inspector: QP-VIDEO-v3 rebuild lane (automated tools + frame eye-pass).
 
 | skill | check_id | status | reason | remediation | evidence | provenance |
 |---|---|---|---|---|---|---|
@@ -25,4 +29,16 @@ Timestamp: 2026-09-12T21:2xZ · Inspector: QP-VIDEO-v3 rebuild lane (automated t
 | (saturation robot) | kino.quality-check | pass-with-adjudication | overall 52.1; 3 FAILs adjudicated, nothing painted to metrics: saturation 1.3% = paper-ledger design (accents semantic only; v2 crime was the inverse); contrast y-std 1.5 = whole-frame metric, local text contrast 13.3:1 + 180 elements WCAG AA pass; temporal 97% static = commissioned (Astra #3 stationary holds). Brightness/audio (−17.8 LUFS)/color-balance pass | none — no hue invented per law | `audit/quality-check-v3.json` | self-attested |
 | (audio) | qp.voice-mux | pass | program-mix-48k-final.wav muxed, video=audio=119.100s exactly; voice never stretched, video never padded/trimmed; −17.8 LUFS | — | ffprobe duration output; `docs/audio/voice-lane-provision-receipt.json` (local Qwen3-TTS, cloud false) | self-attested |
 | (self eye gate) | qp.final-film-watch | pass | Every cut boundary + every hold extracted from the actual master and inspected (Astra #9): no clipping, no overlap, no flash frames, no contradictory labels after 2 fix-and-rerender cycles (swap-stack anchor bug; terminal decode run-up) | — | `stills/` (26 hold stills), build record §6 | self-attested |
-| gate.independent | independent-triple-gate | pending | Astra re-review + fresh-validator tastecheck battery + ultraqa adversarial cycle + orchestrator full-film eyes run OUTSIDE this lane — not yet executed; nothing is CEO-ready from this lane | run the triple gate on `docs/video-v3/render/demo-video-v3.mp4` | this row | pending (by design) |
+| gate.independent | independent-triple-gate-v31 | pending | v3.1 returns to all three independent checks + orchestrator full-film eyes before any CEO exposure | run the triple gate on `docs/video-v3/render/demo-video-v3.mp4` (md5 of record) | this row | pending (by design) |
+| astra-fix | qp.p0-1-seal-earned-only | pass | No seal exists on any pre-decision certificate (empty doc, '—' rows); brass seal enters only in the close-ups after the decision | — | `stills/still-450-rest-noseal.png` (empty+unsealed) vs `stills/still-3465-cert2-earned.png` (earned brass seal) | self-attested |
+| astra-fix | qp.p0-2-ending-payoff | pass | Completed EXECUTE certificate close-up is the final focal subject (112.9–117.2) before a 4.3s close tail | — | `stills/still-3465-cert2-earned.png`, `stills/still-3590-close.png` | self-attested |
+| astra-fix | qp.p0-3-narration-v21 | pass | 121.5s program mix muxed; video padded to voice (3645 frames); all beats re-timed to voice-lane onsets; onsets verified by silencedetect on narration-gained.wav (0.93/22.95/48.98/94.85/113.26) | — | ffprobe 121.500; silencedetect receipt in build record | self-attested |
+| astra-fix | qp.p0-4-microtype | pass | Ballot reasoning 17px, trace labels 16px / data 17px, raw bytes 20px mono canvas-filling; validate: 228 text elements WCAG AA | — | `stills/still-3010-proof.png`, `stills/still-3140-bytes.png` | self-attested |
+| astra-fix | qp.p1-awaiting-verdict | pass | Case chambers read "Awaiting verdict" + factual quorum-gate line until the stamp; boot state keeps "Awaiting proceeding" (accurate there) | — | outcome-stack crops n1906–n1968 | self-attested |
+| astra-fix | qp.p1-terminal-reflow | pass | Decoded fields on intentional lines (from→to whole, value, factHash); no orphaned fragment; pump serialized (order can never scramble); single green PASS | — | `stills/still-1000-term-reflow.png` | self-attested |
+| ultraqa-fix | qp.blocker1-quorum-met-gate | pass | Frame-exact watch: n1906 "Awaiting verdict / QUORUM GATE — ≥2 OF 3" → n1908 "QUORUM MET — 2/3" → n1935 "3/3" → n1968 EXECUTE. No frame shows QUORUM MET with 1/3. QP-002 "QUORUM NOT MET — 1/3" mirror-verified consistent | — | `/tmp/qpv3-inspect/outcome-stack.png` (gate crops, preserved in build record) | self-attested |
+| ultraqa-fix | qp.p1-secrecy-window | pass | Round I ballots place with agent+signature only (no vote content, no reasons); votes AND the "box opened" caption land at the same instant (59.63 / 76.7) | — | `/tmp/qpv3-inspect/sec-stack.png` (n1770 vs n1792) | self-attested |
+| astra-fix | qp.p2-conventions | pass | §1 sub-counter dropped from docket strip; § brand mark in ink; brass only on seal + exhibit stamps | — | `stills/still-3300-docket.png`, `still-450-*` | self-attested |
+| battery-p3 | qp.doubled-phrase | pass | "local enforcement — local enforcement:" collapsed to the seed note alone | — | `stills/still-3465-cert2-earned.png` (enforcement line) | self-attested |
+| battery-p3 | qp.dark-theme-beat | n/a (accepted residual) | DARK-theme toggle beat skipped by scope discipline; midnight evidenced via real terminal + kyanite chrome, as in v3 | record-only; do not expand scope | build record §10 | self-attested |
+| regression-caught | qp.selfgate-seal-css | pass | Self-gate caught a v3.1 regression (base .seal CSS trimmed with the chamber cert → black malformed seal in close-ups); fixed (styles restored + unique SVG arc ids per view) and re-rendered before any hand-off | — | git history of build-pkg.mjs; re-render 07b67ad7 | self-attested |
