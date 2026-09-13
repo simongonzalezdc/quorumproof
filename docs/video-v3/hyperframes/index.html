@@ -200,7 +200,8 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
 .reject-word { margin: 0 0 26px; font: 700 128px/1 var(--serif); letter-spacing: 0.08em; color: var(--verdict-reject); }
 .reject-line { margin: 8px 0 0; font: 500 22px/1.5 var(--mono); color: var(--ink); letter-spacing: 0.04em; }
 .close-strip { position: absolute; left: 24px; right: 24px; bottom: 34px; z-index: 40; display: flex; align-items: baseline; justify-content: space-between; gap: 28px; padding: 14px 18px 12px; border-top: 2px solid var(--rule-strong); background: var(--paper-raised); }
-.close-brandline { font: 700 26px var(--serif); color: var(--ink); }
+.brand-seal { width: 34px; height: 34px; vertical-align: -9px; margin-right: 10px; }
+  .close-brandline { font: 700 26px var(--serif); color: var(--ink); }
 .close-brandline .brand-mark { color: var(--ink); margin-right: 6px; }
 .close-thesis { font: 500 17px/1.4 var(--mono); color: var(--ink-dim); letter-spacing: 0.03em; }
 .close-tail-sub { font: 400 12px var(--mono); color: var(--ink-faint); letter-spacing: 0.08em; white-space: nowrap; }
@@ -862,7 +863,12 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
       </div>
     </div>
     <div class="close-strip mv" id="cl-strip">
-      <span class="close-brandline"><img class="ky-mark" src="assets/kyanitelabs-mark.png" alt="" width="30" height="30"><span class="brand-mark" aria-hidden="true">§</span> QuorumProof</span>
+      <span class="close-brandline"><img class="ky-mark" src="assets/kyanitelabs-mark.png" alt="" width="30" height="30">
+            <svg class="seal brand-seal" viewBox="0 0 100 100" role="img" aria-label="QuorumProof brass seal">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="50" cy="50" r="39.5" fill="none" stroke="currentColor" stroke-width="0.9"/>
+              <text class="seal-center" x="50" y="57.5">QP</text>
+            </svg> QuorumProof</span>
       <span class="close-thesis">The fleet replaces the oracle. The paper trail is the product.</span>
       <span class="close-tail-sub">BUIDL CTC 2026 Fall · AI track · Edited with Kinocut</span>
     </div>
