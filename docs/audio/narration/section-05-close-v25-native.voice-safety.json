@@ -1,0 +1,191 @@
+{
+ "status": "generated_asr_failed",
+ "createdAt": "2026-09-13T15:09:41Z",
+ "generatedAt": "2026-09-13T15:09:41Z",
+ "policyVersion": "qwen3-prosody-v2",
+ "wavSha256": "ad882974c7655cce7ec684dc1bd1fee854466a36317a6a3810ba73d62695f5da",
+ "normalizedText": "QuorumProof \u2014 auditable autonomous decisions on the Attestcoin Protocol.\n\nThe fleet replaces the oracle \u2014 and the paper trail is the product.",
+ "normalizedTextSha256": "4e87f87b86d91d321f86727f0a776deac2fa3d2056766ba158f6f2cda6f73b1f",
+ "output": "/Users/simongonzalezdecruz/workspaces/buidl-ctc/docs/audio/narration/section-05-close-v25-native.wav",
+ "generator": "generate_safe_qwen_voiceover.py",
+ "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+ "safeChunking": {
+  "enabled": true,
+  "maxChars": 210,
+  "chunkCount": 2,
+  "chunks": [
+   [
+    "QuorumProof \u2014 auditable autonomous decisions on the Attestcoin Protocol.",
+    720
+   ],
+   [
+    "The fleet replaces the oracle \u2014 and the paper trail is the product.",
+    0
+   ]
+  ]
+ },
+ "prosodyPlan": {
+  "policyVersion": "qwen3-prosody-v2",
+  "sourceBoundaries": [
+   {
+    "ordinal": 0,
+    "intent": "semantic_pause",
+    "source": "blank_line",
+    "sourceStart": 72,
+    "sourceEnd": 74
+   }
+  ],
+  "units": [
+   {
+    "ordinal": 0,
+    "text": "QuorumProof \u2014 auditable autonomous decisions on the Attestcoin Protocol.",
+    "boundaryAfter": "paragraph",
+    "boundaryIntent": "semantic_pause"
+   },
+   {
+    "ordinal": 1,
+    "text": "The fleet replaces the oracle \u2014 and the paper trail is the product.",
+    "boundaryAfter": "final",
+    "boundaryIntent": "visual_only_break"
+   }
+  ],
+  "chunks": [
+   {
+    "ordinal": 0,
+    "text": "QuorumProof \u2014 auditable autonomous decisions on the Attestcoin Protocol.",
+    "unitOrdinals": [
+     0
+    ],
+    "boundaryAfter": "forced_limit",
+    "boundaryIntent": "semantic_pause",
+    "boundaryPerformedInsideTake": false,
+    "insertedPauseMs": 720,
+    "forcedSplitReason": "max_chars",
+    "synthesisBudget": 210,
+    "observedInputSize": 72
+   },
+   {
+    "ordinal": 1,
+    "text": "The fleet replaces the oracle \u2014 and the paper trail is the product.",
+    "unitOrdinals": [
+     1
+    ],
+    "boundaryAfter": "final",
+    "boundaryIntent": "visual_only_break",
+    "boundaryPerformedInsideTake": true,
+    "insertedPauseMs": 0,
+    "forcedSplitReason": null,
+    "synthesisBudget": 210,
+    "observedInputSize": 67
+   }
+  ]
+ },
+ "synthesisSettings": {
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+  "speed": "1.0",
+  "temperature": "0.6",
+  "topP": "0.85",
+  "repetitionPenalty": "1.0",
+  "cfgScale": "1.2",
+  "exaggeration": "0.8",
+  "pitch": "-2",
+  "ddpmSteps": "50"
+ },
+ "technicalSpeechNormalization": {
+  "enabled": true,
+  "originalText": "QuorumProof \u2014 auditable autonomous decisions on the Attestcoin Protocol.\n\nThe fleet replaces the oracle \u2014 and the paper trail is the product.",
+  "ttsText": "QuorumProof \u2014 auditable autonomous decisions on the Attestcoin Protocol.\n\nThe fleet replaces the oracle \u2014 and the paper trail is the product."
+ },
+ "asrAudit": {
+  "status": "failed",
+  "strict": true,
+  "requiredTerms": {},
+  "termResults": {},
+  "missing": [],
+  "scriptCoverage": {
+   "status": "failed",
+   "enabled": true,
+   "requiredTerms": {
+    "quorumproof": [
+     "quorumproof",
+     "quorumproofed",
+     "quorumproofs"
+    ],
+    "auditable": [
+     "auditable",
+     "auditabled",
+     "auditables"
+    ],
+    "autonomous": [
+     "autonomou",
+     "autonomous",
+     "autonomoused"
+    ],
+    "decisions": [
+     "decision",
+     "decisions",
+     "decisionsed"
+    ],
+    "attestcoin": [
+     "attestcoin",
+     "attestcoined",
+     "attestcoins"
+    ],
+    "protocol": [
+     "protocol",
+     "protocoled",
+     "protocols"
+    ],
+    "fleet": [
+     "fleet",
+     "fleeted",
+     "fleets"
+    ],
+    "replaces": [
+     "replace",
+     "replaces",
+     "replacesed"
+    ],
+    "oracle": [
+     "oracle",
+     "oracled",
+     "oracles"
+    ],
+    "paper": [
+     "paper",
+     "papered",
+     "papers"
+    ],
+    "trail": [
+     "trail",
+     "trailed",
+     "trails"
+    ],
+    "product": [
+     "product",
+     "producted",
+     "products"
+    ]
+   },
+   "missing": [
+    "quorumproof"
+   ],
+   "coverage": 0.9167,
+   "minCoverage": 0.95,
+   "maxMissing": 1
+  },
+  "transcript": "Quorum proof, auditable, autonomous decisions on the attestcoin protocol.\nThe fleet replaces the Oracle and the paper trail is the product.\n",
+  "normalizedTranscript": "quorum proof auditable autonomous decisions on the attestcoin protocol the fleet replaces the oracle and the paper trail is the product"
+ },
+ "runtime": {
+  "python": "/Users/simongonzalezdecruz/workspaces/kinocut/.venv-voice/bin/python",
+  "speed": "1.0",
+  "strict": true,
+  "asrModel": "base"
+ },
+ "equivalenceEvidence": {
+  "added": "2026-09-13T21:1xZ",
+  "class": "ASR tokenization false-positive (COO-356 issue of record)",
+  "note": "all five v2.5 transcripts semantically exact vs script v2.5; split compounds (attest coin, quorum proof, quorum registry, credit coin) + secp256k1 homophone class"
+ }
+}

@@ -1,0 +1,4 @@
+Every ballot signed with the agent's own SEB256K1 key and bound to the attest coin FACT hash.
+On chain, the Quorum registry contract recovers every signature and applies the Quorum gate 2 of 3.
+Deploy it and the decision becomes a credit coin FACT.
+One, any lending protocol can consume.
