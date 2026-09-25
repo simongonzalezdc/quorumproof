@@ -22,7 +22,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const seed = JSON.parse(readFileSync('/Users/simongonzalezdecruz/workspaces/buidl-ctc/src/web/seed-trace.json', 'utf8'));
+const seed = JSON.parse(readFileSync('~/workspaces/buidl-ctc/src/web/seed-trace.json', 'utf8'));
 
 /* ---------- app.js helpers, ported verbatim ---------- */
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
