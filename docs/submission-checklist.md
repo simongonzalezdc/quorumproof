@@ -3,7 +3,7 @@
 Deadline: **2026-09-13 23:59:00 ET** (extended). Winner announcement 2026-09-20.
 
 ## State (read first)
-- Final design = HEAD `8ba592e` + whitepaper artifact commit `95997ba` (The Chamber + midnight-ledger dark per DESIGN-SYSTEM.md incl. 5df3b17 amendment). Final gate **SHIP 14/14** — org-hq `docs/cfo-corpus/gates/final-quorumproof-0908.md`, evidence in `evidence-final-0908/quorumproof/` (both themes, judging frames, contrast tables, keyboard/evidence probes).
+- Final design = HEAD `8ba592e` + whitepaper artifact commit `95997ba` (The Chamber + midnight-ledger dark per DESIGN-SYSTEM.md incl. 5df3b17 amendment). Final gate **SHIP 14/14** — internal copy `docs/cfo-corpus/gates/final-quorumproof-0908.md`, evidence in `evidence-final-0908/quorumproof/` (both themes, judging frames, contrast tables, keyboard/evidence probes).
 - **Whitepaper PDF: DONE and committed** → `docs/whitepaper.pdf` (A4, 3pp, generated from `docs/whitepaper.md`; ledger-styled serif+mono). The form's "PDF URL" = the repo raw link once the repo is public:
   `https://github.com/<owner>/<repo>/raw/main/docs/whitepaper.pdf`
 - **Demo video:** 2-min script locked (`docs/demo-script.md`). Production reassigned by CEO order to the **kinocut + Hyperframes lane** (screen-recorded live demo, both themes). **v2.1 DONE, gate PASS:** kyanite-chrome overlay pass (QP-VIDEO-v2.1) lifted the kinocut gate **67.4 → 80.2 — all 5 gating checks passed** (`assert_quality` min-score-80 PASS; receipt: `docs/demo-video-receipt.json` v21_block). Still **silent** (narration lane not provisioned). Upload (YouTube unlisted) is a CEO act; the URL slots into the form field below. This repo's `docs/demo-video.*` is owned by that lane.
