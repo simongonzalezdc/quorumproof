@@ -121,6 +121,12 @@ docs/                           integration notes, demo script, submission check
   Creditcoin Discord (`discord.gg/Gu43zTfmtc`, #buidl-ctc-qna for builder support) —
   tokens are requested, never purchased. Until a faucet grant lands, the contract ships
   with tests and the decision flow runs in local-enforcement mode (clearly labeled).
+- The registry enforces **membership, threshold and outcome from committed on-chain
+  state** — `submitDecision` takes only the ballots. Before submitting, the client syncs
+  the owner-set roster (`registerAgent`) and the policy threshold (`registerPolicy`);
+  both are owner-only, so `QUORUMPROOF_SUBMITTER_KEY` must be the registry deployer.
+  Agent keys are ephemeral per fleet spawn, so the roster is synced per run (making the
+  keys persistent/derivable is a tracked follow-up).
 
 ## Honest limitations
 
