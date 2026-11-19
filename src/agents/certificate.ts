@@ -1,7 +1,32 @@
 /**
  * Canonical ballot + certificate hashing shared by the fleet (signing),
  * the local auditor (recovery), and the Solidity registry (recovery).
- * The exact byte layout MUST match contracts/QuorumRegistry.sol.
+ *
+ * THE canonical byte layout (mirrored by QuorumRegistry.ballotDigestOf /
+ * .certificateHashOf and enforced cross-language by test/parity.test.ts,
+ * which compiles the contract and executes it in a local EVM):
+ *
+ *   ballot digest = keccak256(abi.encode(bytes32 factHash,
+ *                                     bytes32 policyId,
+ *                                     uint8   round,      // padded to 32
+ *                                     bytes32 agentId,
+ *                                     uint8   vote))      // padded to 32
+ *                   → 160-byte preimage, PADDED abi.encode (never
+ *                     abi.encodePacked — the contract side must not pack).
+ *
+ *   cert hash     = keccak256(abi.encode(string  "QUORUMPROOF_V1",
+ *                                     bytes32 factHash,
+ *                                     bytes32 policyId,
+ *                                     uint8   decision,
+ *                                     uint8   approvals,  // bound on-chain too
+ *                                     uint8   fleetSize))
+ *                   → 256-byte preimage.
+ *
+ * Signatures are EIP-191 personal_sign over the RAW 32-byte digest:
+ *   keccak256("\x19Ethereum Signed Message:\n32" ++ digest)
+ * i.e. the fleet signs with `wallet.signMessage(getBytes(digest))` — passing
+ * the hex STRING would UTF-8-encode it ("\n66" framing) and the contract's
+ * ecrecover would fail for every genuine ballot.
  */
 import { AbiCoder, keccak256 } from 'ethers';
 

@@ -57,16 +57,18 @@ describe('hashing', () => {
       agentId: 'ledger-01',
       vote: 'APPROVE',
     });
-    const sig = await w.signMessage(digest);
+    // canonical framing: sign/verify the RAW digest bytes ("\n32") — the exact
+    // message QuorumRegistry hashes before ecrecover
+    const sig = await w.signMessage(getBytes(digest));
     const { r, s, v } = splitSignature(sig);
     expect(r.length).toBe(66);
     expect(s.length).toBe(66);
     expect([27, 28]).toContain(v);
-    expect(verifyMessage(digest, sig).toLowerCase()).toBe(w.address.toLowerCase());
+    expect(verifyMessage(getBytes(digest), sig).toLowerCase()).toBe(w.address.toLowerCase());
     // our eip191Digest matches ethers' hashMessage, and the signature recovers
     // over the RAW digest exactly the way QuorumRegistry (ecrecover) will.
     expect(eip191Digest(digest)).toBe(hashMessage(getBytes(digest)));
-    expect(verifyMessage(digest, sig).toLowerCase()).toBe(w.address.toLowerCase());
+    expect(verifyMessage(getBytes(digest), sig).toLowerCase()).toBe(w.address.toLowerCase());
   });
 
   it('vote bytes match the Solidity registry enum', () => {
