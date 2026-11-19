@@ -29,9 +29,11 @@ A fleet of three heterogeneous agents — an underwriter (`ledger-01`), a fraud 
 (`sentinel-02`), a market analyst (`meridian-03`), plus an optional fourth LLM analyst —
 deliberates over facts that have already passed Attestcoin verification:
 
-- **Round 1 — secret ballot.** Each agent independently votes APPROVE / DENY / ABSTAIN
-  with a confidence and reasons. Ballots are committed into a ballot-box hash before
-  anyone sees anyone's vote.
+- **Round 1 — independent first ballot.** Each agent independently votes APPROVE / DENY /
+  ABSTAIN with a confidence and reasons. Votes are committed into a ballot-box hash before
+  anyone sees the tally. This is sequencing, not secrecy: round-1 votes are published in
+  the trace and certificate once cast, and the deterministic brains make them reproducible
+  from public data.
 - **Round 2 — debate.** The tally is published. Each agent may revise exactly once under
   a *documented* revision rule (e.g., a sole dissenting approver keeps its vote but
   discounts confidence and states the jurisdictional reason on the record).
@@ -57,7 +59,7 @@ VERIFIED FACT ──► EvmV1Decoder (eth_call) ──► structured fact + fact
    │
    ▼
 Fleet (ledger / sentinel / meridian [/ llm-analyst])
-   round 1 secret ballot → ballot-box hash → debate → round 2
+   round 1 independent ballot → ballot-box hash → debate → round 2
    │
    ▼
 QuorumCertificate (6 signed ballots, certHash)

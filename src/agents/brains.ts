@@ -14,10 +14,11 @@ export interface BrainContext {
   fact: AttestedFact;
   policy: CreditPolicy;
   round: 1 | 2;
-  /** Present in round 2: what round 1 produced (secret ballot until then) */
+  /** Present in round 2: the published round-1 tally. Sequencing, not secrecy:
+   *  round-1 votes are published in the trace and certificate once cast. */
   summary?: RoundSummary;
-  /** Present in round 2: this agent's own round-1 ballots (single element) */
-  ownRound1?: Vote[];
+  /** Present in round 2: this agent's own round-1 ballot (and no other agent's) */
+  ownRound1?: Vote;
 }
 
 export interface Brain {
@@ -98,8 +99,7 @@ const SENTINEL: Brain = {
     // declined, Sentinel maintains its dissent but discounts confidence — its
     // mandate is integrity, and it defers jurisdiction over policy fit.
     if (round === 2 && summary && ownRound1) {
-      const mine = ownRound1.find((v) => v.agentId === this.id);
-      if (mine?.vote === 'APPROVE' && summary.approvals === 1 && summary.denials >= 2) {
+      if (ownRound1.vote === 'APPROVE' && summary.approvals === 1 && summary.denials >= 2) {
         reasons.push('sole dissent maintained: mandate is transaction integrity; policy fit belongs to ledger/meridian');
         return { agentId: this.id, agentKind: this.kind, vote: 'APPROVE', confidence: 0.66, reasons };
       }
@@ -131,8 +131,7 @@ const MERIDIAN: Brain = {
       // Round-2 revision rule (documented): a sole DENY against a unified
       // approving fleet softens to ABSTAIN — concede the floor, not the point.
       if (round === 2 && summary && ownRound1) {
-        const mine = ownRound1.find((v) => v.agentId === this.id);
-        if (mine?.vote === 'DENY' && summary.approvals >= 2) {
+        if (ownRound1.vote === 'DENY' && summary.approvals >= 2) {
           reasons.push('conceding to fleet majority: objection recorded as abstention');
           return { agentId: this.id, agentKind: this.kind, vote: 'ABSTAIN', confidence: 0.6, reasons };
         }

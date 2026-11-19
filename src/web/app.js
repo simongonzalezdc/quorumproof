@@ -158,7 +158,7 @@ function renderChamber(entry) {
     `PROOF <span class="ok">VERIFIED</span> ${t.proofMs}MS · PRECOMPILE <span class="ok">PASS</span> ${t.verifyMs}MS · ` +
     `DECODE <span class="ok">PASS</span> ${t.decodeMs}MS · DELIBERATION ${t.deliberateMs}MS`;
 
-  $('r1-box').textContent = 'votes sealed — box opened at round II';
+  $('r1-box').textContent = 'votes cast — tally revealed at round II';
   $('r2-box').innerHTML = `box ${esc(short(d.trace.ballotBoxHash, 8))}${copyBtn(d.trace.ballotBoxHash, 'ballot box hash')}`;
   $('round1').innerHTML = r1.map((v, i) => ballotRow(v, null, i)).join('');
   $('round2').innerHTML = r2.map((v, i) => ballotRow(v, r1[i], i)).join('');

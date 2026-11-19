@@ -4,7 +4,7 @@
 
 Three heterogeneous AI agents independently deliberate over a transaction that has been
 cryptographically proven inside Creditcoin's trust domain (Attestcoin Protocol, BlockProver
-precompile `0x…FD2` on CC3 testnet). They vote in a secret ballot, debate, revise under
+precompile `0x…FD2` on CC3 testnet). They vote independently before the tally is revealed, debate, revise under
 documented rules, and only when quorum is met does the fleet authorize the on-chain action.
 Every step — the proof, both ballots, every signature, the certificate — is recorded and
 independently verifiable. No centralized oracle operator, no single-model authority.
@@ -45,7 +45,7 @@ FACT VERIFIED IN CREDITCOIN'S TRUST DOMAIN        ← no gas, no private key
    │  3. on-chain EvmV1Decoder library — eth_call
    ▼
 structured fact (from, to, value, receipt status) + factHash
-   │  4. fleet deliberation: round 1 secret ballot → debate → round 2
+   │  4. fleet deliberation: round 1 independent ballot → debate → round 2
    ▼
 signed QuorumCertificate (6 secp256k1 ballots bound to factHash)
    │  5. enforcement: local signature audit, or QuorumRegistry submission
@@ -126,6 +126,9 @@ docs/                           integration notes, demo script, submission check
 
 - Default agent brains are deterministic analytic evaluators (auditable, reproducible).
   The LLM analyst is wired but off by default so the demo never depends on a paid API.
+- Round 1 is a sequencing device, not a secret ballot: votes are published in the
+  trace and certificate once cast, and the deterministic brains make them
+  reproducible from public data. No ballot confidentiality is claimed.
 - `QuorumRegistry` is written for CC3 testnet deployment but is not yet deployed (faucet-gated);
   the certificate flow is otherwise complete end to end.
 - Demo txs are fixed mainnet transfers chosen to sit below the testnet's attested height;

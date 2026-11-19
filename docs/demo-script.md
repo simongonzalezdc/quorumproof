@@ -24,7 +24,7 @@ And it's all reads — zero tokens, zero keys.
 
 Three agents, three mandates — not three copies of the same model. The underwriter wants exact policy fit. The fraud hunter asks one question: is this transaction real? The market analyst reads partial repayments.
 
-Round one is a secret ballot — everyone commits before anyone sees a vote. Round two is debate, and each agent can revise once.
+Round one is an independent ballot — everyone votes before anyone sees the tally. The votes aren't hidden: they're published in the trace and certificate afterwards; what the two rounds protect is the ordering. Round two is debate, and each agent can revise once.
 
 Watch the repayment case — three out of three.
 

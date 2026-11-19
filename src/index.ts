@@ -43,7 +43,7 @@ async function run(txHash: string): Promise<boolean> {
     ].join('\n'),
   );
 
-  header('2 · FLEET DELIBERATION (2 rounds, secret ballot then debate)');
+  header('2 · FLEET DELIBERATION (2 rounds, independent ballot then debate)');
   console.log(`  policy        : ${demoPolicy().lender} expects ${Number(demoPolicy().expectedAmountWei) / 1e18} ETH  (policyId ${computePolicyId(demoPolicy()).slice(0, 18)}…)`);
   console.log(`  roster        : ${fleetRoster.map((r) => `${r.agentId}${llmEnabled && r.kind === 'llm' ? ' [LLM]' : ''}`).join(', ')}`);
   for (const round of trace.rounds) {

@@ -6,6 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { Fleet, auditCertificateSignatures } from '../src/agents/fleet.js';
 import { DETERMINISTIC_FLEET } from '../src/agents/brains.js';
+import type { Brain } from '../src/agents/brains.js';
 import { computeFactHash, computePolicyId } from '../src/attest/gateway.js';
 import { demoPolicy } from '../src/pipeline.js';
 import type { AttestedFact, CreditPolicy } from '../src/agents/types.js';
@@ -125,13 +126,46 @@ describe('fleet quorum', () => {
       policy: policy(),
       round: 2 as const,
       summary: { approvals: 2, denials: 0, abstentions: 1, ballotBoxHash: '0x' + '11'.repeat(32) },
-      ownRound1: [
-        { agentId: 'meridian-03', agentKind: 'deterministic' as const, agentAddress: '0x1', vote: 'DENY' as const, confidence: 0.7, reasons: ['x'], round: 1 as const },
-      ],
+      ownRound1: { agentId: 'meridian-03', agentKind: 'deterministic' as const, agentAddress: '0x1', vote: 'DENY' as const, confidence: 0.7, reasons: ['x'], round: 1 as const },
     };
     const r2 = await meridian.evaluate(ctx);
     expect(r2.vote).toBe('ABSTAIN');
     expect(r2.reasons.join(' ')).toMatch(/conceding/i);
+  });
+
+  it("a brain's round-2 context contains only its own round-1 ballot — never another agent's", async () => {
+    const violations: string[] = [];
+    let spySawRound1 = false;
+    const spy: Brain = {
+      id: 'spy-99',
+      kind: 'deterministic',
+      charter: 'Context spy: proves round-2 context carries only this agent’s own round-1 ballot.',
+      async evaluate(ctx) {
+        if (ctx.round === 1) {
+          spySawRound1 = true;
+          if (ctx.ownRound1 !== undefined) violations.push('round 1: ownRound1 must be absent (no round-1 data before round 2)');
+          if (ctx.summary !== undefined) violations.push('round 1: summary must be absent (no tally before round 2)');
+          return { agentId: this.id, agentKind: this.kind, vote: 'ABSTAIN', confidence: 0.5, reasons: ['spy abstains'] };
+        }
+        const own = ctx.ownRound1;
+        if (own === undefined) {
+          violations.push('round 2: ownRound1 missing');
+        } else {
+          if (Array.isArray(own)) violations.push('round 2: ownRound1 is an array — a brain could over-read other agents’ ballots');
+          if (own.agentId !== this.id) violations.push(`round 2: ownRound1.agentId=${own.agentId}, expected ${this.id}`);
+          if (own.vote !== 'ABSTAIN') violations.push(`round 2: ownRound1.vote=${own.vote}, expected the ABSTAIN this agent cast in round 1`);
+        }
+        return { agentId: this.id, agentKind: this.kind, vote: 'ABSTAIN', confidence: 0.5, reasons: ['spy abstains'] };
+      },
+    };
+    const fleet = new Fleet([...DETERMINISTIC_FLEET, spy]);
+    const trace = await fleet.deliberate(fakeFact(), policy());
+    expect(spySawRound1).toBe(true);
+    expect(violations).toEqual([]);
+    // sanity: the spy really participated in both rounds of the published trace
+    expect(trace.rounds[0]!.votes.some((v) => v.agentId === 'spy-99')).toBe(true);
+    expect(trace.rounds[1]!.votes.some((v) => v.agentId === 'spy-99')).toBe(true);
+    expect(auditCertificateSignatures(trace).ok).toBe(true);
   });
 
   it('reverted source tx blocks execution', async () => {

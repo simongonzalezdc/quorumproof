@@ -122,7 +122,7 @@
     {"clip": "Hyperframes chapter 01 (light + ink proof-chain panel)", "t": "0:16-0:19", "note": "The trust boundary — FactBuilder -> ProofBuilder -> BlockProver 0x...FD2 -> EvmV1Decoder -> factHash"},
     {"clip": "live npm run verify-live (midnight terminal, real process)", "t": "0:19-0:35.3", "note": "real CC3 testnet run, exit 0; callouts: proofbuild, blockprover 0x...FD2, decoder, VERIFY-LIVE PASS"},
     {"clip": "terminal PASS exhibit still (midnight, ken-burns)", "t": "0:35.3-0:41.3", "note": "hold on the green PASS line"},
-    {"clip": "Hyperframes chapter 02 (light + ink Round-I panel)", "t": "0:41.3-0:44.3", "note": "The fleet deliberates — secret ballot; QUORUM >= 2 OF 3 token in verdict green"},
+    {"clip": "Hyperframes chapter 02 (light + ink Round-I panel)", "t": "0:41.3-0:44.3", "note": "The fleet deliberates — round-I independent ballots (the rendered video card reads 'secret ballot'; that wording overstates it — round 1 is sequencing, not secrecy, and votes are published in the trace/certificate); QUORUM >= 2 OF 3 token in verdict green"},
     {"clip": "dashboard EXECUTE (light ledger, live)", "t": "0:44.3-0:54.3", "note": "tight cut into deliberation -> 3/3 EXECUTE; callouts: convene, ballots, execute"},
     {"clip": "EXECUTE verdict exhibit still (light)", "t": "0:54.3-0:57.8", "note": "verdict + tally close-up; execute callout"},
     {"clip": "sealed certificate exhibit still (light)", "t": "0:57.8-1:00.8", "note": "brass seal + certificate of quorum decision"},

@@ -119,7 +119,7 @@ function chamber(c, idp) {
         </article>
         <article class="ballots">
           <section class="round">
-            <h3 class="round-h"><span>Round I — secret ballot</span><span class="round-box">ballot box —</span></h3>
+            <h3 class="round-h"><span>Round I — independent ballot</span><span class="round-box">ballot box —</span></h3>
             <div class="ballotlist"><p class="empty">no ballots cast</p></div>
           </section>
           <section class="round">
@@ -170,7 +170,7 @@ function chamber(c, idp) {
         </article>
         <article class="ballots">
           <section class="round">
-            <h3 class="round-h"><span>Round I — secret ballot</span><span class="round-box swap"><span class="on">ballot box —</span><span>votes sealed — box opened at round II</span></span></h3>
+            <h3 class="round-h"><span>Round I — independent ballot</span><span class="round-box swap"><span class="on">ballot box —</span><span>votes cast — tally revealed at round II</span></span></h3>
             <div class="ballotlist">${r1.map((v, i) => ballotRow(v, null, idp + 'r1b' + i, true)).join('')}</div>
           </section>
           <section class="round">
@@ -709,7 +709,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
   <!-- V4 · FLEET ROSTER 48.83 → 56.0 -->
   <section class="view clip" id="v-roster" data-start="43.08" data-duration="20.7">${rosterView()}</section>
 
-  <!-- V5 · CHAMBER QP-001 — exhibit → secret ballots → reveal → quorum → verdict 56.0 → 66.2 -->
+  <!-- V5 · CHAMBER QP-001 — exhibit → round-I ballots → reveal → quorum → verdict 56.0 → 66.2 -->
   <section class="view clip" id="v-ch1" data-start="63.78" data-duration="2.8">
     <div class="app-page">
       ${masthead()}
@@ -720,7 +720,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
   <!-- V6 · CERTIFICATE CLOSE-UP QP-001 — the earned seal 66.2 → 70.2 -->
   <section class="view clip" id="v-cert" data-start="66.58" data-duration="4.0">${certView(case1, null, 'v-cert')}</section>
 
-  <!-- V7 · CHAMBER QP-002 — secret ballots → reveal → dissent → REJECT 70.2 → 90.4 -->
+  <!-- V7 · CHAMBER QP-002 — round-I ballots → reveal → dissent → REJECT 70.2 → 90.4 -->
   <section class="view clip" id="v-ch2" data-start="70.46" data-duration="11.28">
     <div class="app-page">
       ${masthead()}
@@ -785,7 +785,7 @@ table.ruled td { font: 400 16px/1.5 var(--mono); color: var(--ink); overflow-wra
     <div class="cap" id="cap-10">The underwriter wants exact policy fit.</div>
     <div class="cap" id="cap-11">The fraud hunter asks one question: is this transaction real?</div>
     <div class="cap" id="cap-12">The market analyst reads partial repayments.</div>
-    <div class="cap" id="cap-13">Round one is a secret ballot — everyone commits before anyone sees a vote.</div>
+    <div class="cap" id="cap-13">Round one is an independent ballot — everyone votes before anyone sees the tally.</div>
     <div class="cap" id="cap-14">Round two is debate, and each agent can revise once.</div>
     <div class="cap" id="cap-15">Watch the repayment case — three out of three.</div>
     <div class="cap" id="cap-16">Execute.</div>
@@ -846,7 +846,7 @@ up('#ros0', 49.8, 0.45, 12);
 up('#ros1', 50.9, 0.45, 12);
 up('#ros2', 52.0, 0.45, 12);
 
-/* V5 QP-001 — exhibit → Round I secret → REVEAL → Round II → quorum → verdict */
+/* V5 QP-001 — exhibit → Round I hidden → REVEAL → Round II → quorum → verdict */
 up('#v-ch1 .masthead', 56.1, 8.23);
 up('#v-ch1 .clerk', 56.2, 8.23);
 up('#v-ch1 .chamber', 56.3, 8.23);
@@ -876,14 +876,14 @@ tl.fromTo('#v-cert tbody tr.mv', { opacity: 0 }, { opacity: 1, duration: 0.25, e
 stamp('#v-cert .big-seal', 67.98);
 fade('#v-cert .big-enf', 67.93);
 
-/* V7 QP-002 — exhibit → Round I secret → reveal → revised dissent → REJECT */
+/* V7 QP-002 — exhibit → Round I hidden → reveal → revised dissent → REJECT */
 up('#v-ch2 .masthead', 70.3, 0.71);
 up('#v-ch2 .clerk', 70.4, 0.71);
 up('#v-ch2 .chamber', 70.5, 0.71);
 stamp('#c2-exstamp', 70.9);
 tl.fromTo('#v-ch2 .exr', { opacity: 0 }, { opacity: 1, duration: 0.22, ease: 'power2.out', stagger: 0.08 }, 71.36);
 fade('#c2-proofchecks', 71.5);
-/* Round I — secret commitment (no vote content) */
+/* Round I — commitment shown, vote content hidden until reveal */
 place('#c2-r1b0', 72.4); place('#c2-r1b1', 72.8); place('#c2-r1b2', 73.2);
 /* Round II reveal at 76.7 ("The fraud hunter says yes…" = the box opening) */
 tl.to('#v-ch2 .round-h .swap > span.on', { opacity: 0, duration: 0.001 }, 76.95);

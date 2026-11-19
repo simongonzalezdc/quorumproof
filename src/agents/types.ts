@@ -70,7 +70,8 @@ export interface RoundSummary {
   approvals: number;
   denials: number;
   abstentions: number;
-  /** keccak256 over each round-1 vote's commit — the "ballot box" hash */
+  /** keccak256 over the round-1 votes (order-independent) — the "ballot box"
+   *  commitment. It binds the published votes; it is not a secrecy mechanism. */
   ballotBoxHash: string;
 }
 

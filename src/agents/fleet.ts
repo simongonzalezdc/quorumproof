@@ -1,9 +1,12 @@
 /**
  * Fleet orchestrator: two-round deliberation with a quorum gate.
  *
- * Round 1 — independent secret ballot. Each brain evaluates the verified fact
- *           on its own; votes are committed (keccak ballot-box hash) before
- *           anyone sees anyone else's vote.
+ * Round 1 — independent first ballot. Each brain evaluates the verified fact
+ *           on its own; votes are collected and committed into a keccak
+ *           ballot-box hash before anyone sees the tally. This is sequencing,
+ *           not secrecy: round-1 votes are published in the trace and the
+ *           certificate once cast, and the deterministic brains make them
+ *           reproducible from public data. No confidentiality is claimed.
  * Round 2 — visible debate. The round-1 tally + ballot-box hash are published;
  *           every brain may revise its vote exactly once, with reasons. A brain
  *           whose vote is alone against a unified fleet faces the strongest
@@ -81,16 +84,18 @@ export class Fleet {
 
   private async collectSigned(
     round: 1 | 2,
-    ctxBase: { fact: DeliberationTrace['fact']; policy: CreditPolicy; summary?: RoundSummary; ownRound1?: Vote[] },
+    ctxBase: { fact: DeliberationTrace['fact']; policy: CreditPolicy; summary?: RoundSummary; round1Votes?: Vote[] },
   ): Promise<{ votes: Vote[]; boxHash: string }> {
     const votes: Vote[] = [];
     for (const { brain, wallet } of this.identities) {
+      // Each brain receives ONLY its own round-1 ballot — never another agent's.
+      const ownRound1 = ctxBase.round1Votes?.find((v) => v.agentId === brain.id);
       const partial = await brain.evaluate({
         fact: ctxBase.fact,
         policy: ctxBase.policy,
         round,
         summary: ctxBase.summary,
-        ownRound1: ctxBase.ownRound1,
+        ownRound1,
       });
       const digest = voteDigest({
         factHash: ctxBase.fact.factHash,
@@ -117,7 +122,8 @@ export class Fleet {
     const t0 = Date.now();
     const policyId = computePolicyId(policy);
 
-    // ROUND 1 — secret ballot
+    // ROUND 1 — independent first ballot (sequenced, not secret: votes are
+    // published in the trace and certificate)
     const round1 = await this.collectSigned(1, { fact, policy });
     const summary: RoundSummary = {
       approvals: round1.votes.filter((v) => v.vote === 'APPROVE').length,
@@ -132,7 +138,7 @@ export class Fleet {
       fact,
       policy,
       summary,
-      ownRound1: round1.votes,
+      round1Votes: round1.votes,
     });
 
     const allVotes = [...round1.votes, ...round2.votes];
