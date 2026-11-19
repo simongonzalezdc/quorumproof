@@ -3,6 +3,10 @@
  *
  *   npm run demo                — runs both demo scenarios (EXECUTE + REJECT paths)
  *   npm run demo -- 0xTXX...    — assesses any Ethereum mainnet tx against the demo policy
+ *   npm run demo -- 0xTXX... --out cert.json [--format json|text|both]
+ *                              — also persists the certificate: the JSON envelope carries
+ *                                the full trace (fact, policy, both signed rounds, cert +
+ *                                certHash) and reads back for offline audit (src/export.ts)
  *
  * Every scenario runs the REAL pipeline: Attestcoin proof build (hosted proof
  * service) -> BlockProver precompile verification on CC3 testnet (eth_call)
@@ -12,6 +16,8 @@
 import { assessTx, demoScenarios, demoPolicy } from './pipeline.js';
 import { renderCertificate } from './chain/registry.js';
 import { computePolicyId } from './attest/gateway.js';
+import { parseCliArgs, USAGE } from './cli.js';
+import { writeCertificate, type CertificateFormat } from './export.js';
 
 const DIM = '\x1b[2m';
 const BOLD = '\x1b[1m';
@@ -24,7 +30,7 @@ function header(title: string): void {
   console.log(`\n${BOLD}${CYAN}═══ ${title} ═══${RESET}`);
 }
 
-async function run(txHash: string): Promise<boolean> {
+async function run(txHash: string, exportOpts?: { outPath?: string; format: CertificateFormat }): Promise<boolean> {
   const started = Date.now();
   const { trace, submission, fleetRoster, llmEnabled } = await assessTx({ txHash });
   const f = trace.fact;
@@ -62,16 +68,38 @@ async function run(txHash: string): Promise<boolean> {
   if (submission.txHash) console.log(`  registry tx   : ${submission.txHash}`);
   console.log(`  wall clock    : ${((Date.now() - started) / 1000).toFixed(1)}s`);
   console.log(`  ballot audit  : ${submission.failures.length === 0 ? `${GREEN}all signatures valid${RESET}` : `${RED}${submission.failures.join('; ')}${RESET}`}`);
+  if (exportOpts?.outPath) {
+    const label = demoScenarios().find((s) => s.txHash === txHash)?.name;
+    const written = writeCertificate({
+      trace,
+      enforcement: submission,
+      outPath: exportOpts.outPath,
+      format: exportOpts.format,
+      label,
+    });
+    console.log(`  exported     : ${written.join(', ')}`);
+  }
   return trace.certificate.decision === 'EXECUTE';
 }
 
 const isMain = process.argv[1]?.endsWith('index.ts') || process.argv[1]?.endsWith('demo');
-const arg = process.argv[2];
 
 if (isMain) {
   (async () => {
-    if (arg) {
-      const ok = await run(arg);
+    const parsed = parseCliArgs(process.argv.slice(2));
+    if (!parsed.ok) {
+      console.error(`\n${parsed.error}\n\n${USAGE}\n`);
+      process.exit(2);
+    }
+    if (parsed.options.help) {
+      console.log(USAGE);
+      process.exit(0);
+    }
+    if (parsed.options.txHash) {
+      const ok = await run(parsed.options.txHash, {
+        outPath: parsed.options.outPath,
+        format: parsed.options.format,
+      });
       process.exit(ok ? 0 : 1);
     }
     let approves = 0;

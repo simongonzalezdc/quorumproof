@@ -11,11 +11,15 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assessTx, demoScenarios, demoPolicy } from './pipeline.js';
+import { bigintJsonReplacer } from './export.js';
 import { cc3Provider, ETHEREUM_MAINNET_CHAINKEY, ETHEREUM_SEPOLIA_CHAINKEY } from './config.js';
 import { fetchAttestedHeight } from './attest/gateway.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), 'web');
 const PORT = Number(process.env.PORT ?? 8787);
+/** Bind loopback by default: the dashboard has no auth (see the exposure audit) —
+ *  set HOST=0.0.0.0 deliberately if you ever need it reachable off-box. */
+const HOST = process.env.HOST ?? '127.0.0.1';
 
 const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
@@ -68,7 +72,7 @@ const server = createServer(async (req, res) => {
       }
       const result = await assessTx({ txHash, chainKey: chainKey ?? ETHEREUM_MAINNET_CHAINKEY });
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(result, (_, v) => (typeof v === 'bigint' ? `0x${v.toString(16)}` : v)));
+      res.end(JSON.stringify(result, bigintJsonReplacer));
       return;
     }
 
@@ -88,6 +92,6 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`QuorumProof dashboard: http://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`QuorumProof dashboard: http://${HOST === '127.0.0.1' ? 'localhost' : HOST}:${PORT} (bound to ${HOST})`);
 });

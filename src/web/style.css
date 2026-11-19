@@ -466,7 +466,7 @@ table.docket tbody tr.emptyrow:hover { background: transparent; }
 .copy {
   background: var(--paper-raised); color: var(--ink-dim);
   border: 1px solid var(--rule-strong);
-  padding: 1px 6px 0; margin-left: 6px;
+  padding: 5px 8px 4px; margin-left: 6px;
   font: 500 9px/1.6 var(--mono);
   text-transform: uppercase; letter-spacing: 0.08em;
   vertical-align: 1px;
@@ -477,7 +477,7 @@ td .copy { float: right; }
 .openrow {
   background: var(--paper-raised); color: var(--ink);
   border: 1px solid var(--rule-strong);
-  padding: 2px 8px 1px;
+  padding: 5px 8px 4px;
   font: 600 10px/1.5 var(--mono);
   letter-spacing: 0.08em;
 }

@@ -59,10 +59,28 @@ Steps 1–4 run live in under 3 seconds. Try it:
 npm install
 npm run verify-live   # prove a real mainnet tx on CC3 testnet (reads only)
 npm run demo          # full fleet: EXECUTE path + REJECT path
-npm run serve         # dashboard at http://localhost:8787
+npm run serve         # dashboard at http://localhost:8787 (binds 127.0.0.1; HOST=0.0.0.0 to expose)
 npm test              # offline quorum/certificate suite
 npm run build         # tsc strict, green
 ```
+
+Keeping a certificate: the demo prints to stdout by default, but any single
+proceeding can be persisted and re-audited offline:
+
+```bash
+npm run demo -- 0x27e55494f572f31c46a79d83de58b8c60cded05185f25637a6f8a710e23d80d7 \
+  --out certificate.json            # JSON envelope: full trace + certificate (default)
+npm run demo -- <txHash> --out certificate.txt --format text   # rendered certificate text
+npm run demo -- <txHash> --out certificate.json --format both  # both files
+```
+
+The JSON file is the durable audit artifact — fact, policy, both rounds of
+signed ballots, certificate and certHash, bigint values as lossless `0x` hex
+(same encoding as the HTTP API). It reads back with `readCertificate()`
+(`src/export.ts`) straight into `auditCertificateSignatures()`: every ballot
+signature verifies with no network and no chain access (covered by `npm test`).
+The docket in the dashboard UI is session-only by design — the file is the
+record.
 
 ## What the judges can verify in one minute
 
@@ -73,6 +91,7 @@ npm run build         # tsc strict, green
   repayment 3/3, and REJECTs an unrelated inflow 1/3 with a documented, signed dissent.
 - **Auditability**: every ballot signature recovers to the agent's control address
   (`npm test` proves tampering is detected); the certificate hash binds decision → fact → policy.
+  Certificates persist to disk (`--out`) and read back for fully offline signature audit.
 - **UI**: `npm run serve` → watch the fleet deliberate in real time.
 
 ## Judging-criteria map (BUIDL CTC 2026 Fall)
@@ -103,11 +122,14 @@ src/
     fleet.ts            2-round deliberation, quorum gate, signature audit
     certificate.ts      canonical ballot digest (byte-exact with the Solidity registry)
   chain/registry.ts     certificate enforcement (local + on-chain submission)
+  cli.ts                demo/export argument parsing (pure, offline-testable)
+  export.ts             certificate persistence: write/read envelopes, bigint-safe
   server.ts             node:http dashboard API
   web/                  dependency-free dashboard UI
 contracts/QuorumRegistry.sol   on-chain quorum gate (CC3-ready)
 scripts/verify-live.ts          live Attestcoin proof CLI
-test/fleet.test.ts              offline quorum/certificate tests (10)
+test/fleet.test.ts              offline quorum/certificate tests
+test/export.test.ts             offline export round-trip + CLI parsing tests
 design-shots/                   dashboard screenshots (Playwright)
 docs/                           integration notes, demo script, submission checklist
 ```
