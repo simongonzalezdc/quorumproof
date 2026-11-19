@@ -470,6 +470,8 @@ table.docket tbody tr.emptyrow:hover { background: transparent; }
   font: 500 9px/1.6 var(--mono);
   text-transform: uppercase; letter-spacing: 0.08em;
   vertical-align: 1px;
+  /* touch target floor (tastecheck tapTargets): >=24x24 CSS px */
+  min-height: 24px; min-width: 24px;
 }
 .copy:hover { color: var(--ink); border-color: var(--ink); }
 .copy.copied { color: var(--verdict-execute); border-color: var(--verdict-execute); }
@@ -477,9 +479,11 @@ td .copy { float: right; }
 .openrow {
   background: var(--paper-raised); color: var(--ink);
   border: 1px solid var(--rule-strong);
-  padding: 2px 8px 1px;
+  padding: 4px 8px 3px;
   font: 600 10px/1.5 var(--mono);
   letter-spacing: 0.08em;
+  /* touch target floor (tastecheck tapTargets): >=24x24 CSS px */
+  min-height: 24px;
 }
 .openrow:hover { border-color: var(--ink); background: var(--paper); }
 
