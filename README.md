@@ -59,10 +59,45 @@ Steps 1–4 run live in under 3 seconds. Try it:
 npm install
 npm run verify-live   # prove a real mainnet tx on CC3 testnet (reads only)
 npm run demo          # full fleet: EXECUTE path + REJECT path
-npm run serve         # dashboard at http://localhost:8787
+npm run serve         # dashboard at http://localhost:8787 (loopback only)
 npm test              # offline quorum/certificate suite
 npm run build         # tsc strict, green
 ```
+
+## Dashboard server: network posture
+
+`POST /api/assess` drives real outbound proof-building and returns the full
+deliberation trace **including the ephemeral fleet roster** (one `agentAddress`
+per agent). The server therefore treats reachability as a security boundary:
+
+- **Loopback by default.** `npm run serve` binds `127.0.0.1` only — nothing on
+  the LAN, tailnet or internet can connect. Tests pin this
+  (`test/server.test.ts` refuses a non-loopback connect).
+- **Non-loopback is opt-in and token-gated.** To serve beyond this machine:
+
+  ```bash
+  QUORUMPROOF_HOST=0.0.0.0 QUORUMPROOF_TOKEN="$(openssl rand -hex 32)" npm run serve
+  # or: npm run serve -- --host 0.0.0.0 --token "$(openssl rand -hex 32)"
+  ```
+
+  The server **refuses to start** on a non-loopback bind without a token, logs
+  the opt-in (and its source: flag or env) at startup, and then requires
+  `Authorization: Bearer *** on every route — compared in constant time
+  (`crypto.timingSafeEqual`). Remote use:
+
+  ```bash
+  curl -H "Authorization: Bearer $QUORUMPROOF_TOKEN" \
+       -H 'Content-Type: application/json' \
+       -X POST http://<host>:8787/api/assess -d '{"txHash":"0x…64 hex…"}'
+  ```
+
+  `--port`/`PORT` behave as before. A token set on a loopback bind is honored
+  too (defense in depth).
+- **Local callers are unchanged.** With no token configured (the default), the
+  dashboard UI and localhost API responses are byte-identical to the previous
+  release. `/api/assess` is gated behind the same bearer token rather than a
+  rate limit: the asset here is confidentiality and spend, not load.
+
 
 ## What the judges can verify in one minute
 
@@ -103,11 +138,12 @@ src/
     fleet.ts            2-round deliberation, quorum gate, signature audit
     certificate.ts      canonical ballot digest (byte-exact with the Solidity registry)
   chain/registry.ts     certificate enforcement (local + on-chain submission)
-  server.ts             node:http dashboard API
+  server.ts             node:http dashboard API (loopback bind; bearer-gated beyond loopback)
   web/                  dependency-free dashboard UI
 contracts/QuorumRegistry.sol   on-chain quorum gate (CC3-ready)
 scripts/verify-live.ts          live Attestcoin proof CLI
 test/fleet.test.ts              offline quorum/certificate tests (10)
+test/server.test.ts             server access-control tests (loopback + bearer gate)
 design-shots/                   dashboard screenshots (Playwright)
 docs/                           integration notes, demo script, submission checklist
 ```
