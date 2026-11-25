@@ -97,6 +97,15 @@ describe('QuorumRegistry ⇄ certificate.ts cross-language parity', () => {
     });
     expect(deploy.execResult.exceptionError?.error).toBeUndefined();
     registry = deploy.createdAddress!;
+
+    // Roster + policy onboarding the enforcement now requires: register the
+    // three agents (caller is the deployer = owner) and commit the threshold.
+    for (const agentId of AGENT_IDS) {
+      const reg = await call('registerAgent', [agentIdHash(agentId), agentWallet(agentId).address]);
+      expect(reg.ok, `registerAgent(${agentId}) reverted: ${reg.data}`).toBe(true);
+    }
+    const pol = await call('registerPolicy', [POLICY_ID, REQUIRED_APPROVALS]);
+    expect(pol.ok, `registerPolicy reverted: ${pol.data}`).toBe(true);
   }, 180_000);
 
   /** eth_call-style invocation against the deployed bytecode. */
@@ -181,16 +190,13 @@ describe('QuorumRegistry ⇄ certificate.ts cross-language parity', () => {
     const sub = await call('submitDecision', [
       FACT_HASH,
       POLICY_ID,
-      1, // EXECUTE claim
       AGENT_IDS.map(agentIdHash),
-      wallets.map((w) => w.address), // expected signers: any mismatch ⇒ BadSigner
       parts.map((p) => p.r),
       parts.map((p) => p.s),
       parts.map((p) => p.v),
       ballots.map((b) => VOTE_BYTE[b.vote]),
-      REQUIRED_APPROVALS,
     ]);
-    expect(sub.ok, `submitDecision reverted: ${sub.data}`).toBe(true); // no BadSigner()
+    expect(sub.ok, `submitDecision reverted: ${sub.data}`).toBe(true); // no BadSigner()/NotRegistered()
 
     const expectedCert = certificateHash({
       factHash: FACT_HASH,
@@ -226,14 +232,11 @@ describe('QuorumRegistry ⇄ certificate.ts cross-language parity', () => {
     const sub = await call('submitDecision', [
       tamperFact,
       POLICY_ID,
-      1,
       AGENT_IDS.map(agentIdHash),
-      wallets.map((w) => w.address),
       parts.map((p) => p.r),
       parts.map((p) => p.s),
       parts.map((p) => p.v),
       votes,
-      REQUIRED_APPROVALS,
     ]);
     expect(sub.ok).toBe(false);
     expect(sub.data.startsWith(selectorOf('BadSigner'))).toBe(true);
@@ -250,14 +253,11 @@ describe('QuorumRegistry ⇄ certificate.ts cross-language parity', () => {
     const sub = await call('submitDecision', [
       dupFact,
       POLICY_ID,
-      1,
       [dupAgentId, dupAgentId],
-      [w.address, w.address],
       [r, r],
       [s, s],
       [v, v],
       [VOTE_BYTE.APPROVE, VOTE_BYTE.APPROVE],
-      REQUIRED_APPROVALS,
     ]);
     expect(sub.ok).toBe(false);
     expect(sub.data.startsWith(selectorOf('DuplicateSigner'))).toBe(true);

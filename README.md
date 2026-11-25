@@ -121,6 +121,12 @@ docs/                           integration notes, demo script, submission check
   Creditcoin Discord (`discord.gg/Gu43zTfmtc`, #buidl-ctc-qna for builder support) —
   tokens are requested, never purchased. Until a faucet grant lands, the contract ships
   with tests and the decision flow runs in local-enforcement mode (clearly labeled).
+- The registry enforces **membership, threshold and outcome from committed on-chain
+  state** — `submitDecision` takes only the ballots. Before submitting, the client syncs
+  the owner-set roster (`registerAgent`) and the policy threshold (`registerPolicy`);
+  both are owner-only, so `QUORUMPROOF_SUBMITTER_KEY` must be the registry deployer.
+  Agent keys are ephemeral per fleet spawn, so the roster is synced per run; a roster
+  that outlives a run would need persistent or derivable keys, which this does not do.
 
 ## Honest limitations
 
@@ -130,6 +136,16 @@ docs/                           integration notes, demo script, submission check
   the certificate flow is otherwise complete end to end.
 - Demo txs are fixed mainnet transfers chosen to sit below the testnet's attested height;
   any mainnet tx below that height works via the custom-input box.
+- On-chain enforcement is only as strong as what the owner commits. The owner sets the
+  roster and the threshold, and because agent keys are ephemeral the owner's own client
+  re-registers each run's keys: membership keeps outsiders out, but it is not a durable
+  allow-list across runs, and nothing here protects against the owner.
+- The on-chain rule counts approvals only (`approvals >= committed threshold`). The local
+  rule also requires a minimum mean confidence among approvals, and confidence is not part
+  of the signed ballot, so the two can disagree; the chain's answer is the one recorded.
+- `submitDecision` has no caller restriction and records one decision per fact. Anyone
+  holding the signed ballots can submit a subset first, which can pin a REJECT. It cannot
+  produce an EXECUTE without enough signatures from registered keys.
 
 ## License
 
