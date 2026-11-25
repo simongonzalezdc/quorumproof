@@ -82,8 +82,8 @@ export function encodeSubmission(trace: DeliberationTrace): {
  * The fleet roster a submission depends on: round-2 voters' agentId => control
  * address. Agent keys are ephemeral per fleet spawn, so before submitting, the
  * registry's roster must be synced to THIS run's control addresses (see
- * syncRosterAndPolicy). Making keys persistent/derivable is tracked separately
- * and would let the roster be registered once instead of per run.
+ * syncRosterAndPolicy). Making keys persistent/derivable would let the roster
+ * be registered once instead of per run; that is not done here.
  */
 export function rosterOf(trace: DeliberationTrace): { agentId: string; control: string }[] {
   return trace.certificate.votes
