@@ -25,6 +25,10 @@ export const QUORUM_REGISTRY_ABI = [
   'function submitDecision(bytes32 factHash, bytes32 policyId, uint8 decision, bytes32[] agentIds, address[] signers, bytes32[] r, bytes32[] s, uint8[] v, uint8[] votes, uint8 requiredApprovals) returns (bytes32)',
   'function decisions(bytes32) view returns (bytes32 certHash, uint8 decision, uint8 approvals, uint8 fleetSize, uint64 timestamp)',
   'function registerAgent(bytes32 agentId, address control) external',
+  // canonical digest helpers — byte-identical to src/agents/certificate.ts
+  // (cross-language parity enforced by test/parity.test.ts)
+  'function ballotDigestOf(bytes32 factHash, bytes32 policyId, uint8 round, bytes32 agentId, uint8 vote) view returns (bytes32)',
+  'function certificateHashOf(bytes32 factHash, bytes32 policyId, uint8 decision, uint8 approvals, uint8 fleetSize) view returns (bytes32)',
 ];
 
 /**

@@ -12,7 +12,7 @@
  *           confidence >= 0.5; else REJECT. Either way the outcome is a signed
  *           QuorumCertificate bound to the Attestcoin factHash.
  */
-import { keccak256, verifyMessage, HDNodeWallet, Wallet } from 'ethers';
+import { getBytes, keccak256, verifyMessage, HDNodeWallet, Wallet } from 'ethers';
 import type {
   Brain,
 } from './brains.js';
@@ -99,7 +99,11 @@ export class Fleet {
         agentId: brain.id,
         vote: partial.vote,
       });
-      const signature = await wallet.signMessage(digest);
+      // Sign the RAW 32-byte digest (EIP-191 "\n32" framing) — exactly the
+      // message QuorumRegistry hashes before ecrecover. Passing the hex string
+      // would UTF-8-encode it ("\n66" framing) and every ballot would revert
+      // BadSigner() on-chain.
+      const signature = await wallet.signMessage(getBytes(digest));
       votes.push({
         ...partial,
         agentAddress: wallet.address,
@@ -209,7 +213,8 @@ export function auditCertificateSignatures(trace: DeliberationTrace): {
       vote: vote.vote,
     });
     try {
-      const recovered = verifyMessage(commitHash, vote.signature);
+      // canonical EIP-191 "\n32" framing over the raw digest — mirrors the contract
+      const recovered = verifyMessage(getBytes(commitHash), vote.signature);
       if (recovered.toLowerCase() !== vote.agentAddress.toLowerCase()) {
         failures.push(`${vote.agentId} round ${vote.round}: signer mismatch`);
       }
